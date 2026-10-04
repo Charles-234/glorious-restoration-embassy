@@ -1,0 +1,84 @@
+# Glorious Restoration Embassy API
+
+FastAPI service for the church's document-backed research assistant. It exposes
+`GET /health`, `POST /api/chat`, and `POST /api/ingest`. At startup, it reads
+PDFs recursively from `content/documents/` in `GITHUB_REPO` and rebuilds the
+Chroma index using `BAAI/bge-small-en-v1.5`.
+
+## Local setup
+
+From this directory, create and activate a virtual environment, then install
+the dependencies:
+
+```powershell
+py -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install -r requirements.txt
+Copy-Item .env.example .env
+```
+
+Edit `.env` with your provider keys as needed. Set `FRONTEND_URL` to the
+frontend origin; multiple comma-separated origins are supported. Provider keys
+are not needed for the health endpoint or local PDF ingestion. For local
+development, set `CHROMA_PERSIST_DIRECTORY=./chroma_db`. The embedding model
+runs locally; extracted text is not sent to an embedding API.
+
+Start the API:
+
+```powershell
+uvicorn main:app --reload --host 127.0.0.1 --port 8000
+```
+
+Verify it at <http://127.0.0.1:8000/health>; the response is
+`{"status":"ok"}`.
+
+## Index PDF sources
+
+Upload one or more text-based PDFs using multipart form data (each PDF is
+limited to 25 MiB):
+
+```powershell
+curl.exe -X POST http://127.0.0.1:8000/api/ingest `
+  -F "files=@C:\path\to\book.pdf"
+```
+
+The endpoint reports page and chunk counts. The Chroma collection is stored in
+`CHROMA_PERSIST_DIRECTORY`; the PDF originals stay where they are.
+
+To index the six books in `C:\Users\<you>\Downloads`, run:
+
+```powershell
+python ingest_sources.py
+```
+
+The script checks that all six PDFs exist before processing, then prints the
+page and chunk counts and total collection size.
+
+## Deploy to Koyeb
+
+Create a Web Service from the repository and set its working directory to
+`backend`. Use the Python build command:
+
+```sh
+pip install -r requirements.txt
+```
+
+Use this run command so the service binds to Koyeb's assigned port:
+
+```sh
+uvicorn main:app --host 0.0.0.0 --port ${PORT:-8000}
+```
+
+Set these Koyeb environment variables:
+
+- `GITHUB_REPO=owner/repository`
+- `GITHUB_TOKEN` with read access to the private repository, if applicable
+- `CHROMA_PERSIST_DIRECTORY=/tmp/chroma_db`
+- `GROQ_API_KEY` and `GEMINI_API_KEY`
+- `FRONTEND_URL` to the deployed Vercel origin
+
+Place source PDFs in `content/documents/` in the GitHub repository. The backend
+rebuilds the index at each startup; a restart after inactivity incurs the
+embedding/download startup cost again because `/tmp` is ephemeral. If GitHub
+indexing fails, the error is logged and the API still starts so `/health`
+remains available; inspect Koyeb logs to resolve the indexing failure.

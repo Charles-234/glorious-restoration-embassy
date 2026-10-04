@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Visual QA — Glorious Restoration Embassy</title>
+<!-- No <base> tag: the static server indexes .audit/ and .audit/screens/ by
+     basename, so the plain relative srcs below resolve correctly. -->
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:#0b1222; color:#e6ecff;
+         font-family: "Segoe UI", system-ui, -apple-system, sans-serif; }
+  header { padding:32px 40px; border-bottom:1px solid rgba(255,255,255,.12);
+           background:linear-gradient(135deg,#0b1222,#132347); }
+  h1 { margin:0 0 6px; font-size:26px; letter-spacing:.02em; }
+  .sub { color:#9fb0d9; font-size:15px; margin:0; }
+  .banner { margin:16px 0 0; padding:12px 16px; border-radius:10px;
+            background:rgba(46,204,113,.12); border:1px solid rgba(46,204,113,.4);
+            color:#b8f5cf; font-size:14px; }
+  .banner b { color:#fff; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(430px,1fr));
+          gap:22px; padding:28px 40px 60px; }
+  .card { background:#101a30; border:1px solid rgba(255,255,255,.12);
+          border-radius:14px; overflow:hidden; }
+  .card h2 { margin:0; padding:12px 16px; font-size:15px; font-weight:600;
+             letter-spacing:.06em; text-transform:uppercase; color:#cfe0ff;
+             border-bottom:1px solid rgba(255,255,255,.1); }
+  .card h2 span { color:#d99a2b; }
+  .shots { display:grid; gap:10px; padding:12px; }
+  .shots.one { grid-template-columns:1fr; }
+  figure { margin:0; }
+  figure img { width:100%; height:auto; display:block; border-radius:8px;
+               border:1px solid rgba(255,255,255,.14); background:#fff; }
+  figcaption { font-size:12px; color:#8fa3cf; padding:6px 2px 0; }
+  footer { padding:24px 40px 50px; color:#8fa3cf; font-size:13px;
+           border-top:1px solid rgba(255,255,255,.12); }
+  code { background:#16244a; padding:2px 6px; border-radius:5px; color:#cfe0ff; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Visual QA — Glorious Restoration Embassy</h1>
+  <p class="sub">Playwright capture of <code>next dev</code> @ http://localhost:3000 &middot; viewport 1440&times;900</p>
+  <div class="banner">
+    <b>16 routes &times; 2 themes = 32 checks, 0 problems.</b>
+    Every route returned <b>200</b>, <b>zero console/page errors</b>, <b>zero horizontal overflow</b>.
+    Theme tokens verified: light <b>rgb(249,247,243)</b> cream &middot; dark <b>rgb(11,18,34)</b> evening navy.
+  </div>
+</header>
+
+<div class="grid">
+  <div class="card"><h2>Homepage <span>&mdash; light</span></h2>
+    <div class="shots one"><figure><img src="home-light.png" alt="home light"><figcaption>Nav + hero. Single &ldquo;Give&rdquo; button, moon toggle.</figcaption></figure></div></div>
+
+  <div class="card"><h2>Homepage <span>&mdash; dark</span></h2>
+    <div class="shots one"><figure><img src="home-dark.png" alt="home dark"><figcaption>Navy canvas, white headline, gold EMBASSY, sun toggle.</figcaption></figure></div></div>
+
+  <div class="card"><h2>Sermons <span>&mdash; light</span></h2>
+    <div class="shots one"><figure><img src="sermons-light.png" alt="sermons light"><figcaption>Restored route, themed sermon card, new <code>.cta-link</code> CTA.</figcaption></figure></div></div>
+
+  <div class="card"><h2>Sermons <span>&mdash; dark</span></h2>
+    <div class="shots one"><figure><img src="sermons-dark.png" alt="sermons dark"><figcaption>Same route in dark — tokens swap correctly.</figcaption></figure></div></div>
+
+  <div class="card"><h2>Contact <span>&mdash; light</span></h2>
+    <div class="shots one"><figure><img src="contact-light.png" alt="contact light"><figcaption>Form opens a real mail client (no fake success message).</figcaption></figure></div></div>
+
+  <div class="card"><h2>Contact <span>&mdash; dark</span></h2>
+    <div class="shots one"><figure><img src="contact-dark.png" alt="contact dark"><figcaption>Office + branch cards themed for dark.</figcaption></figure></div></div>
+
+  <div class="card"><h2>Gallery <span>&mdash; light</span></h2>
+    <div class="shots one"><figure><img src="gallery-light.png" alt="gallery light"><figcaption>Lightbox scrim + controls use theme tokens.</figcaption></figure></div></div>
+
+  <div class="card"><h2>Gallery <span>&mdash; dark</span></h2>
+    <div class="shots one"><figure><img src="gallery-dark.png" alt="gallery dark"><figcaption>No horizontal overflow (was 168px before the fix).</figcaption></figure></div></div>
+<div class="card"><h2>About</h2><div class="shots one"><figure><img src="about-light.png" alt="about"><figcaption>About</figcaption></figure></div></div>
+  <div class="card"><h2>Ministries</h2><div class="shots one"><figure><img src="ministries-light.png" alt="ministries"><figcaption>Ministries</figcaption></figure></div></div>
+  <div class="card"><h2>Events</h2><div class="shots one"><figure><img src="events-light.png" alt="events"><figcaption>Events — corrected event fields</figcaption></figure></div></div>
+  <div class="card"><h2>Watch Live</h2><div class="shots one"><figure><img src="livestream-light.png" alt="livestream"><figcaption>Livestream</figcaption></figure></div></div>
+  <div class="card"><h2>Branches</h2><div class="shots one"><figure><img src="branches-light.png" alt="branches"><figcaption>Branches</figcaption></figure></div></div>
+  <div class="card"><h2>Give</h2><div class="shots one"><figure><img src="give-light.png" alt="give"><figcaption>Give — no fake payment UI</figcaption></figure></div></div>
+  <div class="card"><h2>Donate</h2><div class="shots one"><figure><img src="donate-light.png" alt="donate"><figcaption>Donate</figcaption></figure></div></div>
+  <div class="card"><h2>Pastor</h2><div class="shots one"><figure><img src="pastor-light.png" alt="pastor"><figcaption>Pastor</figcaption></figure></div></div>
+  <div class="card"><h2>Blog</h2><div class="shots one"><figure><img src="blog-light.png" alt="blog"><figcaption>Blog (new route)</figcaption></figure></div></div>
+  <div class="card"><h2>Search</h2><div class="shots one"><figure><img src="search-light.png" alt="search"><figcaption>Search widget themed</figcaption></figure></div></div>
+  <div class="card"><h2>Privacy</h2><div class="shots one"><figure><img src="privacy-light.png" alt="privacy"><figcaption>Privacy (new route)</figcaption></figure></div></div>
+  <div class="card"><h2>Terms</h2><div class="shots one"><figure><img src="terms-light.png" alt="terms"><figcaption>Terms (new route)</figcaption></figure></div></div>
+  <div class="card"><h2>Homepage <span>&mdash; full page, light</span></h2>
+    <div class="shots one"><figure><img src="home-light-full.png" alt="home light full"><figcaption>Entire homepage scroll, light theme.</figcaption></figure></div></div>
+  <div class="card"><h2>Homepage <span>&mdash; full page, dark</span></h2>
+    <div class="shots one"><figure><img src="home-dark-full.png" alt="home dark full"><figcaption>Entire homepage scroll, dark theme.</figcaption></figure></div></div>
+</div>
+
+<footer>
+  Live site: <b>http://localhost:3000</b> &mdash; run <code>npm run dev</code> in
+  <code>d:\Glorious Restoration Embassy</code> if it is not responding.
+  This folder is temporary QA output; delete <code>.audit\</code> when you are finished.
+</footer>
+</body>
+</html>

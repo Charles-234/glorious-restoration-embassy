@@ -1,0 +1,401 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ==========================================================================
+   Glorious Restoration Embassy — design tokens
+   Warm cream + antique brass by daylight, evening navy by night.
+   Every component reads from these variables, so both themes stay legible.
+   ========================================================================== */
+
+@layer base {
+  :root {
+    /* Grounds */
+    --background: 40 38% 96.5%; /* #F9F7F3 cream */
+    --foreground: 221 45% 15%; /* #141F38 deep indigo-navy ink */
+
+    --card: 42 60% 99%; /* #FFFDF7 warm paper */
+    --card-foreground: 221 45% 15%;
+
+    --popover: 42 60% 99%;
+    --popover-foreground: 221 45% 15%;
+
+    --primary: 221 66% 47%; /* deepened royal for cream contrast */
+    --primary-foreground: 42 60% 99%;
+
+    --secondary: 40 45% 90%; /* sand */
+    --secondary-foreground: 221 45% 15%;
+
+    --muted: 40 40% 92%;
+    --muted-foreground: 221 22% 36%; /* warm ink, never sterile gray */
+
+    --accent: 43 62% 42%; /* antique brass */
+    --accent-foreground: 221 45% 15%;
+
+    --destructive: 0 65% 46%;
+    --destructive-foreground: 42 60% 99%;
+
+    /* Warm hairlines — replaced the cool shadcn grays (#e2e8f0 / #3b82f6) */
+    --border: 40 26% 85%;
+    --input: 40 26% 85%;
+    --ring: 221 66% 47%;
+
+    /* Panel + media surfaces */
+    --surface: 42 60% 99%;
+    --surface-border: 40 30% 82%;
+    --overlay: 222 52% 12%;
+
+    --radius: 0.75rem;
+
+    --kicker: 43 65% 32%;
+    --panel-border: 40 32% 83%;
+    --evening-from: 222 50% 24%;
+    --evening-to: 222 56% 13%;
+    --evening-border: 43 55% 55%;
+
+    /* Motion + elevation shared by the CSS primitives below */
+    --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
+    --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    --shadow-warm: 0 1px 2px rgba(20, 31, 56, 0.05), 0 12px 32px -12px rgba(20, 31, 56, 0.2);
+    --shadow-lift: 0 2px 4px rgba(20, 31, 56, 0.06), 0 20px 44px -16px rgba(20, 31, 56, 0.28);
+  }
+
+  .dark {
+    /* Evening navy — warm-leaning, not the cold #020817 near-black */
+    --background: 222 50% 9%;
+    --foreground: 40 26% 94%; /* warm white, not pure #f8fafc */
+
+    --card: 222 44% 13%;
+    --card-foreground: 40 26% 94%;
+
+    --popover: 222 44% 13%;
+    --popover-foreground: 40 26% 94%;
+
+    --primary: 217 76% 62%;
+    --primary-foreground: 222 50% 9%;
+
+    --secondary: 222 32% 18%;
+    --secondary-foreground: 40 26% 94%;
+
+    --muted: 222 34% 17%;
+    --muted-foreground: 40 15% 70%;
+
+    --accent: 43 74% 62%;
+    --accent-foreground: 222 50% 9%;
+
+    --destructive: 0 55% 42%;
+    --destructive-foreground: 40 26% 94%;
+
+    --border: 222 26% 22%;
+    --input: 222 26% 22%;
+    --ring: 43 74% 62%;
+
+    --surface: 222 44% 13%;
+    --surface-border: 222 26% 24%;
+    --overlay: 222 60% 6%;
+  }
+}
+
+/* ==========================================================================
+   Base + native mobile baseline
+   ========================================================================== */
+
+@layer base {
+  /* Preflight already zeroes border-width; this only colours hairlines.
+     (The previous `border-0` on `*` was redundant and hid real borders.) */
+  * {
+    @apply border-border;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%; /* stop iOS inflating text in landscape */
+    text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent; /* no grey flash on tap */
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    overscroll-behavior-y: none; /* no rubber-band page bounce */
+  }
+
+  /* iOS Safari zooms the whole page when a focused field is under 16px.
+     Font-size utilities on inputs must therefore stay at or above 1rem. */
+  input,
+  select,
+  textarea {
+    font-size: 16px;
+  }
+
+  /* Removes the ~300ms tap delay / double-tap zoom on interactive elements */
+  a,
+  button,
+  [role="button"],
+  input,
+  select,
+  textarea,
+  label {
+    touch-action: manipulation;
+  }
+
+  /* Ring for keyboard users only — never left stuck on screen after a tap */
+  :focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 2px;
+  }
+
+  :focus:not(:focus-visible) {
+    outline: none;
+  }
+
+  /* Honour the OS reduced-motion setting for CSS, Framer Motion and GSAP */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+/* ==========================================================================
+   Component primitives
+   These classes were referenced across the app but never defined, which is why
+   <Button> rendered as bare text and <Card> / .readable-surface had no surface.
+   ========================================================================== */
+
+@layer components {
+  /* ---------- Buttons ---------- */
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 text-sm font-semibold;
+    min-height: 2.75rem; /* 44px — comfortable touch target */
+    border: 1px solid transparent;
+    text-align: center;
+    white-space: nowrap;
+    cursor: pointer;
+    user-select: none;
+    touch-action: manipulation;
+    transition:
+      background-color 200ms var(--ease-soft),
+      border-color 200ms var(--ease-soft),
+      color 200ms var(--ease-soft),
+      box-shadow 200ms var(--ease-soft),
+      transform 120ms var(--ease-soft);
+  }
+
+  .btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+  }
+
+  .btn-primary {
+    background-color: #2456c4;
+    border-color: #2456c4;
+    color: #fffdf7;
+    box-shadow: var(--shadow-warm);
+  }
+
+  .btn-primary:hover {
+    background-color: #1c46a3;
+    border-color: #1c46a3;
+  }
+
+  .btn-primary:active {
+    background-color: #173a88;
+  }
+
+  .btn-secondary {
+    background-color: transparent;
+    border-color: hsl(var(--border));
+    color: hsl(var(--foreground));
+  }
+
+  .btn-secondary:hover {
+    background-color: hsl(var(--muted));
+  }
+
+  .btn-ghost {
+    background-color: transparent;
+    color: hsl(var(--muted-foreground));
+  }
+
+  .btn-ghost:hover {
+    background-color: hsl(var(--muted));
+    color: hsl(var(--foreground));
+  }
+
+  /* Inline text link. Previously referenced by the admin console but never
+     defined, so it rendered as bare uncoloured text. */
+  .cta-link {
+    color: hsl(var(--primary));
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  .cta-link:hover {
+    color: hsl(var(--accent));
+  }
+
+  /* Hover lift only on real pointers — never left stuck after a touch tap */
+  @media (hover: hover) and (pointer: fine) {
+    .btn:hover {
+      transform: translateY(-1px);
+    }
+  }
+
+  /* Press feedback also works on touch devices */
+  .btn:active {
+    transform: scale(0.98);
+  }
+
+  /* ---------- Surfaces ---------- */
+
+  .glass-panel {
+    background-color: hsl(var(--surface) / 0.94);
+    border: 1px solid hsl(var(--surface-border));
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    box-shadow: var(--shadow-warm);
+  }
+
+  .readable-surface {
+    background-color: hsl(var(--surface) / 0.92);
+    border: 1px solid hsl(var(--surface-border));
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    box-shadow: var(--shadow-warm);
+    color: hsl(var(--foreground));
+  }
+
+  /* Retained for the existing glass components */
+  .glass {
+    background-color: hsl(var(--surface) / 0.7);
+    border: 1px solid hsl(var(--surface-border));
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+  }
+
+  .glass-card {
+    background-color: hsl(var(--surface) / 0.8);
+    border: 1px solid hsl(var(--surface-border));
+    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
+    box-shadow: var(--shadow-warm);
+  }
+
+  /* ---------- Text over photography ---------- */
+
+  /* Guarantees contrast for copy laid directly on imagery */
+  .media-scrim {
+    background-image: linear-gradient(
+      to top,
+      hsl(var(--overlay) / 0.9) 0%,
+      hsl(var(--overlay) / 0.62) 45%,
+      hsl(var(--overlay) / 0.28) 100%
+    );
+  }
+
+  .text-legible {
+    text-shadow:
+      0 1px 2px hsl(var(--overlay) / 0.55),
+      0 8px 28px hsl(var(--overlay) / 0.35);
+  }
+
+  /* Full-screen lightbox backdrop that follows the active theme */
+  .lightbox-scrim {
+    background-color: hsl(var(--overlay) / 0.94);
+  }
+
+  /* Copy that always sits on a media scrim, so always light */
+  .text-overlay {
+    color: #fffdf7;
+  }
+}
+
+/* ==========================================================================
+   Utilities
+   ========================================================================== */
+
+@layer utilities {
+  /* Safe areas for notched devices (viewportFit: "cover" is enabled) */
+  .pt-safe {
+    padding-top: env(safe-area-inset-top);
+  }
+
+  .pb-safe {
+    padding-bottom: max(1.5rem, env(safe-area-inset-bottom));
+  }
+
+  .px-safe {
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
+  }
+
+  /* Fills the screen without the 100vh mobile URL-bar jump */
+  .min-h-screen-safe {
+    min-height: 100vh;
+    min-height: 100svh;
+  }
+
+  .perspective-container {
+    perspective: 1200px;
+  }
+
+  .preserve-3d {
+    transform-style: preserve-3d;
+  }
+}
+
+/* Elegant scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: hsl(var(--border));
+  border-radius: 9999px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: hsl(var(--muted-foreground) / 0.5);
+}
+
+/* Mobile-specific improvements */
+@media (max-width: 768px) {
+  /* Improve tap targets for touch devices */
+  button,
+  [role="button"],
+  a,
+  .btn {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Better mobile navigation */
+  .navbar-mobile {
+    backdrop-filter: blur(12px);
+  }
+  
+  /* Better touch feedback */
+  *:active {
+    transform: scale(0.98);
+    transition: transform 0.1s ease-out;
+  }
+}

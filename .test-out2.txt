@@ -1,0 +1,337 @@
+
+Running 51 tests using 2 workers
+
+  ✓   1 [chromium] › tests\smoke.spec.ts:60:9 › routes › / returns 200 (24.7s)
+[WebServer] <w> [webpack.cache.PackFileCacheStrategy/webpack.FileSystemInfo] Resolving '../../../typescript/lib/typescript' in d:\Glorious Restoration Embassy\node_modules\next\dist\build for build dependencies doesn't lead to expected result 'D:\Glorious Restoration Embassy\node_modules\typescript\lib\typescript.js', but to 'd:\Glorious Restoration Embassy\node_modules\typescript\lib\typescript.js' instead. Resolving dependencies are ignored for this path.
+[WebServer] <w>  at resolve commonjs file ../../../typescript/lib/typescript (expected D:\Glorious Restoration Embassy\node_modules\typescript\lib\typescript.js)
+[WebServer] <w>  at file dependencies d:\Glorious Restoration Embassy\node_modules\next\dist\build\load-jsconfig.js
+[WebServer] <w>  at file d:\Glorious Restoration Embassy\node_modules\next\dist\build\load-jsconfig.js
+[WebServer] <w>  at file dependencies d:\Glorious Restoration Embassy\node_modules\next\dist\build\webpack-config.js
+[WebServer] <w>  at file d:\Glorious Restoration Embassy\node_modules\next\dist\build\webpack-config.js
+[WebServer] <w>  at file dependencies d:\Glorious Restoration Embassy\node_modules\next\dist\build\handle-externals.js
+[WebServer] <w>  at file d:\Glorious Restoration Embassy\node_modules\next\dist\build\handle-externals.js
+[WebServer] <w>  at file dependencies d:\Glorious Restoration Embassy\node_modules\next\dist\build\webpack\loaders\next-swc-loader.js
+[WebServer] <w>  at file d:\Glorious Restoration Embassy\node_modules\next\dist\build\webpack\loaders\next-swc-loader.js
+[WebServer] <w>  at resolve commonjs d:\Glorious Restoration Embassy\node_modules\next\dist\build\webpack\loaders\next-swc-loader.js
+[WebServer] <w> [webpack.cache.PackFileCacheStrategy/webpack.FileSystemInfo] Resolving '../../../typescript/lib/typescript' in d:\Glorious Restoration Embassy\node_modules\next\dist\build for build dependencies doesn't lead to expected result 'D:\Glorious Restoration Embassy\node_modules\typescript\lib\typescript.js', but to 'd:\Glorious Restoration Embassy\node_modules\typescript\lib\typescript.js' instead. Resolving dependencies are ignored for this path.
+[WebServer] <w>  at resolve commonjs file ../../../typescript/lib/typescript (expected D:\Glorious Restoration Embassy\node_modules\typescript\lib\typescript.js)
+[WebServer] <w>  at file dependencies d:\Glorious Restoration Embassy\node_modules\next\dist\build\load-jsconfig.js
+[WebServer] <w>  at file d:\Glorious Restoration Embassy\node_modules\next\dist\build\load-jsconfig.js
+[WebServer] <w>  at file dependencies d:\Glorious Restoration Embassy\node_modules\next\dist\build\webpack-config.js
+[WebServer] <w>  at file d:\Glorious Restoration Embassy\node_modules\next\dist\build\webpack-config.js
+[WebServer] <w>  at file dependencies d:\Glorious Restoration Embassy\node_modules\next\dist\build\handle-externals.js
+[WebServer] <w>  at file d:\Glorious Restoration Embassy\node_modules\next\dist\build\handle-externals.js
+[WebServer] <w>  at file dependencies d:\Glorious Restoration Embassy\node_modules\next\dist\build\webpack\loaders\next-swc-loader.js
+[WebServer] <w>  at file d:\Glorious Restoration Embassy\node_modules\next\dist\build\webpack\loaders\next-swc-loader.js
+[WebServer] <w>  at resolve commonjs d:\Glorious Restoration Embassy\node_modules\next\dist\build\webpack\loaders\next-swc-loader.js
+  ✘   2 [chromium] › tests\smoke.spec.ts:60:9 › routes › /about returns 200 (35.2s)
+  ✘   3 [chromium] › tests\smoke.spec.ts:60:9 › routes › /ministries returns 200 (35.1s)
+[WebServer]  ⨯ The requested resource isn't a valid image for /gallery/photo1.jpeg received null
+[WebServer]  ⨯ The requested resource isn't a valid image for /gallery/photo2.jpeg received null
+  ✘   4 [chromium] › tests\smoke.spec.ts:60:9 › routes › /sermons returns 200 (30.5s)
+  ✓   5 [chromium] › tests\smoke.spec.ts:60:9 › routes › /events returns 200 (12.0s)
+  ✓   7 [chromium] › tests\smoke.spec.ts:60:9 › routes › /gallery returns 200 (27.7s)
+  ✘   6 [chromium] › tests\smoke.spec.ts:60:9 › routes › /livestream returns 200 (30.6s)
+  ✓   8 [chromium] › tests\smoke.spec.ts:60:9 › routes › /branches returns 200 (18.7s)
+  ✓   9 [chromium] › tests\smoke.spec.ts:60:9 › routes › /contact returns 200 (20.3s)
+  ✓  10 [chromium] › tests\smoke.spec.ts:60:9 › routes › /give returns 200 (15.6s)
+  ✓  12 [chromium] › tests\smoke.spec.ts:60:9 › routes › /pastor returns 200 (21.8s)
+  ✓  11 [chromium] › tests\smoke.spec.ts:60:9 › routes › /donate returns 200 (25.7s)
+  ✓  13 [chromium] › tests\smoke.spec.ts:60:9 › routes › /blog returns 200 (14.2s)
+  ✓  14 [chromium] › tests\smoke.spec.ts:60:9 › routes › /search returns 200 (14.5s)
+  ✓  15 [chromium] › tests\smoke.spec.ts:60:9 › routes › /privacy returns 200 (13.7s)
+  ✓  16 [chromium] › tests\smoke.spec.ts:60:9 › routes › /terms returns 200 (13.6s)
+  ✓  18 [chromium] › tests\smoke.spec.ts:67:7 › routes › an unknown route returns 404 (20.2s)
+  ✓  17 [chromium] › tests\smoke.spec.ts:60:9 › routes › /admin/login returns 200 (20.8s)
+[WebServer]  ⨯ The requested resource isn't a valid image for /gallery/photo1.jpeg received null
+[WebServer]  ⨯ The requested resource isn't a valid image for /gallery/photo2.jpeg received null
+  ✓  20 [chromium] › tests\smoke.spec.ts:91:9 › styling and layout › / has no horizontal overflow (13.4s)
+  ✓  19 [chromium] › tests\smoke.spec.ts:75:9 › styling and layout › / has CSS applied (14.9s)
+[WebServer]  ⨯ The requested resource isn't a valid image for /gallery/photo1.jpeg received null
+[WebServer]  ⨯ The requested resource isn't a valid image for /gallery/photo2.jpeg received null
+[WebServer]  ⨯ The requested resource isn't a valid image for /gallery/photo1.jpeg received null
+[WebServer]  ⨯ The requested resource isn't a valid image for /gallery/photo2.jpeg received null
+  ✘  21 [chromium] › tests\smoke.spec.ts:100:9 › styling and layout › / has no console errors or failed requests (13.9s)
+  ✘  22 [chromium] › tests\smoke.spec.ts:108:9 › styling and layout › / has no broken images (15.0s)
+  ✓  24 [chromium] › tests\smoke.spec.ts:91:9 › styling and layout › /sermons has no horizontal overflow (18.0s)
+  ✓  23 [chromium] › tests\smoke.spec.ts:75:9 › styling and layout › /sermons has CSS applied (19.6s)
+  ✓  25 [chromium] › tests\smoke.spec.ts:100:9 › styling and layout › /sermons has no console errors or failed requests (7.1s)
+  ✓  26 [chromium] › tests\smoke.spec.ts:108:9 › styling and layout › /sermons has no broken images (7.3s)
+  ✓  27 [chromium] › tests\smoke.spec.ts:75:9 › styling and layout › /events has CSS applied (10.0s)
+  ✓  28 [chromium] › tests\smoke.spec.ts:91:9 › styling and layout › /events has no horizontal overflow (10.2s)
+  ✓  29 [chromium] › tests\smoke.spec.ts:100:9 › styling and layout › /events has no console errors or failed requests (7.2s)
+  ✓  30 [chromium] › tests\smoke.spec.ts:108:9 › styling and layout › /events has no broken images (7.4s)
+  ✓  32 [chromium] › tests\smoke.spec.ts:91:9 › styling and layout › /gallery has no horizontal overflow (11.1s)
+  ✓  31 [chromium] › tests\smoke.spec.ts:75:9 › styling and layout › /gallery has CSS applied (11.1s)
+  ✓  34 [chromium] › tests\smoke.spec.ts:100:9 › styling and layout › /gallery has no console errors or failed requests (10.9s)
+  ✘  33 [chromium] › tests\smoke.spec.ts:108:9 › styling and layout › /gallery has no broken images (12.5s)
+  ✓  35 [chromium] › tests\smoke.spec.ts:75:9 › styling and layout › /contact has CSS applied (16.4s)
+  ✓  36 [chromium] › tests\smoke.spec.ts:100:9 › styling and layout › /contact has no console errors or failed requests (6.4s)
+  ✓  37 [chromium] › tests\smoke.spec.ts:108:9 › styling and layout › /contact has no broken images (8.0s)
+  ✓  38 [chromium] › tests\smoke.spec.ts:91:9 › styling and layout › /contact has no horizontal overflow (9.2s)
+  ✓  39 [chromium] › tests\smoke.spec.ts:121:5 › images have alt text and links have accessible names (21.5s)
+[WebServer] DOMException [DataCloneError]: Data cannot be cloned, out of memory.
+[WebServer]     at new DOMException (node:internal/per_context/domexception:76:18)
+[WebServer]     at Worker.postMessage (node:internal/worker:465:5)
+[WebServer]     at ExperimentalWorker.send (d:\Glorious Restoration Embassy\node_modules\next\dist\compiled\jest-worker\index.js:1:17480)
+[WebServer]     at WorkerPool.send (d:\Glorious Restoration Embassy\node_modules\next\dist\compiled\jest-worker\index.js:1:6183)
+[WebServer]     at Farm._process (d:\Glorious Restoration Embassy\node_modules\next\dist\compiled\jest-worker\index.js:1:2094)
+[WebServer]     at onEnd (d:\Glorious Restoration Embassy\node_modules\next\dist\compiled\jest-worker\index.js:1:2044)
+[WebServer]     at ExperimentalWorker._onProcessEnd (d:\Glorious Restoration Embassy\node_modules\next\dist\compiled\jest-worker\index.js:1:17372)
+[WebServer]     at ExperimentalWorker._onMessage (d:\Glorious Restoration Embassy\node_modules\next\dist\compiled\jest-worker\index.js:1:16716)
+[WebServer]     at Worker.emit (node:events:514:28)
+[WebServer]     at MessagePort.<anonymous> (node:internal/worker:350:14)
+[WebServer]     at [nodejs.internal.kHybridDispatch] (node:internal/event_target:848:20)
+[WebServer]     at MessagePort.<anonymous> (node:internal/per_context/messageport:23:28)
+[WebServer]  ⨯ uncaughtException: DOMException [DataCloneError]: Data cannot be cloned, out of memory.
+[WebServer]     at new DOMException (node:internal/per_context/domexception:76:18)
+[WebServer]     at Worker.postMessage (node:internal/worker:465:5)
+[WebServer]     at ExperimentalWorker.send (d:\Glorious Restoration Embassy\node_modules\next\dist\compiled\jest-worker\index.js:1:17480)
+[WebServer]     at WorkerPool.send (d:\Glorious Restoration Embassy\node_modules\next\dist\compiled\jest-worker\index.js:1:6183)
+[WebServer]     at Farm._process (d:\Glorious Restoration Embassy\node_modules\next\dist\compiled\jest-worker\index.js:1:2094)
+[WebServer]     at onEnd (d:\Glorious Restoration Embassy\node_modules\next\dist\compiled\jest-worker\index.js:1:2044)
+[WebServer]     at ExperimentalWorker._onProcessEnd (d:\Glorious Restoration Embassy\node_modules\next\dist\compiled\jest-worker\index.js:1:17372)
+[WebServer]     at ExperimentalWorker._onMessage (d:\Glorious Restoration Embassy\node_modules\next\dist\compiled\jest-worker\index.js:1:16716)
+[WebServer]     at Worker.emit (node:events:514:28)
+[WebServer]     at MessagePort.<anonymous> (node:internal/worker:350:14)
+[WebServer]     at [nodejs.internal.kHybridDispatch] (node:internal/event_target:848:20)
+[WebServer]     at MessagePort.<anonymous> (node:internal/per_context/messageport:23:28)
+[WebServer]  ⨯ uncaughtException: DOMException [DataCloneError]: Data cannot be cloned, out of memory.
+[WebServer]     at new DOMException (node:internal/per_context/domexception:76:18)
+[WebServer]     at Worker.postMessage (node:internal/worker:465:5)
+[WebServer]     at ExperimentalWorker.send (d:\Glorious Restoration Embassy\node_modules\next\dist\compiled\jest-worker\index.js:1:17480)
+[WebServer]     at WorkerPool.send (d:\Glorious Restoration Embassy\node_modules\next\dist\compiled\jest-worker\index.js:1:6183)
+[WebServer]     at Farm._process (d:\Glorious Restoration Embassy\node_modules\next\dist\compiled\jest-worker\index.js:1:2094)
+[WebServer]     at onEnd (d:\Glorious Restoration Embassy\node_modules\next\dist\compiled\jest-worker\index.js:1:2044)
+[WebServer]     at ExperimentalWorker._onProcessEnd (d:\Glorious Restoration Embassy\node_modules\next\dist\compiled\jest-worker\index.js:1:17372)
+[WebServer]     at ExperimentalWorker._onMessage (d:\Glorious Restoration Embassy\node_modules\next\dist\compiled\jest-worker\index.js:1:16716)
+[WebServer]     at Worker.emit (node:events:514:28)
+[WebServer]     at MessagePort.<anonymous> (node:internal/worker:350:14)
+[WebServer]     at [nodejs.internal.kHybridDispatch] (node:internal/event_target:848:20)
+[WebServer]     at MessagePort.<anonymous> (node:internal/per_context/messageport:23:28)
+  ✓  41 [chromium] › tests\theme-and-links.spec.ts:21:11 › theming › /sermons renders correctly in light (3.5s)
+  ✓  42 [chromium] › tests\theme-and-links.spec.ts:21:11 › theming › /gallery renders correctly in light (4.1s)
+[WebServer]  ⨯ The requested resource isn't a valid image for /gallery/photo1.jpeg received null
+[WebServer]  ⨯ The requested resource isn't a valid image for /gallery/photo2.jpeg received null
+  ✓  43 [chromium] › tests\theme-and-links.spec.ts:21:11 › theming › /contact renders correctly in light (5.7s)
+[WebServer]  ⨯ The requested resource isn't a valid image for /gallery/photo1.jpeg received null
+[WebServer]  ⨯ The requested resource isn't a valid image for /gallery/photo2.jpeg received null
+  ✓  44 [chromium] › tests\theme-and-links.spec.ts:21:11 › theming › / renders correctly in dark (6.7s)
+  ✓  45 [chromium] › tests\theme-and-links.spec.ts:21:11 › theming › /sermons renders correctly in dark (5.0s)
+  ✓  46 [chromium] › tests\theme-and-links.spec.ts:21:11 › theming › /gallery renders correctly in dark (18.3s)
+  ✘  40 [chromium] › tests\theme-and-links.spec.ts:21:11 › theming › / renders correctly in light (35.2s)
+  ✓  47 [chromium] › tests\theme-and-links.spec.ts:21:11 › theming › /contact renders correctly in dark (9.1s)
+  ✓  48 [chromium] › tests\theme-and-links.spec.ts:85:7 › SEO plumbing › sitemap.xml is valid and lists the public routes (11.7s)
+  ✓  50 [chromium] › tests\theme-and-links.spec.ts:97:7 › SEO plumbing › robots.txt is served and references the sitemap (2.7s)
+[WebServer]  ⨯ The requested resource isn't a valid image for /gallery/photo1.jpeg received null
+[WebServer]  ⨯ The requested resource isn't a valid image for /gallery/photo2.jpeg received null
+[WebServer]  ⨯ The requested resource isn't a valid image for /gallery/photo1.jpeg received null
+[WebServer]  ⨯ The requested resource isn't a valid image for /gallery/photo2.jpeg received null
+  ✓  51 [chromium] › tests\theme-and-links.spec.ts:106:7 › SEO plumbing › the canonical domain is declared in metadata (21.0s)
+  ✘  49 [chromium] › tests\theme-and-links.spec.ts:50:7 › internal links › every internal link on the site resolves (3.1m)
+
+
+  1) [chromium] › tests\smoke.spec.ts:60:9 › routes › /about returns 200 ───────────────────────────
+
+    Test timeout of 30000ms exceeded.
+
+    Error: page.goto: net::ERR_ABORTED; maybe frame was detached?
+    Call log:
+      - navigating to "http://localhost:3000/about", waiting until "load"
+
+
+      59 |   for (const route of PUBLIC_ROUTES) {
+      60 |     test(`${route} returns 200`, async ({ page }) => {
+    > 61 |       const response = await page.goto(route);
+         |                                   ^
+      62 |       expect(response?.status(), `${route} should return 200`).toBe(200);
+      63 |       await expect(page.locator('body')).toBeVisible();
+      64 |     });
+        at d:\Glorious Restoration Embassy\tests\smoke.spec.ts:61:35
+
+    Error Context: test-results\smoke-routes-about-returns-200-chromium\error-context.md
+
+  2) [chromium] › tests\smoke.spec.ts:60:9 › routes › /ministries returns 200 ──────────────────────
+
+    Test timeout of 30000ms exceeded.
+
+    Error: page.goto: net::ERR_ABORTED; maybe frame was detached?
+    Call log:
+      - navigating to "http://localhost:3000/ministries", waiting until "load"
+
+
+      59 |   for (const route of PUBLIC_ROUTES) {
+      60 |     test(`${route} returns 200`, async ({ page }) => {
+    > 61 |       const response = await page.goto(route);
+         |                                   ^
+      62 |       expect(response?.status(), `${route} should return 200`).toBe(200);
+      63 |       await expect(page.locator('body')).toBeVisible();
+      64 |     });
+        at d:\Glorious Restoration Embassy\tests\smoke.spec.ts:61:35
+
+    Error Context: test-results\smoke-routes-ministries-returns-200-chromium\error-context.md
+
+  3) [chromium] › tests\smoke.spec.ts:60:9 › routes › /sermons returns 200 ─────────────────────────
+
+    Test timeout of 30000ms exceeded.
+
+    Error: page.goto: Test timeout of 30000ms exceeded.
+    Call log:
+      - navigating to "http://localhost:3000/sermons", waiting until "load"
+
+
+      59 |   for (const route of PUBLIC_ROUTES) {
+      60 |     test(`${route} returns 200`, async ({ page }) => {
+    > 61 |       const response = await page.goto(route);
+         |                                   ^
+      62 |       expect(response?.status(), `${route} should return 200`).toBe(200);
+      63 |       await expect(page.locator('body')).toBeVisible();
+      64 |     });
+        at d:\Glorious Restoration Embassy\tests\smoke.spec.ts:61:35
+
+    Error Context: test-results\smoke-routes-sermons-returns-200-chromium\error-context.md
+
+  4) [chromium] › tests\smoke.spec.ts:60:9 › routes › /livestream returns 200 ──────────────────────
+
+    Test timeout of 30000ms exceeded.
+
+    Error: page.goto: Test timeout of 30000ms exceeded.
+    Call log:
+      - navigating to "http://localhost:3000/livestream", waiting until "load"
+
+
+      59 |   for (const route of PUBLIC_ROUTES) {
+      60 |     test(`${route} returns 200`, async ({ page }) => {
+    > 61 |       const response = await page.goto(route);
+         |                                   ^
+      62 |       expect(response?.status(), `${route} should return 200`).toBe(200);
+      63 |       await expect(page.locator('body')).toBeVisible();
+      64 |     });
+        at d:\Glorious Restoration Embassy\tests\smoke.spec.ts:61:35
+
+    Error Context: test-results\smoke-routes-livestream-returns-200-chromium\error-context.md
+
+  5) [chromium] › tests\smoke.spec.ts:100:9 › styling and layout › / has no console errors or failed requests 
+
+    Error: Failed to load resource: the server responded with a status of 400 (Bad Request)
+    Failed to load resource: the server responded with a status of 400 (Bad Request)
+
+    expect(received).toHaveLength(expected)
+
+    Expected length: 0
+    Received length: 2
+    Received array:  ["Failed to load resource: the server responded with a status of 400 (Bad Request)", "Failed to load resource: the server responded with a status of 400 (Bad Request)"]
+
+      102 |       await page.goto(route);
+      103 |       await settle(page);
+    > 104 |       expect(errors, errors.join('\n')).toHaveLength(0);
+          |                                         ^
+      105 |       expect(failures, failures.join('\n')).toHaveLength(0);
+      106 |     });
+      107 |
+        at d:\Glorious Restoration Embassy\tests\smoke.spec.ts:104:41
+
+    Error Context: test-results\smoke-styling-and-layout-h-d517b-e-errors-or-failed-requests-chromium\error-context.md
+
+  6) [chromium] › tests\smoke.spec.ts:108:9 › styling and layout › / has no broken images ──────────
+
+    Error: broken images: http://localhost:3000/_next/image?url=%2Fgallery%2Fphoto1.jpeg&w=384&q=75, http://localhost:3000/_next/image?url=%2Fgallery%2Fphoto2.jpeg&w=384&q=75, http://localhost:3000/_next/image?url=%2Fgallery%2Fphoto14.jpeg&w=3840&q=75
+
+    expect(received).toHaveLength(expected)
+
+    Expected length: 0
+    Received length: 3
+    Received array:  ["http://localhost:3000/_next/image?url=%2Fgallery%2Fphoto1.jpeg&w=384&q=75", "http://localhost:3000/_next/image?url=%2Fgallery%2Fphoto2.jpeg&w=384&q=75", "http://localhost:3000/_next/image?url=%2Fgallery%2Fphoto14.jpeg&w=3840&q=75"]
+
+      114 |           .map((img) => img.currentSrc || img.src)
+      115 |       );
+    > 116 |       expect(broken, `broken images: ${broken.join(', ')}`).toHaveLength(0);
+          |                                                             ^
+      117 |     });
+      118 |   }
+      119 | });
+        at d:\Glorious Restoration Embassy\tests\smoke.spec.ts:116:61
+
+    Error Context: test-results\smoke-styling-and-layout-has-no-broken-images-chromium\error-context.md
+
+  7) [chromium] › tests\smoke.spec.ts:108:9 › styling and layout › /gallery has no broken images ───
+
+    Error: broken images: http://localhost:3000/_next/image?url=%2Fgallery%2Fphoto6.jpg&w=1080&q=75, http://localhost:3000/_next/image?url=%2Fgallery%2Fphoto7.jpg&w=1080&q=75, http://localhost:3000/_next/image?url=%2Fgallery%2Fphoto8.jpg&w=1080&q=75, http://localhost:3000/_next/image?url=%2Fgallery%2Fphoto9.jpg&w=1080&q=75, http://localhost:3000/_next/image?url=%2Fgallery%2Fphoto10.jpeg&w=1080&q=75, http://localhost:3000/_next/image?url=%2Fgallery%2Fphoto11.jpeg&w=1080&q=75, http://localhost:3000/_next/image?url=%2Fgallery%2Fphoto12.jpeg&w=1080&q=75, http://localhost:3000/_next/image?url=%2Fgallery%2Fphoto13.jpeg&w=1080&q=75, http://localhost:3000/_next/image?url=%2Fgallery%2Fphoto14.jpeg&w=1080&q=75, http://localhost:3000/_next/image?url=%2Fgallery%2Fphoto17.jpeg&w=1080&q=75, http://localhost:3000/_next/image?url=%2Fgallery%2Fphoto18.jpeg&w=1080&q=75, http://localhost:3000/_next/image?url=%2Fgallery%2Fphoto34.jpeg&w=1080&q=75, http://localhost:3000/_next/image?url=%2Fgallery%2Fphoto35.jpeg&w=1080&q=75, http://localhost:3000/_next/image?url=%2Fgallery%2Fphoto36.jpeg&w=1080&q=75, http://localhost:3000/_next/image?url=%2Fgallery%2Fphoto34.jpeg&w=1080&q=75, http://localhost:3000/_next/image?url=%2Fgallery%2Fphoto35.jpeg&w=1080&q=75, http://localhost:3000/_next/image?url=%2Fgallery%2Fphoto36.jpeg&w=1080&q=75, http://localhost:3000/_next/image?url=%2Fgallery%2Fphoto22.jpeg&w=1080&q=75, http://localhost:3000/_next/image?url=%2Fgallery%2Fphoto23.jpeg&w=1080&q=75, http://localhost:3000/_next/image?url=%2Fgallery%2Fphoto27.jpeg&w=1080&q=75, http://localhost:3000/_next/image?url=%2Fgallery%2Fphoto28.jpeg&w=1080&q=75, http://localhost:3000/_next/image?url=%2Fgallery%2Fphoto29.jpeg&w=1080&q=75, http://localhost:3000/_next/image?url=%2Fgallery%2Fphoto30.jpeg&w=1080&q=75, http://localhost:3000/_next/image?url=%2Fgallery%2Fphoto31.jpeg&w=1080&q=75, http://localhost:3000/_next/image?url=%2Fgallery%2Fphoto32.jpeg&w=1080&q=75, http://localhost:3000/_next/image?url=%2Fgallery%2Fphoto33.jpeg&w=1080&q=75
+
+    expect(received).toHaveLength(expected)
+
+    Expected length: 0
+    Received length: 26
+    Received array:  ["http://localhost:3000/_next/image?url=%2Fgallery%2Fphoto6.jpg&w=1080&q=75", "http://localhost:3000/_next/image?url=%2Fgallery%2Fphoto7.jpg&w=1080&q=75", "http://localhost:3000/_next/image?url=%2Fgallery%2Fphoto8.jpg&w=1080&q=75", "http://localhost:3000/_next/image?url=%2Fgallery%2Fphoto9.jpg&w=1080&q=75", "http://localhost:3000/_next/image?url=%2Fgallery%2Fphoto10.jpeg&w=1080&q=75", "http://localhost:3000/_next/image?url=%2Fgallery%2Fphoto11.jpeg&w=1080&q=75", "http://localhost:3000/_next/image?url=%2Fgallery%2Fphoto12.jpeg&w=1080&q=75", "http://localhost:3000/_next/image?url=%2Fgallery%2Fphoto13.jpeg&w=1080&q=75", "http://localhost:3000/_next/image?url=%2Fgallery%2Fphoto14.jpeg&w=1080&q=75", "http://localhost:3000/_next/image?url=%2Fgallery%2Fphoto17.jpeg&w=1080&q=75", …]
+
+      114 |           .map((img) => img.currentSrc || img.src)
+      115 |       );
+    > 116 |       expect(broken, `broken images: ${broken.join(', ')}`).toHaveLength(0);
+          |                                                             ^
+      117 |     });
+      118 |   }
+      119 | });
+        at d:\Glorious Restoration Embassy\tests\smoke.spec.ts:116:61
+
+    Error Context: test-results\smoke-styling-and-layout-gallery-has-no-broken-images-chromium\error-context.md
+
+  8) [chromium] › tests\theme-and-links.spec.ts:21:11 › theming › / renders correctly in light ─────
+
+    Test timeout of 30000ms exceeded.
+
+    Error: expect(locator).toHaveClass(expected) failed
+
+    Locator: locator('html')
+    Expected pattern: /\blight\b/
+    Received string:  ""
+
+    Call log:
+      - Expect "toHaveClass" locator('html') with timeout 5000ms
+      - waiting for locator('html')
+
+
+      25 |         await page.waitForTimeout(800);
+      26 |
+    > 27 |         await expect(page.locator('html')).toHaveClass(new RegExp(`\\b${theme.name}\\b`));
+         |                                            ^
+      28 |
+      29 |         const bg = await page.evaluate(() => getComputedStyle(document.body).backgroundColor);
+      30 |         expect(bg, `${route} in ${theme.name} should use --background`).toBe(theme.token);
+        at d:\Glorious Restoration Embassy\tests\theme-and-links.spec.ts:27:44
+
+    Error Context: test-results\theme-and-links-theming-renders-correctly-in-light-chromium\error-context.md
+
+  9) [chromium] › tests\theme-and-links.spec.ts:50:7 › internal links › every internal link on the site resolves 
+
+    Test timeout of 180000ms exceeded.
+
+    Error: apiRequestContext.get: Request context disposed.
+    Call log:
+      - → GET http://localhost:3000/terms
+        - user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.8010.12 Safari/537.36
+        - accept: */*
+        - accept-encoding: gzip,deflate,br
+
+
+      72 |         checked.add(key);
+      73 |
+    > 74 |         const response = await request.get(href);
+         |                                        ^
+      75 |         if (response.status() >= 400) dead.push(`${response.status()} ${key}`);
+      76 |       }
+      77 |     }
+        at d:\Glorious Restoration Embassy\tests\theme-and-links.spec.ts:74:40
+
+    Error Context: test-results\theme-and-links-internal-l-5b84e-l-link-on-the-site-resolves-chromium\error-context.md
+
+  9 failed
+    [chromium] › tests\smoke.spec.ts:60:9 › routes › /about returns 200 ────────────────────────────
+    [chromium] › tests\smoke.spec.ts:60:9 › routes › /ministries returns 200 ───────────────────────
+    [chromium] › tests\smoke.spec.ts:60:9 › routes › /sermons returns 200 ──────────────────────────
+    [chromium] › tests\smoke.spec.ts:60:9 › routes › /livestream returns 200 ───────────────────────
+    [chromium] › tests\smoke.spec.ts:100:9 › styling and layout › / has no console errors or failed requests 
+    [chromium] › tests\smoke.spec.ts:108:9 › styling and layout › / has no broken images ───────────
+    [chromium] › tests\smoke.spec.ts:108:9 › styling and layout › /gallery has no broken images ────
+    [chromium] › tests\theme-and-links.spec.ts:21:11 › theming › / renders correctly in light ──────
+    [chromium] › tests\theme-and-links.spec.ts:50:7 › internal links › every internal link on the site resolves 
+  42 passed (12.6m)

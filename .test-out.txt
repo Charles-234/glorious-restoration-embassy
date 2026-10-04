@@ -1,0 +1,41 @@
+[WebServer] The user aborted a request.
+[WebServer] 
+[WebServer] Retrying 1/3...
+[WebServer] The user aborted a request.
+[WebServer] 
+[WebServer] Retrying 1/3...
+
+Running 51 tests using 2 workers
+
+[WebServer] <w> [webpack.cache.PackFileCacheStrategy/webpack.FileSystemInfo] Resolving '../../../typescript/lib/typescript' in d:\Glorious Restoration Embassy\node_modules\next\dist\build for build dependencies doesn't lead to expected result 'D:\Glorious Restoration Embassy\node_modules\typescript\lib\typescript.js', but to 'd:\Glorious Restoration Embassy\node_modules\typescript\lib\typescript.js' instead. Resolving dependencies are ignored for this path.
+[WebServer] <w>  at resolve commonjs file ../../../typescript/lib/typescript (expected D:\Glorious Restoration Embassy\node_modules\typescript\lib\typescript.js)
+[WebServer] <w>  at file dependencies d:\Glorious Restoration Embassy\node_modules\next\dist\build\load-jsconfig.js
+[WebServer] <w>  at file d:\Glorious Restoration Embassy\node_modules\next\dist\build\load-jsconfig.js
+[WebServer] <w>  at file dependencies d:\Glorious Restoration Embassy\node_modules\next\dist\build\webpack-config.js
+[WebServer] <w>  at file d:\Glorious Restoration Embassy\node_modules\next\dist\build\webpack-config.js
+[WebServer] <w>  at file dependencies d:\Glorious Restoration Embassy\node_modules\next\dist\build\webpack\loaders\next-swc-loader.js
+[WebServer] <w>  at file d:\Glorious Restoration Embassy\node_modules\next\dist\build\webpack\loaders\next-swc-loader.js
+[WebServer] <w>  at resolve commonjs d:\Glorious Restoration Embassy\node_modules\next\dist\build\webpack\loaders\next-swc-loader.js
+[WebServer] <w> [webpack.cache.PackFileCacheStrategy/webpack.FileSystemInfo] Resolving '../../../typescript/lib/typescript' in d:\Glorious Restoration Embassy\node_modules\next\dist\build for build dependencies doesn't lead to expected result 'D:\Glorious Restoration Embassy\node_modules\typescript\lib\typescript.js', but to 'd:\Glorious Restoration Embassy\node_modules\typescript\lib\typescript.js' instead. Resolving dependencies are ignored for this path.
+[WebServer] <w>  at resolve commonjs file ../../../typescript/lib/typescript (expected D:\Glorious Restoration Embassy\node_modules\typescript\lib\typescript.js)
+[WebServer] <w>  at file dependencies d:\Glorious Restoration Embassy\node_modules\next\dist\build\load-jsconfig.js
+[WebServer] <w>  at file d:\Glorious Restoration Embassy\node_modules\next\dist\build\load-jsconfig.js
+[WebServer] <w>  at file dependencies d:\Glorious Restoration Embassy\node_modules\next\dist\build\webpack-config.js
+[WebServer] <w>  at file d:\Glorious Restoration Embassy\node_modules\next\dist\build\webpack-config.js
+[WebServer] <w>  at file dependencies d:\Glorious Restoration Embassy\node_modules\next\dist\build\webpack\loaders\next-swc-loader.js
+[WebServer] <w>  at file d:\Glorious Restoration Embassy\node_modules\next\dist\build\webpack\loaders\next-swc-loader.js
+[WebServer] <w>  at resolve commonjs d:\Glorious Restoration Embassy\node_modules\next\dist\build\webpack\loaders\next-swc-loader.js
+  ✘   2 [chromium] › tests\smoke.spec.ts:60:9 › routes › /about returns 200 (35.1s)
+  ✘   1 [chromium] › tests\smoke.spec.ts:60:9 › routes › / returns 200 (35.2s)
+  ✓   3 [chromium] › tests\smoke.spec.ts:60:9 › routes › /ministries returns 200 (24.7s)
+  ✓   4 [chromium] › tests\smoke.spec.ts:60:9 › routes › /sermons returns 200 (20.4s)
+  ✓   6 [chromium] › tests\smoke.spec.ts:60:9 › routes › /gallery returns 200 (21.6s)
+  ✓   5 [chromium] › tests\smoke.spec.ts:60:9 › routes › /events returns 200 (22.3s)
+  ✓   8 [chromium] › tests\smoke.spec.ts:60:9 › routes › /branches returns 200 (30.0s)
+  ✓   9 [chromium] › tests\smoke.spec.ts:60:9 › routes › /contact returns 200 (14.0s)
+  ✘   7 [chromium] › tests\smoke.spec.ts:60:9 › routes › /livestream returns 200 (30.6s)
+  ✓  10 [chromium] › tests\smoke.spec.ts:60:9 › routes › /give returns 200 (21.2s)
+  ✓  12 [chromium] › tests\smoke.spec.ts:60:9 › routes › /pastor returns 200 (18.1s)
+  ✓  11 [chromium] › tests\smoke.spec.ts:60:9 › routes › /donate returns 200 (25.9s)
+  ✓  13 [chromium] › tests\smoke.spec.ts:60:9 › routes › /blog returns 200 (19.0s)
+  ✓  14 [chromium] › tests\smoke.spec.ts:60:9 › routes › /search returns 200 (19.3s)

@@ -1,0 +1,64 @@
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Dependencies
+node_modules/
+/.pnp
+.pnp.js
+
+# Next.js
+/.next/
+/out/
+/.cache/
+
+# Build artifacts
+/dist/
+/build/
+*.tsbuildinfo
+/backend/.venv/
+/backend/venv/
+/backend/chroma_db/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.iml
+*.swp
+*.swo
+*~
+
+# Testing
+coverage/
+.nyc_output/
+
+# Logs
+npm-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Misc
+.eslintcache
+*.pem
+
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/playwright/.auth/
+
+# Windows reserved device names
+nul
+con
+prn
+aux
+com[1-9]
+lpt[1-9]

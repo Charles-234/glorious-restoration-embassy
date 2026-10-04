@@ -1,0 +1,103 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "public/gallery"
+public_folder: "/gallery"
+
+publish_mode: simple
+
+# ─────────────────────────────────────────────
+# COLLECTIONS — one for each content type
+# ─────────────────────────────────────────────
+
+collections:
+
+  # ── SERMONS ──────────────────────────────────
+  - name: "sermons"
+    label: "Sermons"
+    label_singular: "Sermon"
+    description: "Add, edit, or remove Sunday sermon notes and summaries."
+    folder: "content/sermons"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "Sermon Title", name: "title", widget: "string", hint: "e.g. Grace in Every Season" }
+      - { label: "Speaker Name", name: "speaker", widget: "string", hint: "e.g. Bishop David Omari" }
+      - { label: "Date Preached", name: "date", widget: "datetime", date_format: "MMM DD, YYYY", time_format: false, hint: "Pick the Sunday this was preached" }
+      - { label: "Short Summary", name: "summary", widget: "text", hint: "1-2 sentences describing the sermon topic" }
+      - { label: "Featured Image (optional)", name: "thumbnail", widget: "image", required: false, hint: "Upload a sermon cover image" }
+
+  # ── EVENTS ───────────────────────────────────
+  - name: "events"
+    label: "Events"
+    label_singular: "Event"
+    description: "Upcoming church gatherings, retreats, and special services."
+    folder: "content/events"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "Event Title", name: "title", widget: "string", hint: "Add your event title" }
+      - { label: "Event Date", name: "date", widget: "datetime", date_format: "MMM DD, YYYY", time_format: false }
+      - { label: "Venue / Location", name: "venue", widget: "string", hint: "e.g. Embassy Hall or City Gallery Lounge" }
+      - { label: "Description", name: "description", widget: "text", hint: "A short description of what will happen at this event" }
+      - { label: "Badge Label", name: "badge", widget: "select", options: ["Featured", "Retreat", "Culture", "Youth", "Outreach", "Service", "Special"], default: "Featured", hint: "The coloured tag shown on the event card" }
+      - { label: "Event Flyer Image (optional)", name: "image", widget: "image", required: false }
+
+  # ── GALLERY ──────────────────────────────────
+  - name: "gallery"
+    label: "Gallery Photos"
+    label_singular: "Photo"
+    description: "Add new photos from services, outreach, and fellowship. Upload directly here."
+    folder: "content/gallery"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Photo Title / Caption", name: "title", widget: "string", hint: "Add a clear caption for this photo" }
+      - { label: "Photo", name: "image", widget: "image", hint: "Upload your photo — it will appear in the gallery automatically" }
+      - { label: "Date Taken (optional)", name: "date", widget: "datetime", date_format: "MMM DD, YYYY", time_format: false, required: false }
+
+  # ── ANNOUNCEMENTS ────────────────────────────
+  - name: "announcements"
+    label: "Announcements"
+    label_singular: "Announcement"
+    description: "Short notices, prayer requests, and weekly updates for the homepage."
+    folder: "content/announcements"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string", hint: "e.g. Prayer Night This Friday" }
+      - { label: "Message", name: "body", widget: "markdown", hint: "Write the full announcement here. You can use bold, lists, and links." }
+      - { label: "Date Posted", name: "date", widget: "datetime", date_format: "MMM DD, YYYY", time_format: false }
+      - { label: "Active (show on site)", name: "active", widget: "boolean", default: true, hint: "Turn off to hide without deleting" }
+
+  # ── SITE SETTINGS ────────────────────────────
+  - name: "settings"
+    label: "Site Settings"
+    description: "Edit the church name, hero text, pastor bio, and contact details."
+    files:
+
+      - name: "hero"
+        label: "Homepage Hero Text"
+        file: "content/settings/hero.json"
+        fields:
+          - { label: "Main Heading", name: "title", widget: "string", hint: "The big text at the top of the homepage" }
+          - { label: "Subtitle / Tagline", name: "subtitle", widget: "string", hint: "One sentence shown under the main heading" }
+          - { label: "Primary Button Text", name: "ctaPrimary", widget: "string", default: "Join our live service" }
+          - { label: "Secondary Button Text", name: "ctaSecondary", widget: "string", default: "Explore ministries" }
+
+      - name: "pastor"
+        label: "Pastor Profile"
+        file: "content/settings/pastor.json"
+        fields:
+          - { label: "Pastor Name", name: "name", widget: "string" }
+          - { label: "Bio", name: "bio", widget: "text", hint: "2-3 sentences about the pastor" }
+          - { label: "Pastor Photo", name: "image", widget: "image", hint: "Upload a photo of the pastor" }
+
+      - name: "donation"
+        label: "Donation Section Text"
+        file: "content/settings/donation.json"
+        fields:
+          - { label: "Section Title", name: "title", widget: "string" }
+          - { label: "Description", name: "description", widget: "text" }
+          - { label: "Button Text", name: "cta", widget: "string", default: "Give now" }

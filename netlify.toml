@@ -1,0 +1,44 @@
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[build.environment]
+  NODE_VERSION = "18"
+
+# Required for Decap CMS: enables Git Gateway so the CMS
+# can commit directly to your GitHub repo
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+# Git Gateway — this is what Decap CMS uses to save content
+[identity]
+  # Netlify Identity is enabled in the Netlify dashboard
+  # after you enable it, users can log in at yoursite.org/admin
+
+# Redirect /admin to the CMS panel
+[[redirects]]
+  from = "/admin"
+  to = "/admin/index.html"
+  status = 200
+
+# Security: block direct access to content source files
+[[headers]]
+  for = "/content/*"
+    [headers.values]
+    X-Robots-Tag = "noindex"
+
+# Security headers for the whole site
+[[headers]]
+  for = "/*"
+    [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+
+# Security: protect admin panel
+[[headers]]
+  for = "/admin/*"
+    [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+    Cache-Control = "no-store"

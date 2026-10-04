@@ -1,0 +1,10 @@
+start Thu 10/01/2026 21:42:38.12
+killing 25560
+SUCCESS: The process with PID 25560 has been terminated.
+killing 25560
+ERROR: The process "25560" not found.
+removing .next
+clean
+test-start Thu 10/01/2026 21:42:50.59
+TEST_EXIT=-1
+test-done Thu 10/01/2026 21:48:14.72

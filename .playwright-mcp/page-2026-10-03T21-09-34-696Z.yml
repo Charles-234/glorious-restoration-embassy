@@ -1,0 +1,218 @@
+- generic [ref=f2e2]:
+  - banner [ref=f2e3]:
+    - generic [ref=f2e5]:
+      - link "Glorious Restoration Embassy" [ref=f2e6] [cursor=pointer]:
+        - /url: /
+        - generic [ref=f2e7]: Glorious Restoration
+        - generic [ref=f2e8]: Embassy
+      - navigation [ref=f2e9]:
+        - link "Home" [ref=f2e10] [cursor=pointer]:
+          - /url: /
+        - link "About" [ref=f2e11] [cursor=pointer]:
+          - /url: /about
+        - link "Ministries" [ref=f2e12] [cursor=pointer]:
+          - /url: /ministries
+        - link "Sermons" [ref=f2e13] [cursor=pointer]:
+          - /url: /sermons
+        - link "Events" [ref=f2e14] [cursor=pointer]:
+          - /url: /events
+        - link "Watch Live" [ref=f2e15] [cursor=pointer]:
+          - /url: /livestream
+        - link "Blog" [ref=f2e16] [cursor=pointer]:
+          - /url: /blog
+        - link "Contact" [ref=f2e17] [cursor=pointer]:
+          - /url: /contact
+      - link "Give" [ref=f2e20] [cursor=pointer]:
+        - /url: /give
+  - generic [ref=f2e21]:
+    - generic [ref=f2e22]:
+      - generic [ref=f2e28]:
+        - generic [ref=f2e29]: Year of Great Harvest
+        - heading "GLORIOUS RESTORATION EMBASSY" [level=1] [ref=f2e31]
+        - paragraph [ref=f2e32]: A place of weightless faith, boundless grace, and immersive spiritual depth.
+        - generic [ref=f2e33]:
+          - link "Watch Live" [ref=f2e34] [cursor=pointer]:
+            - /url: /livestream
+          - link "Our Ministries" [ref=f2e39] [cursor=pointer]:
+            - /url: /ministries
+      - generic [ref=f2e42]:
+        - img "Worship Moment 1" [ref=f2e45]
+        - img "Church Community" [ref=f2e49]
+        - img "Worship Moment 2" [ref=f2e53]
+      - generic [ref=f2e55]: Scroll to explore
+    - main [ref=f2e61]:
+      - generic [ref=f2e62]:
+        - generic [ref=f2e63]:
+          - paragraph [ref=f2e64]: Glorious Restoration Embassy
+          - heading "Our ministries" [level=2] [ref=f2e65]
+          - paragraph [ref=f2e66]: Deep-hearted care, worship, creative discipleship, and leadership training for every generation.
+        - generic [ref=f2e67]:
+          - generic [ref=f2e79]:
+            - heading "Community Outreach" [level=3] [ref=f2e80]
+            - paragraph [ref=f2e81]: Reaching out to our local community with the love and hands of Christ through food drives, medical camps, and evangelism.
+          - generic [ref=f2e90]:
+            - heading "Youth Ministry" [level=3] [ref=f2e91]
+            - paragraph [ref=f2e92]: Discipleship, mentoring, and community building for the next generation with dynamic worship and leadership training.
+          - generic [ref=f2e101]:
+            - heading "Retreats" [level=3] [ref=f2e102]
+            - paragraph [ref=f2e103]: Spiritual retreats to unplug, reflect, and grow closer to God in serene environments.
+          - generic [ref=f2e114]:
+            - heading "Worship & Arts" [level=3] [ref=f2e115]
+            - paragraph [ref=f2e116]: Creative expression through music, dance, and drama to glorify God and inspire the congregation.
+          - generic [ref=f2e125]:
+            - heading "Children's Ministry" [level=3] [ref=f2e126]
+            - paragraph [ref=f2e127]: Nurturing young hearts with biblical teachings, fun activities, and godly values.
+          - generic [ref=f2e137]:
+            - heading "Prayer & Intercession" [level=3] [ref=f2e138]
+            - paragraph [ref=f2e139]: Dedicated prayer warriors standing in the gap for the church, nation, and personal needs.
+      - generic [ref=f2e143]:
+        - generic [ref=f2e144]:
+          - paragraph [ref=f2e145]: Live Stream
+          - heading "Experience worship on every screen." [level=2] [ref=f2e146]
+          - paragraph [ref=f2e147]: Join our Facebook service, connect with the church family, and tune in for prophetic teaching and prayer.
+          - generic [ref=f2e148]:
+            - link "Facebook Live" [ref=f2e149] [cursor=pointer]:
+              - /url: https://www.facebook.com/share/1Xob4wuJwK/
+            - link "WhatsApp" [ref=f2e152] [cursor=pointer]:
+              - /url: https://wa.me/254726791236
+        - generic [ref=f2e155]:
+          - paragraph [ref=f2e156]: Next service
+          - generic [ref=f2e157]:
+            - generic [ref=f2e158]:
+              - paragraph [ref=f2e159]: 8.00 AM - 10.00 AM
+              - paragraph [ref=f2e163]: Prayers and Bible study
+            - generic [ref=f2e164]:
+              - paragraph [ref=f2e165]: 10.00 AM - 11.30 AM
+              - paragraph [ref=f2e169]: Worship and Praise
+            - generic [ref=f2e170]:
+              - paragraph [ref=f2e171]: 11.30 AM - 1.00 PM
+              - paragraph [ref=f2e175]: Main Service
+          - button "Set a reminder" [ref=f2e176] [cursor=pointer]
+      - generic [ref=f2e177]:
+        - generic [ref=f2e178]:
+          - paragraph [ref=f2e179]: Glorious Restoration Embassy
+          - heading "Gallery of grace" [level=2] [ref=f2e180]
+          - paragraph [ref=f2e181]: Photographic stories from worship nights, outreach, and fellowship.
+        - generic [ref=f2e182]:
+          - generic [ref=f2e184]:
+            - img "Worship Night" [ref=f2e186]
+            - heading "Worship Night" [level=3] [ref=f2e188]
+          - generic [ref=f2e190]:
+            - img "Community Fellowship" [ref=f2e192]
+            - heading "Community Fellowship" [level=3] [ref=f2e194]
+          - generic [ref=f2e196]:
+            - img "Outreach Ministry" [ref=f2e198]
+            - heading "Outreach Ministry" [level=3] [ref=f2e200]
+          - generic [ref=f2e202]:
+            - img "Sunday Service" [ref=f2e204]
+            - heading "Sunday Service" [level=3] [ref=f2e206]
+          - generic [ref=f2e208]:
+            - img "Youth Gathering" [ref=f2e210]
+            - heading "Youth Gathering" [level=3] [ref=f2e212]
+          - generic [ref=f2e214]:
+            - img "Prayer Meeting" [ref=f2e216]
+            - heading "Prayer Meeting" [level=3] [ref=f2e218]
+          - generic [ref=f2e220]:
+            - img "Choir Ministration" [ref=f2e222]
+            - heading "Choir Ministration" [level=3] [ref=f2e224]
+          - generic [ref=f2e226]:
+            - img "Church Family" [ref=f2e228]
+            - heading "Church Family" [level=3] [ref=f2e230]
+          - generic [ref=f2e232]:
+            - img "Baptism Service" [ref=f2e234]
+            - heading "Baptism Service" [level=3] [ref=f2e236]
+          - generic [ref=f2e238]:
+            - img "Children's Sunday School" [ref=f2e240]
+            - heading "Children's Sunday School" [level=3] [ref=f2e242]
+          - generic [ref=f2e244]:
+            - img "Church Conference" [ref=f2e246]
+            - heading "Church Conference" [level=3] [ref=f2e248]
+          - generic [ref=f2e250]:
+            - img "Couples Ministry" [ref=f2e252]
+            - heading "Couples Ministry" [level=3] [ref=f2e254]
+      - generic [ref=f2e255]:
+        - generic [ref=f2e256]:
+          - paragraph [ref=f2e257]: Glorious Restoration Embassy
+          - heading "Branch network" [level=2] [ref=f2e258]
+          - paragraph [ref=f2e259]: Local expressions of Glorious Restoration Embassy across Africa.
+        - generic [ref=f2e260]:
+          - article [ref=f2e261]:
+            - heading "Nairobi" [level=3] [ref=f2e266]
+            - paragraph [ref=f2e267]: 123 Main Street, Nairobi, Kenya
+            - paragraph [ref=f2e268]: +254 712 345 678
+          - article [ref=f2e269]:
+            - heading "Mombasa" [level=3] [ref=f2e274]
+            - paragraph [ref=f2e275]: 456 Beach Rd, Mombasa, Kenya
+            - paragraph [ref=f2e276]: +254 733 123 456
+          - article [ref=f2e277]:
+            - heading "Machakos" [level=3] [ref=f2e282]
+            - paragraph [ref=f2e283]: 789 Town Square, Machakos, Kenya
+            - paragraph [ref=f2e284]: +254 755 987 654
+          - article [ref=f2e285]:
+            - heading "Murang'a" [level=3] [ref=f2e290]
+            - paragraph [ref=f2e291]: 321 Church Road, Murang'a, Kenya
+            - paragraph [ref=f2e292]: +254 777 123 456
+      - generic [ref=f2e295]:
+        - generic [ref=f2e296]:
+          - paragraph [ref=f2e297]: Newsletter
+          - heading "Stay connected with weekly inspiration." [level=2] [ref=f2e298]
+          - paragraph [ref=f2e299]: Subscribe to updates for livestream announcements, sermon summaries, and community stories from Glorious Restoration Embassy.
+        - generic [ref=f2e300]:
+          - textbox "Email address" [ref=f2e305]:
+            - /placeholder: Enter your email address
+          - button "Subscribe" [ref=f2e306] [cursor=pointer]
+  - contentinfo [ref=f2e308]:
+    - generic [ref=f2e309]:
+      - generic [ref=f2e310]:
+        - generic [ref=f2e311]:
+          - link "Glorious Restoration Embassy" [ref=f2e312] [cursor=pointer]:
+            - /url: /
+            - text: Glorious RestorationEmbassy
+          - paragraph [ref=f2e313]: A place of weightless faith, boundless grace, and immersive spiritual depth. Join us for worship, community, and spiritual growth in Kenya.
+          - link "Facebook" [ref=f2e315] [cursor=pointer]:
+            - /url: https://www.facebook.com/share/1Xob4wuJwK/
+        - generic [ref=f2e318]:
+          - heading "Quick Links" [level=4] [ref=f2e319]
+          - list [ref=f2e320]:
+            - listitem [ref=f2e321]:
+              - link "Home" [ref=f2e322] [cursor=pointer]:
+                - /url: /
+            - listitem [ref=f2e323]:
+              - link "About" [ref=f2e324] [cursor=pointer]:
+                - /url: /about
+            - listitem [ref=f2e325]:
+              - link "Ministries" [ref=f2e326] [cursor=pointer]:
+                - /url: /ministries
+            - listitem [ref=f2e327]:
+              - link "Sermons" [ref=f2e328] [cursor=pointer]:
+                - /url: /sermons
+            - listitem [ref=f2e329]:
+              - link "Events" [ref=f2e330] [cursor=pointer]:
+                - /url: /events
+            - listitem [ref=f2e331]:
+              - link "Watch Live" [ref=f2e332] [cursor=pointer]:
+                - /url: /livestream
+        - generic [ref=f2e333]:
+          - heading "Contact Us" [level=4] [ref=f2e334]
+          - list [ref=f2e335]:
+            - listitem [ref=f2e336]:
+              - generic [ref=f2e340]: Nairobi, Kenya
+            - listitem [ref=f2e341]:
+              - link "+254 726 791 236" [ref=f2e344] [cursor=pointer]:
+                - /url: tel:+254726791236
+            - listitem [ref=f2e345]:
+              - link "embassychurchglory@gmail.com" [ref=f2e349] [cursor=pointer]:
+                - /url: mailto:embassychurchglory@gmail.com
+        - generic [ref=f2e350]:
+          - heading "Newsletter" [level=4] [ref=f2e351]
+          - paragraph [ref=f2e352]: Stay updated with our latest news and events.
+          - generic [ref=f2e353]:
+            - textbox "Your email address" [ref=f2e354]
+            - button "Subscribe" [ref=f2e355] [cursor=pointer]
+      - generic [ref=f2e356]:
+        - paragraph [ref=f2e357]: © 2026 Glorious Restoration Embassy. All rights reserved.
+        - generic [ref=f2e358]:
+          - link "Privacy Policy" [ref=f2e359] [cursor=pointer]:
+            - /url: /privacy
+          - link "Terms of Service" [ref=f2e360] [cursor=pointer]:
+            - /url: /terms

@@ -1,0 +1,16 @@
+{
+  "/pastor": {
+    "status": 200,
+    "log": [
+      "[response 400] http://localhost:3000/_next/image?url=%2Fpastor.jpg&w=1080&q=75",
+      "[error] Failed to load resource: the server responded with a status of 400 (Bad Request)",
+      "[info] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold"
+    ]
+  },
+  "/search": {
+    "status": 200,
+    "log": [
+      "[info] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold"
+    ]
+  }
+}

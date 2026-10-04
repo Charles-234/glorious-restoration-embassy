@@ -1,0 +1,17 @@
+fastapi
+uvicorn[standard]
+langchain
+langchain-text-splitters
+langchain-community
+langchain-groq
+langchain-google-genai
+chromadb
+sentence-transformers
+groq
+google-generativeai
+pypdf
+duckduckgo-search
+PyGithub
+python-dotenv
+python-multipart
+python-telegram-bot
