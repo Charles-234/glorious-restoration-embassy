@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { fetchAIConversations } from "@/lib/supabaseClient";
 import { siteConfig } from "@/lib/siteData";
+import { verifyAdminSessionToken } from "@/lib/adminAuth";
 
 export const metadata = {
   title: `Admin AI Logs — ${siteConfig.brandName}`,
@@ -21,8 +22,10 @@ function formatTimestamp(value: string | null) {
 }
 
 export default async function AdminPage() {
-  const adminAuth = cookies().get("admin_auth")?.value;
-  const adminPassword = process.env.ADMIN_PASSWORD;
+  const cookieStore = await cookies();
+  const adminSession = verifyAdminSessionToken(cookieStore.get("admin_auth")?.value);
+  const adminPassword =
+    process.env.ADMIN_PASSWORD ?? process.env.SUPER_ADMIN_PASSWORD;
 
   if (!adminPassword) {
     return (
@@ -37,7 +40,7 @@ export default async function AdminPage() {
     );
   }
 
-  if (adminAuth !== "true") {
+  if (!adminSession) {
     redirect("/admin/login");
   }
 
@@ -49,6 +52,9 @@ export default async function AdminPage() {
       <section className="space-y-4 text-center">
         <p className="text-sm uppercase tracking-[0.32em] text-accent">Admin dashboard</p>
         <h1 className="text-4xl font-semibold text-foreground sm:text-5xl">AI conversation logs</h1>
+        <p className="text-sm text-muted-foreground">
+          Signed in as {adminSession.username} ({adminSession.role === "super_admin" ? "Super admin" : "Admin"})
+        </p>
         <p className="mx-auto max-w-3xl text-base leading-8 text-muted-foreground">Review recent question-and-answer exchanges stored in Supabase, along with timestamps and admin access links.</p>
       </section>
 

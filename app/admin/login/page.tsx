@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 export default function AdminLoginPage() {
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -17,7 +18,7 @@ export default function AdminLoginPage() {
     const response = await fetch("/api/admin/auth", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ password })
+      body: JSON.stringify({ username, password })
     });
 
     setLoading(false);
@@ -37,18 +38,32 @@ export default function AdminLoginPage() {
         <div className="space-y-4 text-center">
           <p className="text-sm uppercase tracking-[0.32em] text-accent">Admin login</p>
           <h1 className="text-4xl font-semibold text-foreground">Protected admin console</h1>
-          <p className="text-muted-foreground">Enter your admin password to view AI conversation logs and manage the site backend.</p>
+          <p className="text-muted-foreground">Sign in with your authorized account to view AI conversation logs and manage the site backend.</p>
         </div>
 
         <form onSubmit={handleSubmit} className="mt-8 space-y-6">
           <label className="block text-sm font-semibold text-foreground">
+            Username
+            <input
+              type="text"
+              autoComplete="username"
+              value={username}
+              onChange={(event) => setUsername(event.target.value)}
+              className="mt-3 w-full rounded-2xl border border-border bg-card px-4 py-3 text-foreground outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/25"
+              placeholder="Enter your admin username"
+              required
+            />
+          </label>
+          <label className="block text-sm font-semibold text-foreground">
             Admin password
             <input
               type="password"
+              autoComplete="current-password"
               value={password}
               onChange={(event) => setPassword(event.target.value)}
               className="mt-3 w-full rounded-2xl border border-border bg-card px-4 py-3 text-foreground outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/25"
               placeholder="Enter the admin password"
+              required
             />
           </label>
 

@@ -6,7 +6,9 @@ interface Env {
   TELEGRAM_WEBHOOK_PATH?: string;
   GITHUB_TOKEN: string;
   GITHUB_REPO: string;
-  KOYEB_BACKEND_URL: string;
+  SUPER_ADMIN_TELEGRAM_ID?: string;
+  FASTAPI_BACKEND_URL?: string;
+  KOYEB_BACKEND_URL?: string;
 }
 
 interface GitHubFileResponse {
@@ -68,8 +70,22 @@ function encodeBase64(value: Uint8Array): string {
   return btoa(binary);
 }
 
+function normalizeTelegramId(value: unknown): string | null {
+  if (typeof value === "number") {
+    return Number.isSafeInteger(value) && value > 0 ? String(value) : null;
+  }
+  if (typeof value !== "string" || !/^\d+$/.test(value)) return null;
+  const parsed = Number(value);
+  return Number.isSafeInteger(parsed) && parsed > 0 ? String(parsed) : null;
+}
+
 async function isAdmin(env: Env, userId: number | undefined): Promise<boolean> {
-  if (userId === undefined) return false;
+  const telegramId = normalizeTelegramId(userId);
+  if (!telegramId) return false;
+
+  const superAdminTelegramId = normalizeTelegramId(env.SUPER_ADMIN_TELEGRAM_ID);
+  if (superAdminTelegramId && superAdminTelegramId === telegramId) return true;
+
   const response = await fetch(githubFileUrl(env, "content/admins.json"), {
     headers: githubHeaders(env),
   });
@@ -82,7 +98,10 @@ async function isAdmin(env: Env, userId: number | undefined): Promise<boolean> {
   }
 
   const admins = JSON.parse(decodeBase64(file.content)) as AdminsFile;
-  return Array.isArray(admins.admins) && admins.admins.some((id) => String(id) === String(userId));
+  return (
+    Array.isArray(admins.admins) &&
+    admins.admins.some((id) => normalizeTelegramId(id) === telegramId)
+  );
 }
 
 async function requireAdmin(ctx: Context, env: Env): Promise<boolean> {
@@ -349,7 +368,7 @@ export function createBot(env: Env): Bot {
     const question = ctx.message.text.trim();
     if (!question || question.startsWith("/")) return;
 
-    const baseUrl = env.KOYEB_BACKEND_URL?.replace(/\/+$/, "");
+    const baseUrl = (env.FASTAPI_BACKEND_URL || env.KOYEB_BACKEND_URL)?.replace(/\/+$/, "");
     if (!baseUrl) {
       await ctx.reply("The AI assistant is not configured yet.");
       return;

@@ -1,11 +1,12 @@
+from __future__ import annotations
+
 import json
 import os
 from pathlib import Path
 from typing import Any
 
+import httpx
 from github import Github
-from telegram import Update
-from telegram.ext import CommandHandler, ContextTypes, MessageHandler, filters
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 CONTENT_ROOT = REPO_ROOT / "content"
@@ -17,13 +18,63 @@ def get_admin_ids() -> set[int]:
         return set()
     try:
         data = json.loads(ADMINS_PATH.read_text(encoding="utf-8"))
-        return {int(item) for item in data.get("admins", [])}
-    except (TypeError, ValueError, OSError):
+        raw_admins = data.get("admins", [])
+        if not isinstance(raw_admins, list):
+            return set()
+        return {
+            int(item)
+            for item in raw_admins
+            if (isinstance(item, int) and not isinstance(item, bool) and item > 0)
+            or (isinstance(item, str) and item.isdecimal() and int(item) > 0)
+        }
+    except (AttributeError, TypeError, ValueError, OSError):
         return set()
 
 
 def is_admin(user_id: int | None) -> bool:
-    return bool(user_id) and user_id in get_admin_ids()
+    if not isinstance(user_id, int) or isinstance(user_id, bool) or user_id <= 0:
+        return False
+
+    # GitHub usernames in admins.json are not Telegram identities. The
+    # operator must explicitly map the super-admin account to its Telegram ID.
+    configured_super_admin_id = os.getenv("SUPER_ADMIN_TELEGRAM_ID", "")
+    if configured_super_admin_id.isdecimal() and int(configured_super_admin_id) == user_id:
+        return True
+
+    return user_id in get_admin_ids()
+
+
+async def request_assistant_answer(question: str) -> dict[str, Any]:
+    base_url = (
+        os.getenv("FASTAPI_BACKEND_URL") or os.getenv("KOYEB_BACKEND_URL") or ""
+    ).rstrip("/")
+    if not base_url:
+        raise RuntimeError("The FastAPI chat service is not configured.")
+
+    async with httpx.AsyncClient(timeout=25.0) as client:
+        response = await client.post(
+            f"{base_url}/api/chat",
+            json={"question": question},
+        )
+    response.raise_for_status()
+    result = response.json()
+    if not isinstance(result, dict):
+        raise ValueError("The FastAPI chat service returned an invalid response.")
+    return result
+
+
+def format_assistant_reply(result: dict[str, Any]) -> str:
+    answer = result.get("answer")
+    if not isinstance(answer, str) or not answer.strip():
+        raise ValueError("The AI assistant returned an empty response.")
+
+    source_lines = [
+        f"- {source.get('title') or 'Source'}: {source['url']}"
+        for source in result.get("sources", [])
+        if isinstance(source, dict) and isinstance(source.get("url"), str) and source["url"]
+    ][:5]
+    reply = f"{answer.strip()}\n\nSources:\n" + "\n".join(source_lines) if source_lines else answer.strip()
+    return reply[:4096]
 
 
 def ensure_parent(path: Path) -> None:
@@ -114,15 +165,35 @@ async def handle_upload_photo(update: Update, context: ContextTypes.DEFAULT_TYPE
 
 
 async def handle_text(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    if not is_admin(update.effective_user.id if update.effective_user else None):
-        await update.message.reply_text("Access denied")
-        return
     text = (update.message.text or "").strip() if update.message else ""
     if not text:
         return
+
+    # Preserve the existing admin-only plain-text CMS authoring format.
     if "===" not in text:
-        await update.message.reply_text("Format should be: Title === Content")
+        try:
+            result = await request_assistant_answer(text)
+            await update.message.reply_text(format_assistant_reply(result))
+        except httpx.TimeoutException:
+            await update.message.reply_text(
+                "The AI assistant is waking up. Please try again in 30 seconds."
+            )
+        except httpx.HTTPStatusError as exc:
+            await update.message.reply_text(
+                "The AI assistant could not answer right now. Please try again later."
+            )
+            print(f"FastAPI chat returned status {exc.response.status_code}.")
+        except (httpx.HTTPError, RuntimeError, ValueError) as exc:
+            await update.message.reply_text(
+                "The AI assistant is temporarily unavailable. Please try again later."
+            )
+            print(f"FastAPI chat request failed: {type(exc).__name__}.")
         return
+
+    if not is_admin(update.effective_user.id if update.effective_user else None):
+        await update.message.reply_text("Access denied")
+        return
+
     parts = [part.strip() for part in text.split("===")]
     if len(parts) < 2:
         await update.message.reply_text("Invalid format.")
@@ -140,7 +211,7 @@ async def handle_text(update: Update, context: ContextTypes.DEFAULT_TYPE) -> Non
 
 
 def build_application() -> Any:
-    from telegram.ext import ApplicationBuilder
+    from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes, MessageHandler, filters
 
     token = os.getenv("TELEGRAM_BOT_TOKEN")
     app = ApplicationBuilder().token(token or "").build()

@@ -50,9 +50,10 @@ export default function PrivacyPage() {
         <div className="space-y-3">
           <h2 className="text-2xl font-semibold text-foreground">Service providers</h2>
           <p className="text-sm leading-7 text-muted-foreground">
-            The site is hosted on Netlify, uses Supabase to store AI chat logs, and sends AI chat
-            questions to OpenAI to generate replies. Facebook is used for livestreaming, so watching
-            a broadcast is subject to Facebook&apos;s own privacy policy. Newsletter and contact
+            The site is hosted on Vercel. Supabase stores AI chat logs when configured, and chat
+            questions are sent to our assistant service, which uses the configured Groq or Gemini
+            provider to generate replies. Facebook is used for livestreaming, so watching a
+            broadcast is subject to Facebook&apos;s own privacy policy. Newsletter and contact
             emails are read through our church email account.
           </p>
         </div>

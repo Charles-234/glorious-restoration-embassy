@@ -16,7 +16,7 @@ export default function GivePage() {
   const donation = getDonationInfo();
 
   return (
-    <main className="container space-y-14 py-24">
+    <main className="container space-y-14 py-16 sm:py-20 lg:py-24">
       <section className="space-y-6 text-center">
         <SectionHeading
           title="Give online"

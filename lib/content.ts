@@ -31,6 +31,7 @@ export type Sermon = {
   date: string;
   summary: string;
   thumbnail?: string;
+  videoUrl?: string;
 };
 
 export type Event = {

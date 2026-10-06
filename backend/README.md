@@ -17,7 +17,10 @@ python -m pip install -r requirements.txt
 Copy-Item .env.example .env
 ```
 
-Edit `.env` with your provider keys as needed. Set `FRONTEND_URL` to the
+Edit `.env` with your provider keys as needed. Groq is the preferred runtime
+provider; if its client cannot initialize or an invocation fails, the assistant
+tries Gemini. Configure both `GROQ_API_KEY` and `GEMINI_API_KEY` to enable that
+fallback. Set `FRONTEND_URL` to the
 frontend origin; multiple comma-separated origins are supported. Provider keys
 are not needed for the health endpoint or local PDF ingestion. For local
 development, set `CHROMA_PERSIST_DIRECTORY=./chroma_db`. The embedding model
@@ -44,6 +47,22 @@ curl.exe -X POST http://127.0.0.1:8000/api/ingest `
 
 The endpoint reports page and chunk counts. The Chroma collection is stored in
 `CHROMA_PERSIST_DIRECTORY`; the PDF originals stay where they are.
+
+## Optional polling Telegram bot
+
+`telegram_bot.py` supports the same shared assistant API as the Cloudflare
+Worker. Configure `FASTAPI_BACKEND_URL` to the FastAPI base URL (the legacy
+`KOYEB_BACKEND_URL` is also accepted), and ordinary text messages are posted
+to `POST /api/chat` as `{ "question": "..." }`. The reply includes available
+source links.
+
+For CMS access, `content/admins.json` may contain a GitHub `super_admin`
+username and an `admins` list of numeric Telegram IDs. A GitHub username is
+not a Telegram identity: explicitly map the super-admin to their numeric
+Telegram user ID with the runtime `SUPER_ADMIN_TELEGRAM_ID` environment
+variable. Existing numeric IDs in `admins` remain authorized. Keep this
+mapping in the deployment environment or an ignored local `.env`, never in
+committed source/config.
 
 To index the six books in `C:\Users\<you>\Downloads`, run:
 
@@ -74,7 +93,7 @@ Set these Koyeb environment variables:
 - `GITHUB_REPO=owner/repository`
 - `GITHUB_TOKEN` with read access to the private repository, if applicable
 - `CHROMA_PERSIST_DIRECTORY=/tmp/chroma_db`
-- `GROQ_API_KEY` and `GEMINI_API_KEY`
+- - `GROQ_API_KEY` and `GEMINI_API_KEY` (Gemini is the runtime fallback for Groq)
 - `FRONTEND_URL` to the deployed Vercel origin
 
 Place source PDFs in `content/documents/` in the GitHub repository. The backend

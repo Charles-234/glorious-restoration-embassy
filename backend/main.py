@@ -92,5 +92,12 @@ async def chat(payload: dict[str, str]) -> dict[str, object]:
     if not question.strip():
         raise HTTPException(status_code=400, detail="Question is required.")
 
-    result = await run_in_threadpool(answer_question, question)
+    try:
+        result = await run_in_threadpool(answer_question, question)
+    except Exception as error:
+        logger.exception("Chat answer generation failed.")
+        raise HTTPException(
+            status_code=502,
+            detail="The AI assistant is temporarily unavailable. Please try again later.",
+        ) from error
     return result

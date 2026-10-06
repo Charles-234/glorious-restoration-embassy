@@ -92,17 +92,18 @@ export default function AntigravityHero() {
   return (
     <div
       ref={containerRef}
-      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden perspective-container"
+      className="relative isolate flex min-h-[90svh] flex-col justify-center overflow-hidden bg-background bg-hero-glow perspective-container"
     >
-      {/* Dynamic Background Glow */}
-      <div className="absolute inset-0 z-0 bg-hero-glow opacity-60" />
+      <div className="pointer-events-none absolute inset-0 z-0" aria-hidden="true">
+        <div className="absolute -left-32 top-24 h-80 w-80 rounded-full bg-brand-accent/10 blur-3xl" />
+        <div className="absolute -right-32 bottom-16 h-96 w-96 rounded-full bg-brand-olive/10 blur-3xl" />
+      </div>
 
-      {/* Floating decorative elements */}
       <div className="absolute inset-0 z-0 overflow-hidden">
         {[0, 1, 2].map((i) => (
           <motion.div
             key={i}
-            className="absolute w-64 h-64 rounded-full bg-gradient-to-r from-brand-gold/10 to-brand-royal/10 opacity-30 blur-3xl"
+            className="absolute h-64 w-64 rounded-full bg-gradient-to-r from-brand-accent/10 to-brand-olive/10 opacity-30 blur-3xl"
             style={{
               top: `${20 + i * 30}%`,
               left: `${10 + i * 25}%`,
@@ -121,95 +122,94 @@ export default function AntigravityHero() {
         ))}
       </div>
 
-      {/* Main content */}
-      <div className="z-10 text-center mt-20 mb-16 px-4">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2, duration: 0.8 }}
-          className="mb-4"
-        >
-          <span className="inline-flex rounded-full border border-brand-accent/30 bg-brand-accent/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.22em] text-brand-accent backdrop-blur-sm">
-            Year of Great Harvest
-          </span>
-        </motion.div>
-        
-        <h1
-          ref={titleRef}
-          className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter preserve-3d text-foreground"
-          style={{ textShadow: '0 10px 30px rgba(0,0,0,0.5)' }}
-        >
-          GLORIOUS RESTORATION <br />
-          <span className="text-brand-accent">EMBASSY</span>
-        </h1>
-        
-        <motion.p
-          ref={subtitleRef}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4, duration: 0.8 }}
-          className="mt-6 text-xl md:text-2xl text-foreground/80 max-w-2xl mx-auto leading-relaxed"
-        >
-          A place of weightless faith, boundless grace, and immersive spiritual depth.
-        </motion.p>
-
-        {/* CTA Buttons */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6, duration: 0.8 }}
-          className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center justify-center"
-        >
-          <Link 
-            href="/livestream" 
-            className="group relative inline-flex min-w-[200px] items-center justify-center rounded-full border border-white/15 bg-gradient-to-b from-brand-royal via-brand-blue to-brand-ocean px-8 py-4 text-sm font-semibold text-white shadow-lg transition duration-500 hover:scale-105 hover:shadow-xl"
-          >
-            <span className="flex items-center gap-2">
-              Watch Live
-              <PlayCircle size={16} className="group-hover:translate-x-1 transition-transform" />
-            </span>
-          </Link>
-
-          <Link 
-            href="/ministries" 
-            className="group inline-flex min-w-[200px] items-center justify-center rounded-full border border-white/25 bg-white/10 px-8 py-4 text-sm font-semibold text-white backdrop-blur-xl transition duration-500 hover:border-brand-accent/60 hover:bg-brand-accent/15"
-          >
-            Our Ministries
-            <ArrowRight size={16} className="ml-2 group-hover:translate-x-1 transition-transform" />
-          </Link>
-        </motion.div>
-      </div>
-
-      {/* Floating images with 3D effect */}
-      <div className="z-20 flex flex-col md:flex-row items-center justify-center gap-8 md:gap-12 w-full max-w-6xl px-8 preserve-3d">
-        {[
-          { src: '/gallery/photo24.jpeg', alt: 'Worship Moment 1' },
-          { src: '/gallery/photo30.jpeg', alt: 'Church Community' },
-          { src: '/gallery/photo25.jpeg', alt: 'Worship Moment 2' },
-        ].map((img, i) => (
+      <div className="relative z-10 mx-auto grid w-full max-w-7xl items-center gap-10 px-5 pb-24 pt-28 sm:px-8 lg:grid-cols-[0.95fr_1.05fr] lg:gap-16 lg:py-32">
+        <div className="text-center lg:text-left">
           <motion.div
-            key={i}
-            ref={addToRefs}
-            initial={{ opacity: 0, y: 50 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.8 + i * 0.2, duration: 0.8 }}
-            className="glass p-2 rounded-2xl preserve-3d w-full md:w-1/3 aspect-[4/5] relative transition-transform duration-500 hover:scale-105 shadow-glow"
-            style={{ transformOrigin: 'center center' }}
-            whileHover={{ scale: 1.05, zIndex: 50 }}
+            transition={{ delay: 0.2, duration: 0.8 }}
+            className="mb-4"
           >
-            <div className="relative w-full h-full rounded-xl overflow-hidden">
-              <Image
-                src={img.src}
-                alt={img.alt}
-                fill
-                className="object-cover transition-transform duration-700 hover:scale-110"
-                priority={i === 1}
-                sizes="(max-width: 768px) 100vw, 33vw"
-              />
-            </div>
-            <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 w-3/4 h-8 bg-brand-royal/20 blur-xl rounded-full" />
+            <span className="inline-flex rounded-full border border-accent/25 bg-accent/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-accent">
+              Year of Great Harvest
+            </span>
           </motion.div>
-        ))}
+
+          <h1
+            ref={titleRef}
+            className="preserve-3d font-display text-4xl font-normal leading-tight tracking-tight text-foreground sm:text-5xl xl:text-6xl"
+          >
+            A place to belong.
+            <br />
+            <span className="text-accent">A place to be restored.</span>
+          </h1>
+
+          <motion.p
+            ref={subtitleRef}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4, duration: 0.8 }}
+            className="mx-auto mt-6 max-w-xl text-base leading-8 text-muted-foreground sm:text-lg lg:mx-0"
+          >
+            A place of weightless faith, boundless grace, and immersive spiritual depth.
+          </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6, duration: 0.8 }}
+            className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row lg:justify-start"
+          >
+            <Link href="/livestream" className="btn btn-primary group min-w-44">
+              <span className="flex items-center gap-2">
+                Watch Live
+                <PlayCircle size={16} className="transition-transform group-hover:translate-x-1" />
+              </span>
+            </Link>
+
+            <Link href="/ministries" className="btn btn-secondary group min-w-44">
+              Our Ministries
+              <ArrowRight size={16} className="ml-2 transition-transform group-hover:translate-x-1" />
+            </Link>
+          </motion.div>
+          <Link
+            href="/sermons"
+            className="mt-5 inline-flex min-h-11 items-center gap-2 rounded-full px-3 text-sm font-semibold text-foreground transition-colors hover:text-accent"
+          >
+            Explore recent sermons <ArrowRight size={16} aria-hidden="true" />
+          </Link>
+        </div>
+
+        <div className="z-20 grid w-full grid-cols-2 items-center gap-4 preserve-3d sm:gap-5">
+          {[
+            { src: '/gallery/photo24.jpeg', alt: 'Worship Moment 1' },
+            { src: '/gallery/photo30.jpeg', alt: 'Church Community' },
+            { src: '/gallery/photo26.jpeg', alt: 'Worship Moment 2' },
+          ].map((img, i) => (
+            <motion.div
+              key={img.src}
+              ref={addToRefs}
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.8 + i * 0.2, duration: 0.8 }}
+              className={`glass relative aspect-[4/5] w-full rounded-2xl p-2 shadow-warm transition-transform duration-500 hover:scale-[1.02] preserve-3d ${i === 1 ? "col-span-2 aspect-[16/10] sm:col-span-1 sm:aspect-[4/5]" : ""}`}
+              style={{ transformOrigin: 'center center' }}
+              whileHover={{ scale: 1.05, zIndex: 50 }}
+            >
+              <div className="relative h-full w-full overflow-hidden rounded-xl">
+                <Image
+                  src={img.src}
+                  alt={img.alt}
+                  fill
+                  className="object-cover transition-transform duration-700 hover:scale-105"
+                  priority={i === 1}
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                />
+              </div>
+              <div className="absolute -bottom-10 left-1/2 h-8 w-3/4 -translate-x-1/2 rounded-full bg-brand-deep/10 blur-xl" />
+            </motion.div>
+          ))}
+        </div>
       </div>
 
       {/* Scroll indicator */}
@@ -217,9 +217,9 @@ export default function AntigravityHero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.5, duration: 0.5 }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 z-30"
+        className="absolute bottom-3 left-1/2 z-30 hidden -translate-x-1/2 text-foreground/50 lg:block"
       >
-        <div className="flex flex-col items-center gap-2 text-white/60">
+        <div className="flex flex-col items-center gap-2">
           <motion.div
             animate={{ y: [0, 10, 0] }}
             transition={{ duration: 2, repeat: Infinity }}

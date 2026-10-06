@@ -1,7 +1,8 @@
 import Link from "next/link";
-import { Building2, HeartHandshake, Smartphone } from "lucide-react";
+import { Building2, HeartHandshake } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { siteConfig } from "@/lib/siteData";
+import { MpesaLogo } from "@/components/mpesa-logo";
 
 interface GivingPanelProps {
   title: string;
@@ -19,8 +20,10 @@ export function GivingPanel({ title, description }: GivingPanelProps) {
     <div className="space-y-8">
       <div className="grid gap-6 md:grid-cols-3">
         <Card className="space-y-4">
-          <Smartphone size={22} className="text-accent" />
-          <h2 className="text-xl font-semibold text-foreground">{label}</h2>
+          <div className="flex items-center gap-3">
+            <MpesaLogo />
+            <h2 className="text-xl font-semibold text-foreground">{label}</h2>
+          </div>
           {paybill ? (
             <>
               <p className="text-sm leading-7 text-muted-foreground">

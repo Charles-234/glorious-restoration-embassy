@@ -1,0 +1,170 @@
+.carousel {
+  --carousel-ink: hsl(var(--foreground));
+  --carousel-paper: hsl(var(--background));
+  --carousel-accent: hsl(var(--accent));
+  --carousel-line: hsl(var(--border));
+
+  width: 100%;
+  max-width: 60rem;
+  margin-inline: auto;
+  color: var(--carousel-ink);
+}
+
+.frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border: 1px solid var(--carousel-line);
+  border-radius: 1.25rem;
+  background: hsl(var(--muted));
+  box-shadow: 0 1rem 2.5rem rgb(9 20 38 / 12%);
+}
+
+.image {
+  object-fit: cover;
+}
+
+.captionArea {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.9rem 0.2rem 0.6rem;
+}
+
+.caption {
+  min-width: 0;
+  margin: 0;
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  font-weight: 600;
+  line-height: 1.45;
+}
+
+.count {
+  flex: 0 0 auto;
+  margin: 0;
+  color: hsl(var(--muted-foreground));
+  font-size: 0.875rem;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.controls {
+  display: flex;
+  min-height: 3.25rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  padding: 0.35rem 0.65rem;
+  border: 1px solid var(--carousel-line);
+  border-radius: 999px;
+  background: hsl(var(--card));
+}
+
+.controlButton,
+.dot {
+  display: inline-grid;
+  flex: 0 0 auto;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  color: var(--carousel-ink);
+  cursor: pointer;
+}
+
+.controlButton {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background: transparent;
+  transition: background-color 160ms ease, color 160ms ease;
+}
+
+.controlButton svg {
+  width: 1.2rem;
+  height: 1.2rem;
+}
+
+.controlButton:hover:not(:disabled) {
+  background: hsl(var(--muted));
+  color: var(--carousel-accent);
+}
+
+.controlButton:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+}
+
+.dot {
+  width: 0.65rem;
+  height: 0.65rem;
+  border: 1px solid hsl(var(--muted-foreground));
+  border-radius: 50%;
+  background: transparent;
+  transition: background-color 160ms ease, border-color 160ms ease, transform 160ms ease;
+}
+
+.dot:hover {
+  transform: scale(1.15);
+}
+
+.dotActive {
+  border-color: var(--carousel-accent);
+  background: var(--carousel-accent);
+}
+
+.controlButton:focus-visible,
+.dot:focus-visible,
+.carousel:focus-visible {
+  outline: 3px solid var(--carousel-accent);
+  outline-offset: 3px;
+}
+
+.empty {
+  margin: 0;
+  padding: 2rem;
+  border: 1px dashed var(--carousel-line);
+  border-radius: 1rem;
+  color: hsl(var(--muted-foreground));
+  text-align: center;
+}
+
+@media (max-width: 480px) {
+  .frame {
+    aspect-ratio: 3 / 4;
+    border-radius: 0.9rem;
+  }
+
+  .controls {
+    gap: 0.25rem;
+    padding-inline: 0.4rem;
+  }
+
+  .controlButton {
+    width: 2.25rem;
+    height: 2.25rem;
+  }
+
+  .dots {
+    gap: 0.35rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .controlButton,
+  .dot {
+    transition: none;
+  }
+
+  .dot:hover {
+    transform: none;
+  }
+}

@@ -1,0 +1,2463 @@
+[   40283ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[   45683ms] [LOG] [HMR] connected @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[  771684ms] [LOG] [Fast Refresh] rebuilding @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[  972243ms] [WARNING] [Fast Refresh] performing full reload
+
+Fast Refresh will perform a full reload when you edit a file that's imported by modules outside of the React rendering tree.
+You might have a file which exports a React component but also exports a value that is imported by a non-React component file.
+Consider migrating the non-React component export to a separate file and importing it into both files.
+
+It is also possible the parent component of the component you edited is a class component, which disables Fast Refresh.
+Fast Refresh requires at least one parent function component in your React tree. @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 1010475ms] [LOG] [Fast Refresh] done in 241400ms @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 1010593ms] [LOG] [Fast Refresh] rebuilding @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 1014686ms] [WARNING] [Fast Refresh] performing full reload
+
+Fast Refresh will perform a full reload when you edit a file that's imported by modules outside of the React rendering tree.
+You might have a file which exports a React component but also exports a value that is imported by a non-React component file.
+Consider migrating the non-React component export to a separate file and importing it into both files.
+
+It is also possible the parent component of the component you edited is a class component, which disables Fast Refresh.
+Fast Refresh requires at least one parent function component in your React tree. @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 1014731ms] [LOG] [Fast Refresh] done in 4093ms @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 1014746ms] [LOG] [Fast Refresh] rebuilding @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 1020871ms] [WARNING] [Fast Refresh] performing full reload
+
+Fast Refresh will perform a full reload when you edit a file that's imported by modules outside of the React rendering tree.
+You might have a file which exports a React component but also exports a value that is imported by a non-React component file.
+Consider migrating the non-React component export to a separate file and importing it into both files.
+
+It is also possible the parent component of the component you edited is a class component, which disables Fast Refresh.
+Fast Refresh requires at least one parent function component in your React tree. @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 1020906ms] [LOG] [Fast Refresh] done in 6134ms @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 1021328ms] [LOG] [Fast Refresh] rebuilding @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 1021330ms] [WARNING] [Fast Refresh] performing full reload
+
+Fast Refresh will perform a full reload when you edit a file that's imported by modules outside of the React rendering tree.
+You might have a file which exports a React component but also exports a value that is imported by a non-React component file.
+Consider migrating the non-React component export to a separate file and importing it into both files.
+
+It is also possible the parent component of the component you edited is a class component, which disables Fast Refresh.
+Fast Refresh requires at least one parent function component in your React tree. @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 1021332ms] [WARNING] [Fast Refresh] performing full reload
+
+Fast Refresh will perform a full reload when you edit a file that's imported by modules outside of the React rendering tree.
+You might have a file which exports a React component but also exports a value that is imported by a non-React component file.
+Consider migrating the non-React component export to a separate file and importing it into both files.
+
+It is also possible the parent component of the component you edited is a class component, which disables Fast Refresh.
+Fast Refresh requires at least one parent function component in your React tree. @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 1021333ms] [LOG] [Fast Refresh] done in 112ms @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 1021402ms] [LOG] [Fast Refresh] rebuilding @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 1021403ms] [WARNING] [Fast Refresh] performing full reload
+
+Fast Refresh will perform a full reload when you edit a file that's imported by modules outside of the React rendering tree.
+You might have a file which exports a React component but also exports a value that is imported by a non-React component file.
+Consider migrating the non-React component export to a separate file and importing it into both files.
+
+It is also possible the parent component of the component you edited is a class component, which disables Fast Refresh.
+Fast Refresh requires at least one parent function component in your React tree. @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 1021405ms] [LOG] [Fast Refresh] done in 2ms @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 1021407ms] [LOG] [Fast Refresh] done in 2ms @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 1110433ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 1181761ms] [LOG] [HMR] connected @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 1246046ms] [LOG] [Fast Refresh] rebuilding @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 1248434ms] [LOG] [Fast Refresh] done in 0ms @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 1349275ms] [ERROR] Encountered a script tag while rendering React component. Scripts inside React components are never executed when rendering on the client. Consider using template tag instead (https://developer.mozilla.org/en-US/docs/Web/HTML/Element/template). @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 1420701ms] Error: Hydration failed because the server rendered HTML didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <SegmentViewNode type="layout" pagePath="layout.tsx">
+      <SegmentTrieNode>
+      <link>
+      <script>
+      <script>
+      <RootLayout>
+        <html lang="en" suppressHydrationWarning={true}>
+          <body className="plus_jakar...">
+            <ThemeProvider attribute="class" defaultTheme="light" enableSystem={true} disableTransitionOnChange={true}>
+              <J attribute="class" defaultTheme="light" enableSystem={true} disableTransitionOnChange={true}>
+                <V attribute="class" defaultTheme="light" enableSystem={true} disableTransitionOnChange={true}>
+                  <script>
+                  <div className="relative i...">
+                    <Navbar>
+                      <motion.header initial={{y:-24,opacity:0}} animate={{y:0,opacity:1}} ...>
+                        <header className="gre-header" style={{opacity:0, ...}} ref={function useMotionRef.useCallback}>
+                          <div>
+                          <div className="gre-wrap g...">
+                            <LinkComponent>
+                            <nav>
+                            <div className="gre-nav-ac...">
+                              <button
+                                type="button"
+                                className="gre-theme-toggle"
+                                onClick={function onClick}
++                               aria-label="Switch to light mode"
+-                               aria-label="Switch to dark mode"
++                               title="Light"
+-                               title="Dark"
+                              >
+                                <Sun size={18}>
+                                  <svg
+                                    ref={null}
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width={18}
+                                    height={18}
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth={2}
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
++                                   className="lucide lucide-sun"
+-                                   className="lucide lucide-moon"
+                                  >
++                                   <circle cx="12" cy="12" r="4">
+-                                   <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z">
+                                    ...
+                                ...
+                              ...
+                    ...
+
+    at throwOnHydrationMismatch (http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:3120:56)
+    at beginWork (http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:6585:918)
+    at runWithFiberInDEV (http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:761:74)
+    at performUnitOfWork (http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9385:97)
+    at workLoopSync (http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9279:40)
+    at renderRootSync (http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9263:13)
+    at performWorkOnRoot (http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:8891:186)
+    at performWorkOnRootViaSchedulerTask (http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:10085:9)
+    at MessagePort.performWorkUntilDeadline (http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_compiled_1amofcm._.js:2647:64)
+[ 1542297ms] [LOG] [Fast Refresh] rebuilding @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 1602139ms] [LOG] [Fast Refresh] done in 37814ms @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 1602140ms] [LOG] [Fast Refresh] rebuilding @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 1666143ms] [LOG] [Fast Refresh] done in 0ms @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 1668557ms] [LOG] [Fast Refresh] rebuilding @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 1670932ms] [LOG] [Fast Refresh] done in 0ms @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 1743487ms] [LOG] [Fast Refresh] rebuilding @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 1828366ms] [LOG] [Fast Refresh] done in 2400ms @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 1857624ms] [LOG] [Fast Refresh] rebuilding @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 1934640ms] [LOG] [Fast Refresh] done in 2386ms @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 1937010ms] [LOG] [Fast Refresh] done in 2386ms @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 2023811ms] [LOG] [Fast Refresh] done in 2386ms @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 2023812ms] [LOG] [Fast Refresh] done in 2386ms @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 2157629ms] [LOG] [Fast Refresh] rebuilding @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 2164767ms] [LOG] [Fast Refresh] done in 9520ms @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 4040869ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 4040930ms] [LOG] [HMR] connected @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 4041157ms] [ERROR] Encountered a script tag while rendering React component. Scripts inside React components are never executed when rendering on the client. Consider using template tag instead (https://developer.mozilla.org/en-US/docs/Web/HTML/Element/template). @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 4041243ms] Error: Hydration failed because the server rendered HTML didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <SegmentViewNode type="layout" pagePath="layout.tsx">
+      <SegmentTrieNode>
+      <link>
+      <script>
+      <script>
+      <RootLayout>
+        <html lang="en" suppressHydrationWarning={true}>
+          <body className="plus_jakar...">
+            <ThemeProvider attribute="class" defaultTheme="light" enableSystem={true} disableTransitionOnChange={true}>
+              <J attribute="class" defaultTheme="light" enableSystem={true} disableTransitionOnChange={true}>
+                <V attribute="class" defaultTheme="light" enableSystem={true} disableTransitionOnChange={true}>
+                  <script>
+                  <div className="relative i...">
+                    <Navbar>
+                      <motion.header initial={{y:-24,opacity:0}} animate={{y:0,opacity:1}} ...>
+                        <header className="gre-header" style={{opacity:0, ...}} ref={function useMotionRef.useCallback}>
+                          <div>
+                          <div className="gre-wrap g...">
+                            <LinkComponent>
+                            <nav>
+                            <div className="gre-nav-ac...">
+                              <button
+                                type="button"
+                                className="gre-theme-toggle"
+                                onClick={function onClick}
++                               aria-label="Switch to light mode"
+-                               aria-label="Switch to dark mode"
++                               title="Light"
+-                               title="Dark"
+                              >
+                                <Sun size={18}>
+                                  <svg
+                                    ref={null}
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width={18}
+                                    height={18}
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth={2}
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
++                                   className="lucide lucide-sun"
+-                                   className="lucide lucide-moon"
+                                  >
++                                   <circle cx="12" cy="12" r="4">
+-                                   <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z">
+                                    ...
+                                ...
+                              ...
+                    ...
+
+    at throwOnHydrationMismatch (http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:3120:56)
+    at beginWork (http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:6585:918)
+    at runWithFiberInDEV (http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:761:74)
+    at performUnitOfWork (http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9385:97)
+    at workLoopConcurrentByScheduler (http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9381:58)
+    at renderRootConcurrent (http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9364:71)
+    at performWorkOnRoot (http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:8891:150)
+    at performWorkOnRootViaSchedulerTask (http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:10085:9)
+    at MessagePort.performWorkUntilDeadline (http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_compiled_1amofcm._.js:2647:64)
+[ 4475151ms] [LOG] [Fast Refresh] rebuilding @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 4485573ms] [WARNING] Error with Permissions-Policy header: Unrecognized feature: 'attribution-reporting'. @ :0
+[ 4485574ms] [WARNING] Error with Permissions-Policy header: Unrecognized feature: 'shared-storage'. @ :0
+[ 4485574ms] [WARNING] Error with Permissions-Policy header: Unrecognized feature: 'shared-storage-select-url'. @ :0
+[ 4492699ms] [ERROR] Failed to load resource: the server responded with a status of 404 () @ https://api.whatsapp.com/data/manifest.json:0
+[ 4492728ms] [ERROR] Manifest fetch from https://api.whatsapp.com/data/manifest.json failed, code 404 @ https://api.whatsapp.com/send/?phone=254726791236&text&type=phone_number&app_absent=0:0
+[ 4495495ms] [ERROR] Failed to load resource: the server responded with a status of 404 () @ https://api.whatsapp.com/data/manifest.json:0
+[ 4495776ms] [ERROR] Manifest fetch from https://api.whatsapp.com/data/manifest.json failed, code 404 @ https://api.whatsapp.com/send/?phone=254726791236&text&type=phone_number&app_absent=0:0
+[ 4512386ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 4513626ms] [ERROR] Encountered a script tag while rendering React component. Scripts inside React components are never executed when rendering on the client. Consider using template tag instead (https://developer.mozilla.org/en-US/docs/Web/HTML/Element/template). @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 4515889ms] Error: Hydration failed because the server rendered HTML didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <SegmentViewNode type="layout" pagePath="layout.tsx">
+      <SegmentTrieNode>
+      <link>
+      <script>
+      <script>
+      <RootLayout>
+        <html lang="en" suppressHydrationWarning={true}>
+          <body className="plus_jakar...">
+            <ThemeProvider attribute="class" defaultTheme="light" enableSystem={true} disableTransitionOnChange={true}>
+              <J attribute="class" defaultTheme="light" enableSystem={true} disableTransitionOnChange={true}>
+                <V attribute="class" defaultTheme="light" enableSystem={true} disableTransitionOnChange={true}>
+                  <script>
+                  <div className="relative i...">
+                    <Navbar>
+                      <motion.header initial={{y:-24,opacity:0}} animate={{y:0,opacity:1}} ...>
+                        <header className="gre-header" style={{opacity:0, ...}} ref={function useMotionRef.useCallback}>
+                          <div>
+                          <div className="gre-wrap g...">
+                            <LinkComponent>
+                            <nav>
+                            <div className="gre-nav-ac...">
+                              <button
+                                type="button"
+                                className="gre-theme-toggle"
+                                onClick={function onClick}
++                               aria-label="Switch to light mode"
+-                               aria-label="Switch to dark mode"
++                               title="Light"
+-                               title="Dark"
+                              >
+                                <Sun size={18}>
+                                  <svg
+                                    ref={null}
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width={18}
+                                    height={18}
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth={2}
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
++                                   className="lucide lucide-sun"
+-                                   className="lucide lucide-moon"
+                                  >
++                                   <circle cx="12" cy="12" r="4">
+-                                   <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z">
+                                    ...
+                                ...
+                              ...
+                    ...
+
+    at throwOnHydrationMismatch (http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:3120:56)
+    at beginWork (http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:6585:918)
+    at runWithFiberInDEV (http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:761:74)
+    at performUnitOfWork (http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9385:97)
+    at workLoopConcurrentByScheduler (http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9381:58)
+    at renderRootConcurrent (http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9364:71)
+    at performWorkOnRoot (http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:8891:150)
+    at performWorkOnRootViaSchedulerTask (http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:10085:9)
+    at MessagePort.performWorkUntilDeadline (http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_compiled_1amofcm._.js:2647:64)
+[ 4526564ms] [LOG] [HMR] connected @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 4527941ms] [LOG] [Fast Refresh] rebuilding @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 4528095ms] [LOG] [Fast Refresh] done in 270ms @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 4528476ms] [LOG] [Fast Refresh] rebuilding @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 4528568ms] [LOG] [Fast Refresh] done in 206ms @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 6164168ms] [LOG] [Fast Refresh] rebuilding @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 6553267ms] [LOG] [Fast Refresh] done in 365405ms @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 7580799ms] [LOG] [Fast Refresh] rebuilding @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 7580801ms] [LOG] [Fast Refresh] done in 2588ms @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 7587947ms] [LOG] [Fast Refresh] done in 2588ms @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 7590335ms] [LOG] [Fast Refresh] done in 2588ms @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 7595141ms] [LOG] [Fast Refresh] done in 2588ms @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 7597841ms] [LOG] [Fast Refresh] done in 2588ms @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 7600817ms] [LOG] [Fast Refresh] done in 2588ms @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 7603496ms] [LOG] [Fast Refresh] done in 2588ms @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 7603497ms] [LOG] [Fast Refresh] done in 2588ms @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 7603498ms] [LOG] [Fast Refresh] done in 2588ms @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 7605896ms] [LOG] [Fast Refresh] done in 2588ms @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 7605988ms] [LOG] [Fast Refresh] done in 2588ms @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 7608556ms] [LOG] [Fast Refresh] done in 2588ms @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 7608629ms] [LOG] [Fast Refresh] done in 2588ms @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 7611281ms] [LOG] [Fast Refresh] done in 2588ms @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 7611282ms] [LOG] [Fast Refresh] done in 2588ms @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 7613693ms] [LOG] [Fast Refresh] done in 2588ms @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 7613770ms] [LOG] [Fast Refresh] done in 2588ms @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 7616399ms] [LOG] [Fast Refresh] done in 2588ms @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 7616482ms] [LOG] [Fast Refresh] done in 2588ms @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 7619119ms] [LOG] [Fast Refresh] done in 2588ms @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 7619119ms] [LOG] [Fast Refresh] done in 2588ms @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 7619204ms] [LOG] [Fast Refresh] done in 2588ms @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 7621822ms] [LOG] [Fast Refresh] done in 2588ms @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 7621941ms] [LOG] [Fast Refresh] done in 2588ms @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 7727866ms] [LOG] [Fast Refresh] rebuilding @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 7743259ms] [ERROR] ./lib/supabaseClient.ts:1:1
+Error: Module not found: Can't resolve '@supabase/supabase-js'
+> 1 | ...eateClient, type SupabaseClient } from "@supabase/su...
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | ...
+  3 | ...aseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  4 | ...aseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+Import trace:
+  App Route:
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7876390ms] [ERROR] ./lib/supabaseClient.ts:1:1
+Error: Module not found: Can't resolve '@supabase/supabase-js'
+> 1 | ...eateClient, type SupabaseClient } from "@supabase/su...
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | ...
+  3 | ...aseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  4 | ...aseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+Import trace:
+  App Route:
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7878763ms] [ERROR] ./lib/supabaseClient.ts:1:1
+Error: Module not found: Can't resolve '@supabase/supabase-js'
+> 1 | ...eateClient, type SupabaseClient } from "@supabase/su...
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | ...
+  3 | ...aseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  4 | ...aseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+Import trace:
+  App Route:
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7881176ms] [ERROR] ./lib/supabaseClient.ts:1:1
+Error: Module not found: Can't resolve '@supabase/supabase-js'
+> 1 | ...eateClient, type SupabaseClient } from "@supabase/su...
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | ...
+  3 | ...aseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  4 | ...aseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+Import trace:
+  App Route:
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7881177ms] [ERROR] ./lib/supabaseClient.ts:1:1
+Error: Module not found: Can't resolve '@supabase/supabase-js'
+> 1 | ...eateClient, type SupabaseClient } from "@supabase/su...
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | ...
+  3 | ...aseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  4 | ...aseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+Import trace:
+  App Route:
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7881177ms] [ERROR] ./lib/supabaseClient.ts:1:1
+Error: Module not found: Can't resolve '@supabase/supabase-js'
+> 1 | ...eateClient, type SupabaseClient } from "@supabase/su...
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | ...
+  3 | ...aseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  4 | ...aseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+Import trace:
+  App Route:
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7881178ms] [ERROR] ./lib/supabaseClient.ts:1:1
+Error: Module not found: Can't resolve '@supabase/supabase-js'
+> 1 | ...eateClient, type SupabaseClient } from "@supabase/su...
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | ...
+  3 | ...aseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  4 | ...aseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+Import trace:
+  App Route:
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7883543ms] [ERROR] ./lib/supabaseClient.ts:1:1
+Error: Module not found: Can't resolve '@supabase/supabase-js'
+> 1 | ...eateClient, type SupabaseClient } from "@supabase/su...
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | ...
+  3 | ...aseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  4 | ...aseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+Import trace:
+  App Route:
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7895530ms] [ERROR] ./lib/supabaseClient.ts:1:1
+Error: Module not found: Can't resolve '@supabase/supabase-js'
+> 1 | ...eateClient, type SupabaseClient } from "@supabase/su...
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | ...
+  3 | ...aseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  4 | ...aseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+Import trace:
+  App Route:
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7897953ms] [ERROR] ./lib/supabaseClient.ts:1:1
+Error: Module not found: Can't resolve '@supabase/supabase-js'
+> 1 | ...eateClient, type SupabaseClient } from "@supabase/su...
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | ...
+  3 | ...aseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  4 | ...aseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+Import trace:
+  App Route:
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7900326ms] [ERROR] ./lib/supabaseClient.ts:1:1
+Error: Module not found: Can't resolve '@supabase/supabase-js'
+> 1 | ...eateClient, type SupabaseClient } from "@supabase/su...
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | ...
+  3 | ...aseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  4 | ...aseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+Import trace:
+  App Route:
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7900327ms] [ERROR] ./lib/supabaseClient.ts:1:1
+Error: Module not found: Can't resolve '@supabase/supabase-js'
+> 1 | ...eateClient, type SupabaseClient } from "@supabase/su...
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | ...
+  3 | ...aseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  4 | ...aseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+Import trace:
+  App Route:
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7900327ms] [ERROR] ./lib/supabaseClient.ts:1:1
+Error: Module not found: Can't resolve '@supabase/supabase-js'
+> 1 | ...eateClient, type SupabaseClient } from "@supabase/su...
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | ...
+  3 | ...aseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  4 | ...aseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+Import trace:
+  App Route:
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7900328ms] [ERROR] ./lib/supabaseClient.ts:1:1
+Error: Module not found: Can't resolve '@supabase/supabase-js'
+> 1 | ...eateClient, type SupabaseClient } from "@supabase/su...
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | ...
+  3 | ...aseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  4 | ...aseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+Import trace:
+  App Route:
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7902735ms] [ERROR] ./lib/supabaseClient.ts:1:1
+Error: Module not found: Can't resolve '@supabase/supabase-js'
+> 1 | ...eateClient, type SupabaseClient } from "@supabase/su...
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | ...
+  3 | ...aseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  4 | ...aseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+Import trace:
+  App Route:
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7902736ms] [ERROR] ./lib/supabaseClient.ts:1:1
+Error: Module not found: Can't resolve '@supabase/supabase-js'
+> 1 | ...eateClient, type SupabaseClient } from "@supabase/su...
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | ...
+  3 | ...aseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  4 | ...aseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+Import trace:
+  App Route:
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7905127ms] [ERROR] ./lib/supabaseClient.ts:1:1
+Error: Module not found: Can't resolve '@supabase/supabase-js'
+> 1 | ...eateClient, type SupabaseClient } from "@supabase/su...
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | ...
+  3 | ...aseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  4 | ...aseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+Import trace:
+  App Route:
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7905128ms] [ERROR] ./lib/supabaseClient.ts:1:1
+Error: Module not found: Can't resolve '@supabase/supabase-js'
+> 1 | ...eateClient, type SupabaseClient } from "@supabase/su...
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | ...
+  3 | ...aseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  4 | ...aseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+Import trace:
+  App Route:
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7907494ms] [ERROR] ./lib/supabaseClient.ts:1:1
+Error: Module not found: Can't resolve '@supabase/supabase-js'
+> 1 | ...eateClient, type SupabaseClient } from "@supabase/su...
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | ...
+  3 | ...aseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  4 | ...aseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+Import trace:
+  App Route:
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7907494ms] [ERROR] ./lib/supabaseClient.ts:1:1
+Error: Module not found: Can't resolve '@supabase/supabase-js'
+> 1 | ...eateClient, type SupabaseClient } from "@supabase/su...
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | ...
+  3 | ...aseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  4 | ...aseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+Import trace:
+  App Route:
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7909906ms] [ERROR] ./lib/supabaseClient.ts:1:1
+Error: Module not found: Can't resolve '@supabase/supabase-js'
+> 1 | ...eateClient, type SupabaseClient } from "@supabase/su...
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | ...
+  3 | ...aseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  4 | ...aseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+Import trace:
+  App Route:
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7909907ms] [ERROR] ./lib/supabaseClient.ts:1:1
+Error: Module not found: Can't resolve '@supabase/supabase-js'
+> 1 | ...eateClient, type SupabaseClient } from "@supabase/su...
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | ...
+  3 | ...aseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  4 | ...aseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+Import trace:
+  App Route:
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7909909ms] [ERROR] ./lib/supabaseClient.ts:1:1
+Error: Module not found: Can't resolve '@supabase/supabase-js'
+> 1 | ...eateClient, type SupabaseClient } from "@supabase/su...
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | ...
+  3 | ...aseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  4 | ...aseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+Import trace:
+  App Route:
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7909910ms] [ERROR] ./lib/supabaseClient.ts:1:1
+Error: Module not found: Can't resolve '@supabase/supabase-js'
+> 1 | ...eateClient, type SupabaseClient } from "@supabase/su...
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | ...
+  3 | ...aseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  4 | ...aseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+Import trace:
+  App Route:
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7909910ms] [ERROR] ./lib/supabaseClient.ts:1:1
+Error: Module not found: Can't resolve '@supabase/supabase-js'
+> 1 | ...eateClient, type SupabaseClient } from "@supabase/su...
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | ...
+  3 | ...aseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  4 | ...aseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+Import trace:
+  App Route:
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7912275ms] [ERROR] ./lib/supabaseClient.ts:1:1
+Error: Module not found: Can't resolve '@supabase/supabase-js'
+> 1 | ...eateClient, type SupabaseClient } from "@supabase/su...
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | ...
+  3 | ...aseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  4 | ...aseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+Import trace:
+  App Route:
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7912276ms] [ERROR] ./lib/supabaseClient.ts:1:1
+Error: Module not found: Can't resolve '@supabase/supabase-js'
+> 1 | ...eateClient, type SupabaseClient } from "@supabase/su...
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | ...
+  3 | ...aseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  4 | ...aseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+Import trace:
+  App Route:
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7912276ms] [ERROR] ./lib/supabaseClient.ts:1:1
+Error: Module not found: Can't resolve '@supabase/supabase-js'
+> 1 | ...eateClient, type SupabaseClient } from "@supabase/su...
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | ...
+  3 | ...aseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  4 | ...aseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+Import trace:
+  App Route:
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7914669ms] [ERROR] ./lib/supabaseClient.ts:1:1
+Error: Module not found: Can't resolve '@supabase/supabase-js'
+> 1 | ...eateClient, type SupabaseClient } from "@supabase/su...
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | ...
+  3 | ...aseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  4 | ...aseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+Import trace:
+  App Route:
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7914670ms] [ERROR] ./lib/supabaseClient.ts:1:1
+Error: Module not found: Can't resolve '@supabase/supabase-js'
+> 1 | ...eateClient, type SupabaseClient } from "@supabase/su...
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | ...
+  3 | ...aseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  4 | ...aseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+Import trace:
+  App Route:
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7914671ms] [ERROR] ./lib/supabaseClient.ts:1:1
+Error: Module not found: Can't resolve '@supabase/supabase-js'
+> 1 | ...eateClient, type SupabaseClient } from "@supabase/su...
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | ...
+  3 | ...aseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  4 | ...aseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+Import trace:
+  App Route:
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7917064ms] [ERROR] ./lib/supabaseClient.ts:1:1
+Error: Module not found: Can't resolve '@supabase/supabase-js'
+> 1 | ...eateClient, type SupabaseClient } from "@supabase/su...
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | ...
+  3 | ...aseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  4 | ...aseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+Import trace:
+  App Route:
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7917065ms] [ERROR] ./lib/supabaseClient.ts:1:1
+Error: Module not found: Can't resolve '@supabase/supabase-js'
+> 1 | ...eateClient, type SupabaseClient } from "@supabase/su...
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | ...
+  3 | ...aseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  4 | ...aseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+Import trace:
+  App Route:
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7919435ms] [ERROR] ./lib/supabaseClient.ts:1:1
+Error: Module not found: Can't resolve '@supabase/supabase-js'
+> 1 | ...eateClient, type SupabaseClient } from "@supabase/su...
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | ...
+  3 | ...aseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  4 | ...aseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+Import trace:
+  App Route:
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7919435ms] [ERROR] ./lib/supabaseClient.ts:1:1
+Error: Module not found: Can't resolve '@supabase/supabase-js'
+> 1 | ...eateClient, type SupabaseClient } from "@supabase/su...
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | ...
+  3 | ...aseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  4 | ...aseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+Import trace:
+  App Route:
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7924184ms] [ERROR] ./node_modules/@supabase/supabase-js/dist/index.mjs:10:1
+Error: Module not found: Can't resolve '@supabase/auth-js'
+   8 | export * from "@supabase/realtime-js"
+   9 |
+> 10 | export * from "@supabase/auth-js"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 |
+  12 | //#region src/lib/version.ts
+  13 | const version = "2.117.2";
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7924184ms] [ERROR] ./node_modules/@supabase/supabase-js/dist/index.mjs:8:1
+Error: Module not found: Can't resolve '@supabase/realtime-js'
+   6 | import { AuthClient } from "@supabase/auth-js";
+   7 |
+>  8 | export * from "@supabase/realtime-js"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   9 |
+  10 | export * from "@supabase/auth-js"
+  11 |
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7924185ms] [ERROR] ./node_modules/@supabase/supabase-js/dist/index.mjs:10:1
+Error: Module not found: Can't resolve '@supabase/auth-js'
+   8 | export * from "@supabase/realtime-js"
+   9 |
+> 10 | export * from "@supabase/auth-js"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 |
+  12 | //#region src/lib/version.ts
+  13 | const version = "2.117.2";
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7926558ms] [ERROR] ./node_modules/@supabase/supabase-js/dist/index.mjs:8:1
+Error: Module not found: Can't resolve '@supabase/realtime-js'
+   6 | import { AuthClient } from "@supabase/auth-js";
+   7 |
+>  8 | export * from "@supabase/realtime-js"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   9 |
+  10 | export * from "@supabase/auth-js"
+  11 |
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7926559ms] [ERROR] ./node_modules/@supabase/supabase-js/dist/index.mjs:10:1
+Error: Module not found: Can't resolve '@supabase/auth-js'
+   8 | export * from "@supabase/realtime-js"
+   9 |
+> 10 | export * from "@supabase/auth-js"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 |
+  12 | //#region src/lib/version.ts
+  13 | const version = "2.117.2";
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7926560ms] [ERROR] ./node_modules/@supabase/supabase-js/dist/index.mjs:8:1
+Error: Module not found: Can't resolve '@supabase/realtime-js'
+   6 | import { AuthClient } from "@supabase/auth-js";
+   7 |
+>  8 | export * from "@supabase/realtime-js"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   9 |
+  10 | export * from "@supabase/auth-js"
+  11 |
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7928931ms] [ERROR] ./node_modules/@supabase/supabase-js/dist/index.mjs:10:1
+Error: Module not found: Can't resolve '@supabase/auth-js'
+   8 | export * from "@supabase/realtime-js"
+   9 |
+> 10 | export * from "@supabase/auth-js"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 |
+  12 | //#region src/lib/version.ts
+  13 | const version = "2.117.2";
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7928932ms] [ERROR] ./node_modules/@supabase/supabase-js/dist/index.mjs:8:1
+Error: Module not found: Can't resolve '@supabase/realtime-js'
+   6 | import { AuthClient } from "@supabase/auth-js";
+   7 |
+>  8 | export * from "@supabase/realtime-js"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   9 |
+  10 | export * from "@supabase/auth-js"
+  11 |
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7928933ms] [ERROR] ./node_modules/@supabase/supabase-js/dist/index.mjs:10:1
+Error: Module not found: Can't resolve '@supabase/auth-js'
+   8 | export * from "@supabase/realtime-js"
+   9 |
+> 10 | export * from "@supabase/auth-js"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 |
+  12 | //#region src/lib/version.ts
+  13 | const version = "2.117.2";
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7928933ms] [ERROR] ./node_modules/@supabase/supabase-js/dist/index.mjs:8:1
+Error: Module not found: Can't resolve '@supabase/realtime-js'
+   6 | import { AuthClient } from "@supabase/auth-js";
+   7 |
+>  8 | export * from "@supabase/realtime-js"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   9 |
+  10 | export * from "@supabase/auth-js"
+  11 |
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7928934ms] [ERROR] ./node_modules/@supabase/supabase-js/dist/index.mjs:10:1
+Error: Module not found: Can't resolve '@supabase/auth-js'
+   8 | export * from "@supabase/realtime-js"
+   9 |
+> 10 | export * from "@supabase/auth-js"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 |
+  12 | //#region src/lib/version.ts
+  13 | const version = "2.117.2";
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7928934ms] [ERROR] ./node_modules/@supabase/supabase-js/dist/index.mjs:8:1
+Error: Module not found: Can't resolve '@supabase/realtime-js'
+   6 | import { AuthClient } from "@supabase/auth-js";
+   7 |
+>  8 | export * from "@supabase/realtime-js"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   9 |
+  10 | export * from "@supabase/auth-js"
+  11 |
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7931316ms] [ERROR] ./node_modules/@supabase/supabase-js/dist/index.mjs:10:1
+Error: Module not found: Can't resolve '@supabase/auth-js'
+   8 | export * from "@supabase/realtime-js"
+   9 |
+> 10 | export * from "@supabase/auth-js"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 |
+  12 | //#region src/lib/version.ts
+  13 | const version = "2.117.2";
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7931317ms] [ERROR] ./node_modules/@supabase/supabase-js/dist/index.mjs:8:1
+Error: Module not found: Can't resolve '@supabase/realtime-js'
+   6 | import { AuthClient } from "@supabase/auth-js";
+   7 |
+>  8 | export * from "@supabase/realtime-js"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   9 |
+  10 | export * from "@supabase/auth-js"
+  11 |
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7933684ms] [ERROR] ./node_modules/@supabase/supabase-js/dist/index.mjs:10:1
+Error: Module not found: Can't resolve '@supabase/auth-js'
+   8 | export * from "@supabase/realtime-js"
+   9 |
+> 10 | export * from "@supabase/auth-js"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 |
+  12 | //#region src/lib/version.ts
+  13 | const version = "2.117.2";
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7933684ms] [ERROR] ./node_modules/@supabase/supabase-js/dist/index.mjs:8:1
+Error: Module not found: Can't resolve '@supabase/realtime-js'
+   6 | import { AuthClient } from "@supabase/auth-js";
+   7 |
+>  8 | export * from "@supabase/realtime-js"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   9 |
+  10 | export * from "@supabase/auth-js"
+  11 |
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7933685ms] [ERROR] ./node_modules/@supabase/supabase-js/dist/index.mjs:10:1
+Error: Module not found: Can't resolve '@supabase/auth-js'
+   8 | export * from "@supabase/realtime-js"
+   9 |
+> 10 | export * from "@supabase/auth-js"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 |
+  12 | //#region src/lib/version.ts
+  13 | const version = "2.117.2";
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7933685ms] [ERROR] ./node_modules/@supabase/supabase-js/dist/index.mjs:8:1
+Error: Module not found: Can't resolve '@supabase/realtime-js'
+   6 | import { AuthClient } from "@supabase/auth-js";
+   7 |
+>  8 | export * from "@supabase/realtime-js"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   9 |
+  10 | export * from "@supabase/auth-js"
+  11 |
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7936099ms] [ERROR] ./node_modules/@supabase/supabase-js/dist/index.mjs:10:1
+Error: Module not found: Can't resolve '@supabase/auth-js'
+   8 | export * from "@supabase/realtime-js"
+   9 |
+> 10 | export * from "@supabase/auth-js"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 |
+  12 | //#region src/lib/version.ts
+  13 | const version = "2.117.2";
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7936100ms] [ERROR] ./node_modules/@supabase/supabase-js/dist/index.mjs:8:1
+Error: Module not found: Can't resolve '@supabase/realtime-js'
+   6 | import { AuthClient } from "@supabase/auth-js";
+   7 |
+>  8 | export * from "@supabase/realtime-js"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   9 |
+  10 | export * from "@supabase/auth-js"
+  11 |
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7936101ms] [ERROR] ./node_modules/@supabase/supabase-js/dist/index.mjs:10:1
+Error: Module not found: Can't resolve '@supabase/auth-js'
+   8 | export * from "@supabase/realtime-js"
+   9 |
+> 10 | export * from "@supabase/auth-js"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 |
+  12 | //#region src/lib/version.ts
+  13 | const version = "2.117.2";
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7936101ms] [ERROR] ./node_modules/@supabase/supabase-js/dist/index.mjs:8:1
+Error: Module not found: Can't resolve '@supabase/realtime-js'
+   6 | import { AuthClient } from "@supabase/auth-js";
+   7 |
+>  8 | export * from "@supabase/realtime-js"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   9 |
+  10 | export * from "@supabase/auth-js"
+  11 |
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7940858ms] [ERROR] ./node_modules/@supabase/supabase-js/dist/index.mjs:10:1
+Error: Module not found: Can't resolve '@supabase/auth-js'
+   8 | export * from "@supabase/realtime-js"
+   9 |
+> 10 | export * from "@supabase/auth-js"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 |
+  12 | //#region src/lib/version.ts
+  13 | const version = "2.117.2";
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7943242ms] [ERROR] ./node_modules/@supabase/supabase-js/dist/index.mjs:8:1
+Error: Module not found: Can't resolve '@supabase/realtime-js'
+   6 | import { AuthClient } from "@supabase/auth-js";
+   7 |
+>  8 | export * from "@supabase/realtime-js"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   9 |
+  10 | export * from "@supabase/auth-js"
+  11 |
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7943243ms] [ERROR] ./node_modules/@supabase/supabase-js/dist/index.mjs:10:1
+Error: Module not found: Can't resolve '@supabase/auth-js'
+   8 | export * from "@supabase/realtime-js"
+   9 |
+> 10 | export * from "@supabase/auth-js"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 |
+  12 | //#region src/lib/version.ts
+  13 | const version = "2.117.2";
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7943243ms] [ERROR] ./node_modules/@supabase/supabase-js/dist/index.mjs:8:1
+Error: Module not found: Can't resolve '@supabase/realtime-js'
+   6 | import { AuthClient } from "@supabase/auth-js";
+   7 |
+>  8 | export * from "@supabase/realtime-js"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   9 |
+  10 | export * from "@supabase/auth-js"
+  11 |
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7943244ms] [ERROR] ./node_modules/@supabase/supabase-js/dist/index.mjs:10:1
+Error: Module not found: Can't resolve '@supabase/auth-js'
+   8 | export * from "@supabase/realtime-js"
+   9 |
+> 10 | export * from "@supabase/auth-js"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 |
+  12 | //#region src/lib/version.ts
+  13 | const version = "2.117.2";
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7943244ms] [ERROR] ./node_modules/@supabase/supabase-js/dist/index.mjs:8:1
+Error: Module not found: Can't resolve '@supabase/realtime-js'
+   6 | import { AuthClient } from "@supabase/auth-js";
+   7 |
+>  8 | export * from "@supabase/realtime-js"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   9 |
+  10 | export * from "@supabase/auth-js"
+  11 |
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7943245ms] [ERROR] ./node_modules/@supabase/supabase-js/dist/index.mjs:10:1
+Error: Module not found: Can't resolve '@supabase/auth-js'
+   8 | export * from "@supabase/realtime-js"
+   9 |
+> 10 | export * from "@supabase/auth-js"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 |
+  12 | //#region src/lib/version.ts
+  13 | const version = "2.117.2";
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7945627ms] [ERROR] ./node_modules/@supabase/supabase-js/dist/index.mjs:8:1
+Error: Module not found: Can't resolve '@supabase/realtime-js'
+   6 | import { AuthClient } from "@supabase/auth-js";
+   7 |
+>  8 | export * from "@supabase/realtime-js"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   9 |
+  10 | export * from "@supabase/auth-js"
+  11 |
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7945628ms] [ERROR] ./node_modules/@supabase/supabase-js/dist/index.mjs:10:1
+Error: Module not found: Can't resolve '@supabase/auth-js'
+   8 | export * from "@supabase/realtime-js"
+   9 |
+> 10 | export * from "@supabase/auth-js"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 |
+  12 | //#region src/lib/version.ts
+  13 | const version = "2.117.2";
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7945628ms] [ERROR] ./node_modules/@supabase/supabase-js/dist/index.mjs:8:1
+Error: Module not found: Can't resolve '@supabase/realtime-js'
+   6 | import { AuthClient } from "@supabase/auth-js";
+   7 |
+>  8 | export * from "@supabase/realtime-js"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   9 |
+  10 | export * from "@supabase/auth-js"
+  11 |
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7947993ms] [ERROR] ./node_modules/@supabase/supabase-js/dist/index.mjs:10:1
+Error: Module not found: Can't resolve '@supabase/auth-js'
+   8 | export * from "@supabase/realtime-js"
+   9 |
+> 10 | export * from "@supabase/auth-js"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 |
+  12 | //#region src/lib/version.ts
+  13 | const version = "2.117.2";
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7947994ms] [ERROR] ./node_modules/@supabase/supabase-js/dist/index.mjs:8:1
+Error: Module not found: Can't resolve '@supabase/realtime-js'
+   6 | import { AuthClient } from "@supabase/auth-js";
+   7 |
+>  8 | export * from "@supabase/realtime-js"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   9 |
+  10 | export * from "@supabase/auth-js"
+  11 |
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7947995ms] [ERROR] ./node_modules/@supabase/supabase-js/dist/index.mjs:10:1
+Error: Module not found: Can't resolve '@supabase/auth-js'
+   8 | export * from "@supabase/realtime-js"
+   9 |
+> 10 | export * from "@supabase/auth-js"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 |
+  12 | //#region src/lib/version.ts
+  13 | const version = "2.117.2";
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7947995ms] [ERROR] ./node_modules/@supabase/realtime-js/dist/module/phoenix/presenceAdapter.js:1:1
+Error: Module not found: Can't resolve '@supabase/phoenix'
+> 1 | import { Presence } from '@supabase/phoenix';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | export default class PresenceAdapter {
+  3 |     constructor(channel, opts) {
+  4 |         const phoenixOptions = phoenixPresenceOptions(o...
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/realtime-js/dist/module/phoenix/presenceAdapter.js
+    ./node_modules/@supabase/realtime-js/dist/module/RealtimePresence.js
+    ./node_modules/@supabase/realtime-js/dist/module/index.js
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7947995ms] [ERROR] ./node_modules/@supabase/realtime-js/dist/module/phoenix/socketAdapter.js:1:1
+Error: Module not found: Can't resolve '@supabase/phoenix'
+> 1 | import { Socket } from '@supabase/phoenix';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | import { CONNECTION_STATE } from '../lib/constants';
+  3 | export default class SocketAdapter {
+  4 |     constructor(endPoint, options) {
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/realtime-js/dist/module/phoenix/socketAdapter.js
+    ./node_modules/@supabase/realtime-js/dist/module/RealtimeClient.js
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7950407ms] [ERROR] ./node_modules/@supabase/supabase-js/dist/index.mjs:10:1
+Error: Module not found: Can't resolve '@supabase/auth-js'
+   8 | export * from "@supabase/realtime-js"
+   9 |
+> 10 | export * from "@supabase/auth-js"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 |
+  12 | //#region src/lib/version.ts
+  13 | const version = "2.117.2";
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7950408ms] [ERROR] ./node_modules/@supabase/realtime-js/dist/module/phoenix/presenceAdapter.js:1:1
+Error: Module not found: Can't resolve '@supabase/phoenix'
+> 1 | import { Presence } from '@supabase/phoenix';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | export default class PresenceAdapter {
+  3 |     constructor(channel, opts) {
+  4 |         const phoenixOptions = phoenixPresenceOptions(o...
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/realtime-js/dist/module/phoenix/presenceAdapter.js
+    ./node_modules/@supabase/realtime-js/dist/module/RealtimePresence.js
+    ./node_modules/@supabase/realtime-js/dist/module/index.js
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7950408ms] [ERROR] ./node_modules/@supabase/realtime-js/dist/module/phoenix/socketAdapter.js:1:1
+Error: Module not found: Can't resolve '@supabase/phoenix'
+> 1 | import { Socket } from '@supabase/phoenix';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | import { CONNECTION_STATE } from '../lib/constants';
+  3 | export default class SocketAdapter {
+  4 |     constructor(endPoint, options) {
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/realtime-js/dist/module/phoenix/socketAdapter.js
+    ./node_modules/@supabase/realtime-js/dist/module/RealtimeClient.js
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7952778ms] [ERROR] ./node_modules/@supabase/supabase-js/dist/index.mjs:10:1
+Error: Module not found: Can't resolve '@supabase/auth-js'
+   8 | export * from "@supabase/realtime-js"
+   9 |
+> 10 | export * from "@supabase/auth-js"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 |
+  12 | //#region src/lib/version.ts
+  13 | const version = "2.117.2";
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7952778ms] [ERROR] ./node_modules/@supabase/realtime-js/dist/module/phoenix/presenceAdapter.js:1:1
+Error: Module not found: Can't resolve '@supabase/phoenix'
+> 1 | import { Presence } from '@supabase/phoenix';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | export default class PresenceAdapter {
+  3 |     constructor(channel, opts) {
+  4 |         const phoenixOptions = phoenixPresenceOptions(o...
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/realtime-js/dist/module/phoenix/presenceAdapter.js
+    ./node_modules/@supabase/realtime-js/dist/module/RealtimePresence.js
+    ./node_modules/@supabase/realtime-js/dist/module/index.js
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7952779ms] [ERROR] ./node_modules/@supabase/realtime-js/dist/module/phoenix/socketAdapter.js:1:1
+Error: Module not found: Can't resolve '@supabase/phoenix'
+> 1 | import { Socket } from '@supabase/phoenix';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | import { CONNECTION_STATE } from '../lib/constants';
+  3 | export default class SocketAdapter {
+  4 |     constructor(endPoint, options) {
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/realtime-js/dist/module/phoenix/socketAdapter.js
+    ./node_modules/@supabase/realtime-js/dist/module/RealtimeClient.js
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7952780ms] [ERROR] ./node_modules/@supabase/supabase-js/dist/index.mjs:10:1
+Error: Module not found: Can't resolve '@supabase/auth-js'
+   8 | export * from "@supabase/realtime-js"
+   9 |
+> 10 | export * from "@supabase/auth-js"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 |
+  12 | //#region src/lib/version.ts
+  13 | const version = "2.117.2";
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7952780ms] [ERROR] ./node_modules/@supabase/realtime-js/dist/module/phoenix/presenceAdapter.js:1:1
+Error: Module not found: Can't resolve '@supabase/phoenix'
+> 1 | import { Presence } from '@supabase/phoenix';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | export default class PresenceAdapter {
+  3 |     constructor(channel, opts) {
+  4 |         const phoenixOptions = phoenixPresenceOptions(o...
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/realtime-js/dist/module/phoenix/presenceAdapter.js
+    ./node_modules/@supabase/realtime-js/dist/module/RealtimePresence.js
+    ./node_modules/@supabase/realtime-js/dist/module/index.js
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7959995ms] [ERROR] ./node_modules/@supabase/realtime-js/dist/module/phoenix/socketAdapter.js:1:1
+Error: Module not found: Can't resolve '@supabase/phoenix'
+> 1 | import { Socket } from '@supabase/phoenix';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | import { CONNECTION_STATE } from '../lib/constants';
+  3 | export default class SocketAdapter {
+  4 |     constructor(endPoint, options) {
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/realtime-js/dist/module/phoenix/socketAdapter.js
+    ./node_modules/@supabase/realtime-js/dist/module/RealtimeClient.js
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7959996ms] [ERROR] ./node_modules/@supabase/supabase-js/dist/index.mjs:10:1
+Error: Module not found: Can't resolve '@supabase/auth-js'
+   8 | export * from "@supabase/realtime-js"
+   9 |
+> 10 | export * from "@supabase/auth-js"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 |
+  12 | //#region src/lib/version.ts
+  13 | const version = "2.117.2";
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7962403ms] [ERROR] ./node_modules/@supabase/realtime-js/dist/module/phoenix/presenceAdapter.js:1:1
+Error: Module not found: Can't resolve '@supabase/phoenix'
+> 1 | import { Presence } from '@supabase/phoenix';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | export default class PresenceAdapter {
+  3 |     constructor(channel, opts) {
+  4 |         const phoenixOptions = phoenixPresenceOptions(o...
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/realtime-js/dist/module/phoenix/presenceAdapter.js
+    ./node_modules/@supabase/realtime-js/dist/module/RealtimePresence.js
+    ./node_modules/@supabase/realtime-js/dist/module/index.js
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7962403ms] [ERROR] ./node_modules/@supabase/realtime-js/dist/module/phoenix/socketAdapter.js:1:1
+Error: Module not found: Can't resolve '@supabase/phoenix'
+> 1 | import { Socket } from '@supabase/phoenix';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | import { CONNECTION_STATE } from '../lib/constants';
+  3 | export default class SocketAdapter {
+  4 |     constructor(endPoint, options) {
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/realtime-js/dist/module/phoenix/socketAdapter.js
+    ./node_modules/@supabase/realtime-js/dist/module/RealtimeClient.js
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7962405ms] [ERROR] ./node_modules/@supabase/supabase-js/dist/index.mjs:10:1
+Error: Module not found: Can't resolve '@supabase/auth-js'
+   8 | export * from "@supabase/realtime-js"
+   9 |
+> 10 | export * from "@supabase/auth-js"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 |
+  12 | //#region src/lib/version.ts
+  13 | const version = "2.117.2";
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7962405ms] [ERROR] ./node_modules/@supabase/realtime-js/dist/module/phoenix/presenceAdapter.js:1:1
+Error: Module not found: Can't resolve '@supabase/phoenix'
+> 1 | import { Presence } from '@supabase/phoenix';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | export default class PresenceAdapter {
+  3 |     constructor(channel, opts) {
+  4 |         const phoenixOptions = phoenixPresenceOptions(o...
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/realtime-js/dist/module/phoenix/presenceAdapter.js
+    ./node_modules/@supabase/realtime-js/dist/module/RealtimePresence.js
+    ./node_modules/@supabase/realtime-js/dist/module/index.js
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7962405ms] [ERROR] ./node_modules/@supabase/realtime-js/dist/module/phoenix/socketAdapter.js:1:1
+Error: Module not found: Can't resolve '@supabase/phoenix'
+> 1 | import { Socket } from '@supabase/phoenix';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | import { CONNECTION_STATE } from '../lib/constants';
+  3 | export default class SocketAdapter {
+  4 |     constructor(endPoint, options) {
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/realtime-js/dist/module/phoenix/socketAdapter.js
+    ./node_modules/@supabase/realtime-js/dist/module/RealtimeClient.js
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7964777ms] [ERROR] ./node_modules/@supabase/supabase-js/dist/index.mjs:10:1
+Error: Module not found: Can't resolve '@supabase/auth-js'
+   8 | export * from "@supabase/realtime-js"
+   9 |
+> 10 | export * from "@supabase/auth-js"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 |
+  12 | //#region src/lib/version.ts
+  13 | const version = "2.117.2";
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7964778ms] [ERROR] ./node_modules/@supabase/realtime-js/dist/module/phoenix/presenceAdapter.js:1:1
+Error: Module not found: Can't resolve '@supabase/phoenix'
+> 1 | import { Presence } from '@supabase/phoenix';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | export default class PresenceAdapter {
+  3 |     constructor(channel, opts) {
+  4 |         const phoenixOptions = phoenixPresenceOptions(o...
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/realtime-js/dist/module/phoenix/presenceAdapter.js
+    ./node_modules/@supabase/realtime-js/dist/module/RealtimePresence.js
+    ./node_modules/@supabase/realtime-js/dist/module/index.js
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7964778ms] [ERROR] ./node_modules/@supabase/realtime-js/dist/module/phoenix/socketAdapter.js:1:1
+Error: Module not found: Can't resolve '@supabase/phoenix'
+> 1 | import { Socket } from '@supabase/phoenix';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | import { CONNECTION_STATE } from '../lib/constants';
+  3 | export default class SocketAdapter {
+  4 |     constructor(endPoint, options) {
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/realtime-js/dist/module/phoenix/socketAdapter.js
+    ./node_modules/@supabase/realtime-js/dist/module/RealtimeClient.js
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7964779ms] [ERROR] ./node_modules/@supabase/supabase-js/dist/index.mjs:10:1
+Error: Module not found: Can't resolve '@supabase/auth-js'
+   8 | export * from "@supabase/realtime-js"
+   9 |
+> 10 | export * from "@supabase/auth-js"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 |
+  12 | //#region src/lib/version.ts
+  13 | const version = "2.117.2";
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7964779ms] [ERROR] ./node_modules/@supabase/realtime-js/dist/module/phoenix/presenceAdapter.js:1:1
+Error: Module not found: Can't resolve '@supabase/phoenix'
+> 1 | import { Presence } from '@supabase/phoenix';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | export default class PresenceAdapter {
+  3 |     constructor(channel, opts) {
+  4 |         const phoenixOptions = phoenixPresenceOptions(o...
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/realtime-js/dist/module/phoenix/presenceAdapter.js
+    ./node_modules/@supabase/realtime-js/dist/module/RealtimePresence.js
+    ./node_modules/@supabase/realtime-js/dist/module/index.js
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7964780ms] [ERROR] ./node_modules/@supabase/realtime-js/dist/module/phoenix/socketAdapter.js:1:1
+Error: Module not found: Can't resolve '@supabase/phoenix'
+> 1 | import { Socket } from '@supabase/phoenix';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | import { CONNECTION_STATE } from '../lib/constants';
+  3 | export default class SocketAdapter {
+  4 |     constructor(endPoint, options) {
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/realtime-js/dist/module/phoenix/socketAdapter.js
+    ./node_modules/@supabase/realtime-js/dist/module/RealtimeClient.js
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7967166ms] [ERROR] ./node_modules/@supabase/supabase-js/dist/index.mjs:10:1
+Error: Module not found: Can't resolve '@supabase/auth-js'
+   8 | export * from "@supabase/realtime-js"
+   9 |
+> 10 | export * from "@supabase/auth-js"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 |
+  12 | //#region src/lib/version.ts
+  13 | const version = "2.117.2";
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7967166ms] [ERROR] ./node_modules/@supabase/realtime-js/dist/module/phoenix/presenceAdapter.js:1:1
+Error: Module not found: Can't resolve '@supabase/phoenix'
+> 1 | import { Presence } from '@supabase/phoenix';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | export default class PresenceAdapter {
+  3 |     constructor(channel, opts) {
+  4 |         const phoenixOptions = phoenixPresenceOptions(o...
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/realtime-js/dist/module/phoenix/presenceAdapter.js
+    ./node_modules/@supabase/realtime-js/dist/module/RealtimePresence.js
+    ./node_modules/@supabase/realtime-js/dist/module/index.js
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7967167ms] [ERROR] ./node_modules/@supabase/realtime-js/dist/module/phoenix/socketAdapter.js:1:1
+Error: Module not found: Can't resolve '@supabase/phoenix'
+> 1 | import { Socket } from '@supabase/phoenix';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | import { CONNECTION_STATE } from '../lib/constants';
+  3 | export default class SocketAdapter {
+  4 |     constructor(endPoint, options) {
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/realtime-js/dist/module/phoenix/socketAdapter.js
+    ./node_modules/@supabase/realtime-js/dist/module/RealtimeClient.js
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7969550ms] [ERROR] ./node_modules/@supabase/supabase-js/dist/index.mjs:10:1
+Error: Module not found: Can't resolve '@supabase/auth-js'
+   8 | export * from "@supabase/realtime-js"
+   9 |
+> 10 | export * from "@supabase/auth-js"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 |
+  12 | //#region src/lib/version.ts
+  13 | const version = "2.117.2";
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7969550ms] [ERROR] ./node_modules/@supabase/realtime-js/dist/module/phoenix/presenceAdapter.js:1:1
+Error: Module not found: Can't resolve '@supabase/phoenix'
+> 1 | import { Presence } from '@supabase/phoenix';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | export default class PresenceAdapter {
+  3 |     constructor(channel, opts) {
+  4 |         const phoenixOptions = phoenixPresenceOptions(o...
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/realtime-js/dist/module/phoenix/presenceAdapter.js
+    ./node_modules/@supabase/realtime-js/dist/module/RealtimePresence.js
+    ./node_modules/@supabase/realtime-js/dist/module/index.js
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7969551ms] [ERROR] ./node_modules/@supabase/realtime-js/dist/module/phoenix/socketAdapter.js:1:1
+Error: Module not found: Can't resolve '@supabase/phoenix'
+> 1 | import { Socket } from '@supabase/phoenix';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | import { CONNECTION_STATE } from '../lib/constants';
+  3 | export default class SocketAdapter {
+  4 |     constructor(endPoint, options) {
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/realtime-js/dist/module/phoenix/socketAdapter.js
+    ./node_modules/@supabase/realtime-js/dist/module/RealtimeClient.js
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7971918ms] [ERROR] ./node_modules/@supabase/supabase-js/dist/index.mjs:10:1
+Error: Module not found: Can't resolve '@supabase/auth-js'
+   8 | export * from "@supabase/realtime-js"
+   9 |
+> 10 | export * from "@supabase/auth-js"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 |
+  12 | //#region src/lib/version.ts
+  13 | const version = "2.117.2";
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7974292ms] [ERROR] ./node_modules/@supabase/realtime-js/dist/module/phoenix/presenceAdapter.js:1:1
+Error: Module not found: Can't resolve '@supabase/phoenix'
+> 1 | import { Presence } from '@supabase/phoenix';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | export default class PresenceAdapter {
+  3 |     constructor(channel, opts) {
+  4 |         const phoenixOptions = phoenixPresenceOptions(o...
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/realtime-js/dist/module/phoenix/presenceAdapter.js
+    ./node_modules/@supabase/realtime-js/dist/module/RealtimePresence.js
+    ./node_modules/@supabase/realtime-js/dist/module/index.js
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 7976696ms] [ERROR] ./node_modules/@supabase/realtime-js/dist/module/phoenix/socketAdapter.js:1:1
+Error: Module not found: Can't resolve '@supabase/phoenix'
+> 1 | import { Socket } from '@supabase/phoenix';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | import { CONNECTION_STATE } from '../lib/constants';
+  3 | export default class SocketAdapter {
+  4 |     constructor(endPoint, options) {
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/realtime-js/dist/module/phoenix/socketAdapter.js
+    ./node_modules/@supabase/realtime-js/dist/module/RealtimeClient.js
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 8017288ms] [ERROR] ./node_modules/@supabase/supabase-js/dist/index.mjs:10:1
+Error: Module not found: Can't resolve '@supabase/auth-js'
+   8 | export * from "@supabase/realtime-js"
+   9 |
+> 10 | export * from "@supabase/auth-js"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 |
+  12 | //#region src/lib/version.ts
+  13 | const version = "2.117.2";
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 8017289ms] [ERROR] ./node_modules/@supabase/realtime-js/dist/module/phoenix/presenceAdapter.js:1:1
+Error: Module not found: Can't resolve '@supabase/phoenix'
+> 1 | import { Presence } from '@supabase/phoenix';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | export default class PresenceAdapter {
+  3 |     constructor(channel, opts) {
+  4 |         const phoenixOptions = phoenixPresenceOptions(o...
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/realtime-js/dist/module/phoenix/presenceAdapter.js
+    ./node_modules/@supabase/realtime-js/dist/module/RealtimePresence.js
+    ./node_modules/@supabase/realtime-js/dist/module/index.js
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 8017289ms] [ERROR] ./node_modules/@supabase/realtime-js/dist/module/phoenix/socketAdapter.js:1:1
+Error: Module not found: Can't resolve '@supabase/phoenix'
+> 1 | import { Socket } from '@supabase/phoenix';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | import { CONNECTION_STATE } from '../lib/constants';
+  3 | export default class SocketAdapter {
+  4 |     constructor(endPoint, options) {
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/realtime-js/dist/module/phoenix/socketAdapter.js
+    ./node_modules/@supabase/realtime-js/dist/module/RealtimeClient.js
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 8017289ms] [ERROR] ./node_modules/@supabase/supabase-js/dist/index.mjs:10:1
+Error: Module not found: Can't resolve '@supabase/auth-js'
+   8 | export * from "@supabase/realtime-js"
+   9 |
+> 10 | export * from "@supabase/auth-js"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 |
+  12 | //#region src/lib/version.ts
+  13 | const version = "2.117.2";
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 8022357ms] [ERROR] ./node_modules/@supabase/supabase-js/dist/index.mjs:10:1
+Error: Module not found: Can't resolve '@supabase/auth-js'
+   8 | export * from "@supabase/realtime-js"
+   9 |
+> 10 | export * from "@supabase/auth-js"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 |
+  12 | //#region src/lib/version.ts
+  13 | const version = "2.117.2";
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 8024730ms] [ERROR] ./node_modules/@supabase/supabase-js/dist/index.mjs:10:1
+Error: Module not found: Can't resolve '@supabase/auth-js'
+   8 | export * from "@supabase/realtime-js"
+   9 |
+> 10 | export * from "@supabase/auth-js"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 |
+  12 | //#region src/lib/version.ts
+  13 | const version = "2.117.2";
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 8024731ms] [ERROR] ./node_modules/@supabase/supabase-js/dist/index.mjs:10:1
+Error: Module not found: Can't resolve '@supabase/auth-js'
+   8 | export * from "@supabase/realtime-js"
+   9 |
+> 10 | export * from "@supabase/auth-js"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 |
+  12 | //#region src/lib/version.ts
+  13 | const version = "2.117.2";
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 8024732ms] [ERROR] ./node_modules/@supabase/supabase-js/dist/index.mjs:10:1
+Error: Module not found: Can't resolve '@supabase/auth-js'
+   8 | export * from "@supabase/realtime-js"
+   9 |
+> 10 | export * from "@supabase/auth-js"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 |
+  12 | //#region src/lib/version.ts
+  13 | const version = "2.117.2";
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 8027102ms] [ERROR] ./node_modules/@supabase/supabase-js/dist/index.mjs:10:1
+Error: Module not found: Can't resolve '@supabase/auth-js'
+   8 | export * from "@supabase/realtime-js"
+   9 |
+> 10 | export * from "@supabase/auth-js"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 |
+  12 | //#region src/lib/version.ts
+  13 | const version = "2.117.2";
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 8027103ms] [ERROR] ./node_modules/@supabase/supabase-js/dist/index.mjs:10:1
+Error: Module not found: Can't resolve '@supabase/auth-js'
+   8 | export * from "@supabase/realtime-js"
+   9 |
+> 10 | export * from "@supabase/auth-js"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 |
+  12 | //#region src/lib/version.ts
+  13 | const version = "2.117.2";
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 8027104ms] [ERROR] ./node_modules/@supabase/supabase-js/dist/index.mjs:10:1
+Error: Module not found: Can't resolve '@supabase/auth-js'
+   8 | export * from "@supabase/realtime-js"
+   9 |
+> 10 | export * from "@supabase/auth-js"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 |
+  12 | //#region src/lib/version.ts
+  13 | const version = "2.117.2";
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 8027105ms] [ERROR] ./node_modules/@supabase/supabase-js/dist/index.mjs:10:1
+Error: Module not found: Can't resolve '@supabase/auth-js'
+   8 | export * from "@supabase/realtime-js"
+   9 |
+> 10 | export * from "@supabase/auth-js"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 |
+  12 | //#region src/lib/version.ts
+  13 | const version = "2.117.2";
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 8029493ms] [ERROR] ./node_modules/@supabase/supabase-js/dist/index.mjs:10:1
+Error: Module not found: Can't resolve '@supabase/auth-js'
+   8 | export * from "@supabase/realtime-js"
+   9 |
+> 10 | export * from "@supabase/auth-js"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 |
+  12 | //#region src/lib/version.ts
+  13 | const version = "2.117.2";
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 8029494ms] [ERROR] ./node_modules/@supabase/supabase-js/dist/index.mjs:10:1
+Error: Module not found: Can't resolve '@supabase/auth-js'
+   8 | export * from "@supabase/realtime-js"
+   9 |
+> 10 | export * from "@supabase/auth-js"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 |
+  12 | //#region src/lib/version.ts
+  13 | const version = "2.117.2";
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 8031884ms] [ERROR] ./node_modules/@supabase/supabase-js/dist/index.mjs:10:1
+Error: Module not found: Can't resolve '@supabase/auth-js'
+   8 | export * from "@supabase/realtime-js"
+   9 |
+> 10 | export * from "@supabase/auth-js"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 |
+  12 | //#region src/lib/version.ts
+  13 | const version = "2.117.2";
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 8031885ms] [ERROR] ./node_modules/@supabase/supabase-js/dist/index.mjs:10:1
+Error: Module not found: Can't resolve '@supabase/auth-js'
+   8 | export * from "@supabase/realtime-js"
+   9 |
+> 10 | export * from "@supabase/auth-js"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 |
+  12 | //#region src/lib/version.ts
+  13 | const version = "2.117.2";
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 8031886ms] [ERROR] ./node_modules/@supabase/supabase-js/dist/index.mjs:10:1
+Error: Module not found: Can't resolve '@supabase/auth-js'
+   8 | export * from "@supabase/realtime-js"
+   9 |
+> 10 | export * from "@supabase/auth-js"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 |
+  12 | //#region src/lib/version.ts
+  13 | const version = "2.117.2";
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 8031886ms] [ERROR] ./node_modules/@supabase/supabase-js/dist/index.mjs:10:1
+Error: Module not found: Can't resolve '@supabase/auth-js'
+   8 | export * from "@supabase/realtime-js"
+   9 |
+> 10 | export * from "@supabase/auth-js"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 |
+  12 | //#region src/lib/version.ts
+  13 | const version = "2.117.2";
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 8031887ms] [ERROR] ./node_modules/@supabase/supabase-js/dist/index.mjs:10:1
+Error: Module not found: Can't resolve '@supabase/auth-js'
+   8 | export * from "@supabase/realtime-js"
+   9 |
+> 10 | export * from "@supabase/auth-js"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 |
+  12 | //#region src/lib/version.ts
+  13 | const version = "2.117.2";
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 8034260ms] [ERROR] ./node_modules/@supabase/supabase-js/dist/index.mjs:10:1
+Error: Module not found: Can't resolve '@supabase/auth-js'
+   8 | export * from "@supabase/realtime-js"
+   9 |
+> 10 | export * from "@supabase/auth-js"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 |
+  12 | //#region src/lib/version.ts
+  13 | const version = "2.117.2";
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 8034261ms] [ERROR] ./node_modules/@supabase/supabase-js/dist/index.mjs:10:1
+Error: Module not found: Can't resolve '@supabase/auth-js'
+   8 | export * from "@supabase/realtime-js"
+   9 |
+> 10 | export * from "@supabase/auth-js"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 |
+  12 | //#region src/lib/version.ts
+  13 | const version = "2.117.2";
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 8034261ms] [ERROR] ./node_modules/@supabase/supabase-js/dist/index.mjs:10:1
+Error: Module not found: Can't resolve '@supabase/auth-js'
+   8 | export * from "@supabase/realtime-js"
+   9 |
+> 10 | export * from "@supabase/auth-js"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 |
+  12 | //#region src/lib/version.ts
+  13 | const version = "2.117.2";
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 8036650ms] [ERROR] ./node_modules/@supabase/supabase-js/dist/index.mjs:10:1
+Error: Module not found: Can't resolve '@supabase/auth-js'
+   8 | export * from "@supabase/realtime-js"
+   9 |
+> 10 | export * from "@supabase/auth-js"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 |
+  12 | //#region src/lib/version.ts
+  13 | const version = "2.117.2";
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 8039029ms] [ERROR] ./node_modules/@supabase/supabase-js/dist/index.mjs:10:1
+Error: Module not found: Can't resolve '@supabase/auth-js'
+   8 | export * from "@supabase/realtime-js"
+   9 |
+> 10 | export * from "@supabase/auth-js"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 |
+  12 | //#region src/lib/version.ts
+  13 | const version = "2.117.2";
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 8039030ms] [ERROR] ./node_modules/@supabase/supabase-js/dist/index.mjs:10:1
+Error: Module not found: Can't resolve '@supabase/auth-js'
+   8 | export * from "@supabase/realtime-js"
+   9 |
+> 10 | export * from "@supabase/auth-js"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 |
+  12 | //#region src/lib/version.ts
+  13 | const version = "2.117.2";
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 8041399ms] [ERROR] ./node_modules/@supabase/supabase-js/dist/index.mjs:10:1
+Error: Module not found: Can't resolve '@supabase/auth-js'
+   8 | export * from "@supabase/realtime-js"
+   9 |
+> 10 | export * from "@supabase/auth-js"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 |
+  12 | //#region src/lib/version.ts
+  13 | const version = "2.117.2";
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 8041400ms] [ERROR] ./node_modules/@supabase/supabase-js/dist/index.mjs:10:1
+Error: Module not found: Can't resolve '@supabase/auth-js'
+   8 | export * from "@supabase/realtime-js"
+   9 |
+> 10 | export * from "@supabase/auth-js"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 |
+  12 | //#region src/lib/version.ts
+  13 | const version = "2.117.2";
+
+Import trace:
+  App Route:
+    ./node_modules/@supabase/supabase-js/dist/index.mjs
+    ./lib/supabaseClient.ts
+    ./app/api/chat/route.ts
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[ 8041401ms] [LOG] [Fast Refresh] rebuilding @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 8067672ms] [LOG] [Fast Refresh] done in 0ms @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 8120088ms] [LOG] [Fast Refresh] rebuilding @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 8367705ms] [LOG] [Fast Refresh] done in 245220ms @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 8408901ms] [LOG] [Fast Refresh] rebuilding @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 9013273ms] [WARNING] [Fast Refresh] performing full reload
+
+Fast Refresh will perform a full reload when you edit a file that's imported by modules outside of the React rendering tree.
+You might have a file which exports a React component but also exports a value that is imported by a non-React component file.
+Consider migrating the non-React component export to a separate file and importing it into both files.
+
+It is also possible the parent component of the component you edited is a class component, which disables Fast Refresh.
+Fast Refresh requires at least one parent function component in your React tree. @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 9013297ms] [LOG] [Fast Refresh] done in 604363ms @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776

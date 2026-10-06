@@ -14,7 +14,7 @@ export default function SermonsPage() {
   const sermons = getSermons();
 
   return (
-    <main className="container space-y-14 py-24">
+    <main className="container space-y-14 py-16 sm:py-20 lg:py-24">
       <section className="space-y-6 text-center">
         <SectionHeading
           title="Sermons"
@@ -35,6 +35,8 @@ export default function SermonsPage() {
               speaker={sermon.speaker}
               date={sermon.date}
               summary={sermon.summary}
+              videoUrl={sermon.videoUrl}
+              thumbnail={sermon.thumbnail}
             />
           ))}
         </section>

@@ -14,7 +14,7 @@ const sundaySchedule = [
 export function LivestreamBanner() {
   return (
     <motion.section initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }} className="readable-surface relative overflow-hidden rounded-[2.5rem] p-8">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(99,179,237,0.18),transparent),radial-gradient(circle_at_bottom_right,rgba(246,224,94,0.12),transparent)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(253,107,54,0.12),transparent),radial-gradient(circle_at_bottom_right,rgba(10,24,0,0.08),transparent)]" />
       <div className="relative grid gap-8 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
         <div className="space-y-5">
           <p className="text-sm font-semibold uppercase tracking-[0.24em] text-accent sm:tracking-[0.32em]">Live Stream</p>

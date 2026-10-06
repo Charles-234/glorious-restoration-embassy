@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Fraunces } from "next/font/google";
-import Script from "next/script";
+import { Merriweather, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/animated-navbar";
 import { Footer } from "@/components/footer";
@@ -8,8 +7,17 @@ import { PageTransition } from "@/components/page-transition";
 import { ThemeProvider } from "@/components/theme-provider";
 import { siteConfig } from "@/lib/siteData";
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
-const display = Fraunces({ subsets: ["latin"], variable: "--font-display" });
+const bodyFont = Plus_Jakarta_Sans({
+  subsets: ["latin"],
+  variable: "--font-body",
+  display: "swap"
+});
+const displayFont = Merriweather({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  variable: "--font-display",
+  display: "swap"
+});
 
 export const metadata: Metadata = {
   title: {
@@ -72,27 +80,15 @@ export const viewport: Viewport = {
   themeColor: [
     // These must match --background in globals.css, otherwise the browser
     // chrome colour does not line up with the page on mobile.
-    { media: "(prefers-color-scheme: light)", color: "#F9F7F3" },
-    { media: "(prefers-color-scheme: dark)", color: "#0B1222" }
+    { media: "(prefers-color-scheme: light)", color: "#fcf9f2" },
+    { media: "(prefers-color-scheme: dark)", color: "#091426" }
   ]
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.variable} ${display.variable} min-h-screen antialiased bg-background text-foreground font-sans`}>
-        <Script id="netlify-identity-redirect" strategy="afterInteractive">{`
-          if (window.netlifyIdentity) {
-            window.netlifyIdentity.on("init", user => {
-              if (!user) {
-                window.netlifyIdentity.on("login", () => {
-                  document.location.href = "/admin/";
-                });
-              }
-            });
-          }
-        `}</Script>
-        
+      <body className={`${bodyFont.variable} ${displayFont.variable} min-h-screen antialiased bg-background text-foreground font-sans`}>
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
           <div className="relative isolate min-h-screen flex flex-col">
         <Navbar />

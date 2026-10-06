@@ -12,7 +12,7 @@ export const metadata = {
 
 export default function ContactPage() {
   return (
-    <main className="container space-y-14 py-24">
+    <main className="container space-y-14 py-16 sm:py-20 lg:py-24">
       <section className="space-y-6 text-center">
         <SectionHeading title="Contact us" subtitle="We would love to hear from you." />
         <p className="mx-auto max-w-3xl text-base leading-8 text-muted-foreground">

@@ -1,0 +1,235 @@
+.background {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.background::after {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  background:
+    linear-gradient(
+      to bottom,
+      hsl(var(--background) / 0.25),
+      hsl(var(--background) / 0.35) 55%,
+      hsl(var(--background) / 0.48)
+    );
+  content: "";
+  pointer-events: none;
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
+}
+
+.image {
+  filter: brightness(0.72) contrast(1.05);
+}
+
+:global(.dark) .image {
+  filter: brightness(0.45) contrast(1.05);
+}
+
+.layer {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  opacity: 0;
+  transform: scale(1.045);
+  transition:
+    opacity 1.6s ease-in-out,
+    transform 8s ease-out;
+  will-change: opacity, transform;
+}
+
+.layerActive {
+  opacity: 1;
+  transform: scale(1.02);
+}
+
+.layerLeaving {
+  opacity: 0;
+  transform: scale(1.045);
+}
+
+.layerIncoming {
+  opacity: 0;
+  transform: scale(1.045);
+}
+
+.layerIncomingActive {
+  opacity: 1;
+  transform: scale(1.02);
+}
+
+.image {
+  object-fit: cover;
+}
+
+.controls {
+  position: fixed;
+  z-index: 50;
+  inset-inline-start: 50%;
+  inset-block-end: max(1rem, env(safe-area-inset-bottom));
+  display: flex;
+  width: min(100% - 2rem, 38rem);
+  min-height: 3.75rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.5rem 0.65rem 0.5rem 1rem;
+  border: 1px solid rgb(255 255 255 / 22%);
+  border-radius: 999px;
+  background: rgb(11 18 32 / 78%);
+  box-shadow: 0 0.75rem 2.5rem rgb(0 0 0 / 24%);
+  color: white;
+  transform: translateX(-50%);
+  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(18px);
+}
+
+.caption {
+  display: flex;
+  min-width: 0;
+  flex: 1 1 auto;
+  align-items: baseline;
+  gap: 0.65rem;
+  margin: 0;
+  overflow: hidden;
+  font-size: 0.75rem;
+  line-height: 1.25rem;
+}
+
+.captionTitle {
+  overflow: hidden;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.counter {
+  flex: 0 0 auto;
+  color: rgb(255 255 255 / 68%);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.actions,
+.dots {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+}
+
+.actions {
+  gap: 0.15rem;
+}
+
+.controlButton {
+  display: inline-grid;
+  width: 2.5rem;
+  height: 2.5rem;
+  flex: 0 0 auto;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  transition: background-color 160ms ease;
+}
+
+.controlButton svg {
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
+.dots {
+  gap: 0.35rem;
+  padding-inline: 0.25rem;
+}
+
+.dot {
+  display: block;
+  width: 0.45rem;
+  height: 0.45rem;
+  flex: 0 0 auto;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 48%);
+  cursor: pointer;
+  transition:
+    width 180ms ease,
+    background-color 180ms ease;
+}
+
+.dotActive {
+  width: 1rem;
+  background: white;
+}
+
+.controlButton:hover,
+.dot:hover {
+  background-color: rgb(255 255 255 / 18%);
+}
+
+.controlButton:focus-visible,
+.dot:focus-visible {
+  outline: 2px solid white;
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .layer {
+    transition: none;
+    transform: none;
+    will-change: auto;
+  }
+
+  .controlButton,
+  .dot {
+    transition: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .controls {
+    width: calc(100% - 1.25rem);
+    gap: 0.4rem;
+    padding-inline-start: 0.75rem;
+  }
+
+  .caption {
+    gap: 0.4rem;
+    font-size: 0.7rem;
+  }
+
+  .dots {
+    max-width: 3.5rem;
+    gap: 0.25rem;
+    overflow-x: auto;
+    padding-inline: 0;
+    scrollbar-width: none;
+  }
+
+  .dots::-webkit-scrollbar {
+    display: none;
+  }
+
+  .dot {
+    width: 0.35rem;
+    height: 0.35rem;
+  }
+
+  .dotActive {
+    width: 0.75rem;
+  }
+
+  .controlButton {
+    width: 2.15rem;
+    height: 2.25rem;
+  }
+}
