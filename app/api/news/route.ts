@@ -20,27 +20,32 @@ const dailyScriptures = [
 ] as const;
 const FEEDS = [
   {
-    name: "AllAfrica",
-    url: "https://allafrica.com/tools/headlines/rdf/africa/headlines.rdf",
-    publisherUrl: "https://allafrica.com/africa",
-    categories: ["Africa"] as FaithNewsCategory[],
+    name: "Faithwire",
+    url: "https://www.faithwire.com/feed/",
+    publisherUrl: "https://faithwire.com",
+    articleHosts: ["faithwire.com"],
+    categories: ["Faith"] as FaithNewsCategory[],
   },
   {
-    name: "Christian Daily (Africa)",
-    url: "https://www.christiandaily.com/africa?format=xml",
-    categories: ["Africa", "Faith"] as FaithNewsCategory[],
+    name: "Christian Newswire",
+    url: "https://www.christiannewswire.com/feed/",
+    publisherUrl: "https://christiannewswire.com",
+    articleHosts: ["christiannewswire.com"],
+    categories: ["Faith"] as FaithNewsCategory[],
   },
   {
-    name: "World History Encyclopedia",
-    url: "https://www.worldhistory.org/rss/",
-    publisherUrl: "https://www.worldhistory.org",
-    categories: ["Exploration"] as FaithNewsCategory[],
+    name: "Charisma News",
+    url: "https://mycharisma.com/category/news/feed/",
+    publisherUrl: "https://charismanews.com",
+    articleHosts: ["mycharisma.com"],
+    categories: ["Faith"] as FaithNewsCategory[],
   },
   {
-    name: "Biblical Archaeology Review",
-    url: "https://www.biblicalarchaeology.org/feed/",
-    publisherUrl: "https://www.biblicalarchaeology.org",
-    categories: ["Exploration"] as FaithNewsCategory[],
+    name: "Faith News Service",
+    url: "https://faithnewsservice.com/feed/",
+    publisherUrl: "https://faithnewsservice.com",
+    articleHosts: ["faithnewsservice.com"],
+    categories: ["Faith"] as FaithNewsCategory[],
   },
 ] as const;
 
@@ -62,6 +67,23 @@ function validHttpsUrl(value: unknown): string | null {
   } catch {
     return null;
   }
+}
+
+function plainTextSummary(value: unknown): string {
+  if (typeof value !== "string") return "";
+  return value.replace(/<[^>]*>/g, "").replace(/\s+/g, " ").trim().slice(0, 140);
+}
+
+function validPublisherArticleUrl(value: unknown, allowedHosts: readonly string[]): string | null {
+  const articleUrl = validHttpsUrl(value);
+  if (!articleUrl) return null;
+  const articleHost = new URL(articleUrl).hostname.toLowerCase().replace(/^www\./, "");
+  return allowedHosts.some((host) => {
+    const publisherHost = host.toLowerCase().replace(/^www\./, "");
+    return articleHost === publisherHost || articleHost.endsWith(`.${publisherHost}`);
+  })
+    ? articleUrl
+    : null;
 }
 
 async function fetchJson(url: string, revalidateSeconds: number): Promise<unknown> {
@@ -126,7 +148,7 @@ function parseNewsApi(data: unknown): FaithNewsArticle[] {
 
     return [{
       id: url,
-      title: article.title,
+      title: plainTextSummary(article.title),
       url,
       source,
       author: typeof article.author === "string" && article.author.trim()
@@ -135,6 +157,7 @@ function parseNewsApi(data: unknown): FaithNewsArticle[] {
       publishedAt: typeof article.publishedAt === "string" && Number.isFinite(Date.parse(article.publishedAt))
         ? new Date(article.publishedAt).toISOString()
         : null,
+      summary: plainTextSummary(article.description),
       imageUrl: thumbnailsEnabled ? validHttpsUrl(article.urlToImage) : null,
       categories,
     }];
@@ -156,7 +179,7 @@ async function fetchFeed(
 
   return data.items.flatMap((item) => {
     if (!isRecord(item) || typeof item.title !== "string" || !item.title.trim()) return [];
-    const articleUrl = validHttpsUrl(item.link);
+    const articleUrl = validPublisherArticleUrl(item.link, feed.articleHosts);
     if (!articleUrl) return [];
 
     const publishedAt = typeof item.pubDate === "string" && Number.isFinite(Date.parse(item.pubDate))
@@ -171,17 +194,19 @@ async function fetchFeed(
         : enclosure && typeof enclosure.link === "string"
           ? enclosure.link
           : null;
+    const summary = plainTextSummary(item.description);
 
     return [{
       id: articleUrl,
-      title: item.title,
+      title: plainTextSummary(item.title),
       url: articleUrl,
       source: feed.name,
       ...("publisherUrl" in feed ? { sourceAttributionUrl: feed.publisherUrl } : {}),
       author: typeof item.author === "string" && item.author.trim() ? item.author.trim() : null,
       publishedAt,
+      summary,
       imageUrl: thumbnailsEnabled ? validHttpsUrl(imageCandidate) : null,
-      categories: categoriesFor(item.title, feed.categories),
+      categories: categoriesFor(`${item.title} ${summary}`, feed.categories),
     }];
   });
 }

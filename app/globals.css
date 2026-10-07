@@ -1417,13 +1417,13 @@
   .gre-media-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 18px;
+    gap: 22px;
   }
 
   .gre-media-card {
     overflow: hidden;
-    border: 1px solid hsl(var(--border));
-    border-radius: 13px;
+    border: 1px solid hsl(var(--border) / 0.8);
+    border-radius: 16px;
     background: hsl(var(--card));
     box-shadow: var(--shadow-warm);
   }
@@ -1432,7 +1432,7 @@
     position: relative;
     display: block;
     width: 100%;
-    aspect-ratio: 16 / 10;
+    aspect-ratio: 4 / 3;
     overflow: hidden;
     background: hsl(var(--primary));
   }

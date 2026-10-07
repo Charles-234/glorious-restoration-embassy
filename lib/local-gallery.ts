@@ -4,10 +4,11 @@ import { reportSiteContentReadError } from "@/lib/cms-diagnostics";
 import { getPublicSupabaseClient } from "@/lib/public-supabase";
 
 export type GalleryMediaItem = {
-  kind: "image" | "video";
+  kind: "image" | "video" | "embed";
   src: string;
   title: string;
   alt: string;
+  poster?: string;
 };
 
 const imageExtensions = new Set([".jpg", ".jpeg", ".png", ".webp"]);
@@ -21,6 +22,54 @@ function getCmsImageUrl(payload: unknown): string | null {
   try {
     const url = new URL(image);
     return url.protocol === "https:" ? url.toString() : null;
+  } catch {
+    return null;
+  }
+}
+
+function getCmsVideoMedia(payload: unknown, title: string): GalleryMediaItem | null {
+  if (typeof payload !== "object" || payload === null || !("videoUrl" in payload)) return null;
+  const videoUrl = payload.videoUrl;
+  if (typeof videoUrl !== "string" || !videoUrl.trim()) return null;
+  const videoPoster = "videoPoster" in payload ? getCmsImageUrl({ image: payload.videoPoster }) ?? undefined : undefined;
+
+  try {
+    const url = new URL(videoUrl);
+    if (url.protocol !== "https:") return null;
+    const host = url.hostname.toLowerCase().replace(/^www\./, "");
+
+    if (host === "youtu.be" || host === "youtube.com" || host === "m.youtube.com") {
+      const videoId = host === "youtu.be" ? url.pathname.slice(1) : url.searchParams.get("v");
+      if (!videoId || !/^[\w-]{11}$/.test(videoId)) return null;
+      return {
+        kind: "embed",
+        src: `https://www.youtube-nocookie.com/embed/${videoId}`,
+        title,
+        alt: `Gallery video: ${title}`,
+        poster: videoPoster ?? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`,
+      };
+    }
+
+    if (host === "vimeo.com" || host === "player.vimeo.com") {
+      const videoId = url.pathname.split("/").filter(Boolean).pop();
+      if (!videoId || !/^\d+$/.test(videoId)) return null;
+      return {
+        kind: "embed",
+        src: `https://player.vimeo.com/video/${videoId}`,
+        title,
+        alt: `Gallery video: ${title}`,
+        poster: videoPoster,
+      };
+    }
+
+    if (!videoExtensions.has(path.extname(url.pathname).toLowerCase())) return null;
+    return {
+      kind: "video",
+      src: url.toString(),
+      title,
+      alt: `Gallery video: ${title}`,
+      poster: videoPoster,
+    };
   } catch {
     return null;
   }
@@ -41,19 +90,23 @@ async function readMediaDirectory(
       const publicPath = [directory, encodeURIComponent(entry.name)].filter(Boolean).join("/");
       const title = entry.name;
 
-      return {
+      const item: GalleryMediaItem = {
         kind,
         src: `/${publicPath}`,
         title,
         alt: `${kind === "image" ? "Gallery image" : "Gallery video"}: ${title}`,
       };
+      if (kind === "video") {
+        item.poster = `/${directory}/posters/${encodeURIComponent(path.parse(entry.name).name)}.jpg`;
+      }
+      return item;
     })
     .sort((left, right) =>
       left.title.localeCompare(right.title, undefined, { numeric: true, sensitivity: "base" }),
     );
 }
 
-async function readCmsGalleryImages(): Promise<GalleryMediaItem[]> {
+async function readCmsGalleryMedia(): Promise<GalleryMediaItem[]> {
   try {
     const supabase = getPublicSupabaseClient();
     const { data, error } = await supabase
@@ -64,51 +117,41 @@ async function readCmsGalleryImages(): Promise<GalleryMediaItem[]> {
       .order("updated_at", { ascending: false });
 
     if (error) {
-      reportSiteContentReadError("published gallery images", error);
+      reportSiteContentReadError("published gallery media", error);
       return [];
     }
 
     return data.flatMap((row) => {
       const image = getCmsImageUrl(row.payload);
-      if (!image) return [];
-      return [{
-        kind: "image" as const,
-        src: image,
-        title: row.title,
-        alt: `Gallery image: ${row.title}`,
-      }];
+      const media: GalleryMediaItem[] = [];
+      if (image) {
+        media.push({
+          kind: "image",
+          src: image,
+          title: row.title,
+          alt: `Gallery image: ${row.title}`,
+        });
+      }
+      const video = getCmsVideoMedia(row.payload, row.title);
+      if (video) media.push(video);
+      return media;
     });
   } catch (error) {
-    console.error("[cms] Could not initialize Supabase for published gallery images.", error);
+    console.error("[cms] Could not initialize Supabase for published gallery media.", error);
     return [];
   }
 }
 
 export async function getLocalGalleryMedia(): Promise<GalleryMediaItem[]> {
-  const [rootImages, galleryImages, stitchImages, videos, cmsImages] = await Promise.all([
+  const [rootImages, galleryImages, stitchImages, videos, cmsMedia] = await Promise.all([
     readMediaDirectory("", "image"),
     readMediaDirectory("gallery", "image"),
     readMediaDirectory("stitch", "image"),
     readMediaDirectory("videos", "video"),
-    readCmsGalleryImages(),
+    readCmsGalleryMedia(),
   ]);
-  const images = [...cmsImages, ...rootImages, ...galleryImages, ...stitchImages];
-  const videoInsertionPoints = videos.map((_, index) =>
-    index === 0
-      ? Math.min(4, images.length)
-      : Math.round(4 + ((images.length - 4) * index) / videos.length),
-  );
-  const combined: GalleryMediaItem[] = [];
-  let videoIndex = 0;
-
-  images.forEach((image, index) => {
-    combined.push(image);
-    if (videoInsertionPoints[videoIndex] === index + 1) {
-      combined.push(videos[videoIndex]);
-      videoIndex += 1;
-    }
-  });
-
-  combined.push(...videos.slice(videoIndex));
-  return combined;
+  const images = [...cmsMedia.filter((item) => item.kind === "image"), ...rootImages, ...galleryImages, ...stitchImages];
+  const cmsVideos = cmsMedia.filter((item) => item.kind !== "image");
+  const allVideos = [...cmsVideos, ...videos];
+  return [...images, ...allVideos];
 }

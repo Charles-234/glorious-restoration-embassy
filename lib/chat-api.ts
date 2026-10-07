@@ -5,12 +5,16 @@ export const CHAT_CALL_LIMIT = 10;
 type AdmissionResult =
   | { status: "admitted"; used: number; remaining: number }
   | { status: "exhausted"; used: number; remaining: 0 }
+  | { status: "unlimited" }
   | { status: "unavailable"; message?: string };
+
+type QuotaAdmission = Exclude<AdmissionResult, { status: "unavailable" }>;
 
 export type ChatAuthorization =
   | {
       status: "authenticated";
-      admitCall: () => Promise<AdmissionResult>;
+      adminUnlimited?: boolean;
+      admitCall?: () => Promise<AdmissionResult>;
     }
   | { status: "unauthenticated" }
   | { status: "unavailable" };
@@ -30,14 +34,17 @@ const QUOTA_UNAVAILABLE =
 
 function withQuota(
   body: Record<string, unknown>,
-  used: number,
-  remaining: number,
+  admission: QuotaAdmission,
 ): Record<string, unknown> {
+  if (admission.status === "unlimited") {
+    return { ...body, quotaUnlimited: true };
+  }
+
   return {
     ...body,
-    quotaUsed: used,
+    quotaUsed: admission.used,
     quotaLimit: CHAT_CALL_LIMIT,
-    remainingCalls: remaining,
+    remainingCalls: admission.remaining,
     resetTimezone: "Africa/Nairobi",
   };
 }
@@ -87,24 +94,42 @@ export function createChatPostHandler({
     if (!query) {
       return NextResponse.json({ error: "Query is required." }, { status: 400 });
     }
+    if (query.length > 4000) {
+      return NextResponse.json(
+        { error: "Please keep your question under 4,000 characters." },
+        { status: 413 },
+      );
+    }
 
     const backendUrl = getBackendUrl();
     if (!backendUrl) {
+      console.error("[chat] FastAPI backend URL is not configured.");
       return NextResponse.json(
-        { error: "The FastAPI chat service is not configured." },
+        { error: "The AI assistant is temporarily unavailable. Please try again later." },
         { status: 503 },
       );
     }
 
     let admission: AdmissionResult;
-    try {
-      admission = await access.admitCall();
-    } catch (error) {
-      console.error("[chat] Supabase quota admission failed.", error);
-      return NextResponse.json(
-        { error: QUOTA_UNAVAILABLE, code: "CHAT_QUOTA_CHECK_FAILED" },
-        { status: 503 },
-      );
+    if (access.adminUnlimited) {
+      admission = { status: "unlimited" };
+    } else {
+      if (!access.admitCall) {
+        console.error("[chat] Authenticated user has no quota admission handler.");
+        return NextResponse.json(
+          { error: QUOTA_UNAVAILABLE, code: "CHAT_QUOTA_CHECK_FAILED" },
+          { status: 503 },
+        );
+      }
+      try {
+        admission = await access.admitCall();
+      } catch (error) {
+        console.error("[chat] Supabase quota admission failed.", error);
+        return NextResponse.json(
+          { error: QUOTA_UNAVAILABLE, code: "CHAT_QUOTA_CHECK_FAILED" },
+          { status: 503 },
+        );
+      }
     }
     if (admission.status === "unavailable") {
       return NextResponse.json(
@@ -114,18 +139,14 @@ export function createChatPostHandler({
     }
     if (admission.status === "exhausted") {
       return NextResponse.json(
-        withQuota(
-          { error: QUOTA_EXCEEDED, code: "CHAT_QUOTA_EXCEEDED" },
-          admission.used,
-          admission.remaining,
-        ),
+        withQuota({ error: QUOTA_EXCEEDED, code: "CHAT_QUOTA_EXCEEDED" }, admission),
         { status: 429 },
       );
     }
 
     const failureResponse = (error: string, status: number) =>
       NextResponse.json(
-        withQuota({ error }, admission.used, admission.remaining),
+        withQuota({ error }, admission),
         { status },
       );
 
@@ -139,22 +160,25 @@ export function createChatPostHandler({
       });
     } catch (error) {
       const isTimeout = error instanceof Error && error.name === "TimeoutError";
+      console.error("[chat] FastAPI backend request failed.", {
+        backendConfigured: Boolean(backendUrl),
+        errorName: error instanceof Error ? error.name : "UnknownError",
+        reason: error instanceof Error ? error.message : "Unknown transport failure",
+      });
       const message = isTimeout
-        ? "The AI assistant is waking up. Please try again in 30 seconds."
-        : "The AI assistant is offline. Please try again later.";
+        ? "The AI assistant is taking longer than expected. Please try again shortly."
+        : "The AI assistant is temporarily unavailable. Please try again later.";
       return failureResponse(message, isTimeout ? 504 : 503);
     }
 
     if (!response.ok) {
-      let errorMessage = `The chat service returned an error (${response.status}).`;
-      try {
-        const errorBody = (await response.json()) as { detail?: unknown; error?: unknown };
-        if (typeof errorBody.detail === "string") errorMessage = errorBody.detail.slice(0, 500);
-        else if (typeof errorBody.error === "string") errorMessage = errorBody.error.slice(0, 500);
-      } catch {
-        // Keep a useful status-based message when the upstream body is not JSON.
-      }
-      return failureResponse(errorMessage, response.status);
+      console.error("[chat] FastAPI backend returned a non-success response.", {
+        status: response.status,
+      });
+      return failureResponse(
+        "The AI assistant is temporarily unavailable. Please try again later.",
+        502,
+      );
     }
 
     let result: unknown;
@@ -173,19 +197,15 @@ export function createChatPostHandler({
 
     try {
       await saveConversation(query, chatResult.answer);
-    } catch {
-      // Keep analytics persistence best-effort, as before.
+    } catch (error) {
+      console.error("[chat] Could not persist the conversation.", error);
     }
 
     return NextResponse.json(
-      withQuota(
-        {
-          message: chatResult.answer,
-          ...(Array.isArray(chatResult.sources) ? { sources: chatResult.sources } : {}),
-        },
-        admission.used,
-        admission.remaining,
-      ),
+      withQuota({
+        message: chatResult.answer,
+        ...(Array.isArray(chatResult.sources) ? { sources: chatResult.sources } : {}),
+      }, admission),
     );
   };
 }

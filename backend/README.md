@@ -3,7 +3,7 @@
 FastAPI service for the church's document-backed research assistant. It exposes
 `GET /health`, `POST /api/chat`, and `POST /api/ingest`. At startup, it reads
 PDFs recursively from `content/documents/` in `GITHUB_REPO` and rebuilds the
-Chroma index using `BAAI/bge-small-en-v1.5`.
+vector index using `BAAI/bge-small-en-v1.5`.
 
 The daily limit of 10 admitted chat request attempts is enforced by the
 authenticated website's Next.js `POST /api/chat` route using Supabase and the
@@ -29,9 +29,14 @@ provider; if its client cannot initialize or an invocation fails, the assistant
 tries Gemini. Configure both `GROQ_API_KEY` and `GEMINI_API_KEY` to enable that
 fallback. Set `FRONTEND_URL` to the
 frontend origin; multiple comma-separated origins are supported. Provider keys
-are not needed for the health endpoint or local PDF ingestion. For local
-development, set `CHROMA_PERSIST_DIRECTORY=./chroma_db`. The embedding model
-runs locally; extracted text is not sent to an embedding API.
+are not needed for the health endpoint. Set `INGEST_API_TOKEN` to a long,
+random secret before enabling PDF ingestion; the ingest route rejects requests
+without its bearer token and is disabled when the setting is absent. For local
+development, set `VECTRIX_PERSIST_DIRECTORY=./vectrix_db`. The legacy
+`CHROMA_PERSIST_DIRECTORY` setting is also accepted when the Vectrix-specific
+setting is not present. The embedding model runs locally; extracted text is
+not sent to an embedding API. An empty knowledge collection skips vector search
+until it contains indexed documents.
 
 Start the API:
 
@@ -40,7 +45,10 @@ uvicorn main:app --reload --host 127.0.0.1 --port 8000
 ```
 
 Verify it at <http://127.0.0.1:8000/health>; the response is
-`{"status":"ok"}`.
+`{"status":"ok"}`. This confirms the API process is responsive; it does not
+make a provider request or verify that configured provider credentials are
+valid. Test an actual chat request separately when you are ready to use the
+configured provider.
 
 ## Index PDF sources
 
@@ -49,11 +57,13 @@ limited to 25 MiB):
 
 ```powershell
 curl.exe -X POST http://127.0.0.1:8000/api/ingest `
+  -H "Authorization: Bearer $env:INGEST_API_TOKEN" `
   -F "files=@C:\path\to\book.pdf"
 ```
 
-The endpoint reports page and chunk counts. The Chroma collection is stored in
-`CHROMA_PERSIST_DIRECTORY`; the PDF originals stay where they are.
+The endpoint reports page and chunk counts. The Vectrix collection is stored
+in `VECTRIX_PERSIST_DIRECTORY` (or the legacy
+`CHROMA_PERSIST_DIRECTORY` setting); the PDF originals stay where they are.
 
 ## Optional polling Telegram bot
 

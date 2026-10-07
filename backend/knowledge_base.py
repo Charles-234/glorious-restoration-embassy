@@ -39,10 +39,9 @@ def get_db() -> Vectrix:
     global _db
     if _db is None:
         persist_dir = Path(
-            os.getenv(
-                "VECTRIX_PERSIST_DIRECTORY",
-                str(Path(__file__).with_name("vectrix_db")),
-            )
+            os.getenv("VECTRIX_PERSIST_DIRECTORY")
+            or os.getenv("CHROMA_PERSIST_DIRECTORY")
+            or str(Path(__file__).with_name("vectrix_db"))
         )
         persist_dir.mkdir(parents=True, exist_ok=True)
 
@@ -66,6 +65,8 @@ def reset_collection() -> None:
 def search_documents(query: str, limit: int = 5) -> list[dict[str, Any]]:
     """Search the document collection and return matching chunks."""
     db = get_db()
+    if db.count() == 0:
+        return []
 
     results = db.search(query, limit=min(max(limit, 1), 10))
 

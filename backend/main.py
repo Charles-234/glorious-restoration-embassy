@@ -1,3 +1,4 @@
+import hmac
 import logging
 import os
 from contextlib import asynccontextmanager
@@ -5,7 +6,7 @@ from pathlib import Path
 from typing import AsyncIterator
 
 from dotenv import load_dotenv
-from fastapi import FastAPI, File, HTTPException, UploadFile
+from fastapi import FastAPI, File, Header, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.concurrency import run_in_threadpool
 
@@ -29,6 +30,19 @@ async def lifespan(_: FastAPI) -> AsyncIterator[None]:
     yield
 
 MAX_PDF_SIZE_BYTES = 25 * 1024 * 1024
+
+
+def is_ingest_authorized(authorization: str | None, expected_token: str | None) -> bool:
+    if not expected_token or not authorization:
+        return False
+    scheme, separator, supplied_token = authorization.partition(" ")
+    return (
+        separator == " "
+        and scheme.lower() == "bearer"
+        and hmac.compare_digest(supplied_token, expected_token)
+    )
+
+
 frontend_urls = os.getenv(
     "FRONTEND_URL",
     "http://localhost:3000,http://localhost:3001",
@@ -72,7 +86,20 @@ async def health_rag() -> dict[str, object]:
 
 
 @app.post("/api/ingest")
-async def ingest(files: list[UploadFile] = File(...)) -> dict[str, object]:
+async def ingest(
+    files: list[UploadFile] = File(...),
+    authorization: str | None = Header(default=None),
+) -> dict[str, object]:
+    expected_token = os.getenv("INGEST_API_TOKEN")
+    if not expected_token:
+        logger.error("Document ingestion is disabled because INGEST_API_TOKEN is not configured.")
+        raise HTTPException(
+            status_code=503,
+            detail="Document ingestion is temporarily unavailable.",
+        )
+    if not is_ingest_authorized(authorization, expected_token):
+        raise HTTPException(status_code=401, detail="Authentication required.")
+
     if not files:
         raise HTTPException(status_code=400, detail="Upload at least one PDF.")
 

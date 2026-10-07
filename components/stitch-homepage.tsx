@@ -455,7 +455,7 @@ export function StitchHomepage({
               title="Gallery & Video Media Highlights"
               description="Photos and videos from Glorious Restoration Embassy."
             />
-            <LocalMediaGallery items={mediaItems} limit={8} />
+            <LocalMediaGallery items={mediaItems} limitPerKind={6} />
             <Link href="/gallery" className="gre-gallery-all-link">View all media <ArrowRight size={17} /></Link>
           </div>
         </section>

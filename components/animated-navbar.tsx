@@ -16,7 +16,7 @@ const navigation = [
   { label: "Sermons", href: "/sermons" },
   { label: "News", href: "/news" },
   { label: "Gallery", href: "/gallery" },
-  { label: "Gatherings", href: "/events" },
+  { label: "Events", href: "/events" },
   { label: "M-Pesa Giving", href: "/give" },
   { label: "Branches", href: "/branches" },
   { label: "Visit", href: "/contact" },

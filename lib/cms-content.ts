@@ -1,5 +1,5 @@
 export type CmsKind = "sermon" | "event" | "announcement" | "gallery" | "setting";
-export type CmsFieldType = "text" | "textarea" | "date" | "url" | "image" | "checkbox";
+export type CmsFieldType = "text" | "textarea" | "date" | "url" | "image" | "video" | "checkbox";
 
 export type CmsField = {
   name: string;
@@ -71,7 +71,9 @@ export const cmsCollections: CmsCollection[] = [
     kind: "gallery",
     label: "Gallery",
     fields: [
-      { name: "image", label: "Photo", type: "image", required: true },
+      { name: "image", label: "Photo", type: "image" },
+      { name: "videoUrl", label: "Video (MP4/WebM, YouTube, or Vimeo)", type: "video" },
+      { name: "videoPoster", label: "Video thumbnail URL (optional)", type: "image" },
       { name: "date", label: "Date taken", type: "date" },
     ],
   },

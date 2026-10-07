@@ -14,7 +14,7 @@ export const siteConfig = {
   phone: "+254721356430",
   phoneDisplay: "+254721356430",
   /** Digits only, for wa.me links. */
-  whatsapp: "254726791236",
+  whatsapp: "254721356430",
 
   // Broadcast channels
   facebookLive: "https://www.facebook.com/share/1Xob4wuJwK/",

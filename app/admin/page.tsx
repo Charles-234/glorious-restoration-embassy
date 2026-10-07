@@ -3,14 +3,15 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/utils/supabase/server";
 
 const dashboardSections = [
-  { title: "Sermons", table: "sermons", href: "/admin/sermons", description: "Manage messages and recordings." },
-  { title: "Events", table: "events", href: "/admin/events", description: "Manage upcoming church events." },
-  { title: "Posts", table: "posts", href: "/admin/posts", description: "Manage news and announcements." },
+  { title: "Sermons", kind: "sermon", href: "/cms?kind=sermon", description: "Manage messages and recordings." },
+  { title: "Events", kind: "event", href: "/cms?kind=event", description: "Manage upcoming church events." },
+  { title: "Announcements", kind: "announcement", href: "/cms?kind=announcement", description: "Manage news and church announcements." },
+  { title: "Gallery", kind: "gallery", href: "/cms?kind=gallery", description: "Manage published photos and videos." },
   {
-    title: "Prayer requests",
-    table: "prayer_requests",
+    title: "Prayer requests & enquiries",
+    kind: null,
     href: "/admin/prayer-requests",
-    description: "Review submitted prayer requests.",
+    description: "Review private prayer requests and church enquiries.",
   },
 ] as const;
 
@@ -37,19 +38,27 @@ export default async function AdminPage() {
     redirect("/admin/login?error=access_denied");
   }
 
-  const counts = await Promise.all(
-    dashboardSections.map(async ({ table }) => {
-      const { count, error } = await supabase
-        .from(table)
-        .select("*", { count: "exact", head: true });
+  const counts = await Promise.all(dashboardSections.map(async ({ kind }) => {
+      const result = kind
+        ? await supabase
+            .from("site_content")
+            .select("id", { count: "exact", head: true })
+            .eq("kind", kind)
+        : await supabase
+            .from("prayer_requests")
+            .select("admin_request_id", { count: "exact", head: true });
 
-      if (error) {
-        console.error(`[admin] Could not count ${table}.`, error);
+      if (result.error) {
+        console.error(`[admin] Could not count ${kind ?? "prayer requests and enquiries"}.`, {
+          code: result.error.code,
+          message: result.error.message,
+          details: result.error.details,
+          hint: result.error.hint,
+        });
         return null;
       }
-      return count ?? 0;
-    }),
-  );
+      return result.count ?? 0;
+    }));
 
   return (
     <main className="container space-y-10 py-14 sm:py-20">
@@ -72,10 +81,10 @@ export default async function AdminPage() {
         </form>
       </header>
 
-      <section aria-label="Content overview" className="grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
+      <section aria-label="Content overview" className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
         {dashboardSections.map((section, index) => (
           <Link
-            key={section.table}
+            key={section.title}
             href={section.href}
             className="readable-surface group rounded-[1.5rem] p-6 transition-[transform,border-color,box-shadow] duration-150 ease-out hover:-translate-y-1 hover:border-accent/50 hover:shadow-[var(--shadow-lift)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent active:scale-[0.98]"
           >

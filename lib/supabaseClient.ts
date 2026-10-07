@@ -22,8 +22,25 @@ export async function saveNewsletterSubscriber(email: string) {
   return ensureSupabase().from("newsletter").insert([{ email }]);
 }
 
-export async function submitContactMessage(name: string, email: string, message: string) {
-  return ensureSupabase().from("contacts").insert([{ name, email, message }]);
+export async function submitContactMessage(
+  name: string,
+  email: string,
+  message: string,
+  requestType: "prayer" | "enquiry",
+) {
+  return ensureSupabase()
+    .from("prayer_requests")
+    .insert([{
+      name,
+      email,
+      request: message,
+      is_private: true,
+      request_type: requestType,
+      status: "new",
+      privacy_consent: true,
+      privacy_consent_at: new Date().toISOString(),
+      privacy_notice_version: "2026-10-07",
+    }]);
 }
 
 export async function saveAIConversation(userQuestion: string, botResponse: string) {

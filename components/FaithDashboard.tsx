@@ -153,39 +153,36 @@ export function FaithDashboard() {
           <div className={styles.grid} aria-live="polite">
             {visibleArticles.length ? visibleArticles.map((article) => (
               <article className={styles.article} data-testid="news-article" key={article.id}>
-                {article.imageUrl && (
-                  <div className={styles.thumbnail}>
-                    <Image
-                      src={article.imageUrl}
-                      alt=""
-                      fill
-                      sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw"
-                      unoptimized
-                    />
-                  </div>
-                )}
-                <div className={styles.articleMeta}>
-                  {article.sourceAttributionUrl ? (
-                    <a className={styles.source} href={article.sourceAttributionUrl} target="_blank" rel="noopener noreferrer">
-                      {article.source}
-                    </a>
-                  ) : (
-                    <span className={styles.source}>{article.source}</span>
-                  )}
-                  <time dateTime={article.publishedAt ?? undefined}>
-                    {formatDate(article.publishedAt)}
-                  </time>
-                </div>
-                {article.author && <p className={styles.articleAuthor}>By {article.author}</p>}
-                <h3 className={styles.articleTitle}>{article.title}</h3>
                 <a
-                  className={styles.articleLink}
+                  className={styles.articleCardLink}
                   href={article.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label={`Read “${article.title}” at ${article.source}`}
+                  aria-label={`Read “${article.title}” directly at ${article.source}`}
                 >
-                  Read at source <ArrowUpRight size={15} aria-hidden="true" />
+                  {article.imageUrl && (
+                    <div className={styles.thumbnail}>
+                      <Image
+                        src={article.imageUrl}
+                        alt=""
+                        fill
+                        sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw"
+                        unoptimized
+                      />
+                    </div>
+                  )}
+                  <div className={styles.articleMeta}>
+                    <span className={styles.source}>{article.source}</span>
+                    <time dateTime={article.publishedAt ?? undefined}>
+                      {formatDate(article.publishedAt)}
+                    </time>
+                  </div>
+                  {article.author && <p className={styles.articleAuthor}>By {article.author}</p>}
+                  <h3 className={styles.articleTitle}>{article.title}</h3>
+                  {article.summary && <p className={styles.articleSummary}>{article.summary}</p>}
+                  <span className={styles.articleLink}>
+                    Read at source <ArrowUpRight size={15} aria-hidden="true" />
+                  </span>
                 </a>
               </article>
             )) : (

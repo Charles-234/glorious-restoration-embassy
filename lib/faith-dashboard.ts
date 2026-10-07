@@ -10,6 +10,7 @@ export interface FaithNewsArticle {
   sourceAttributionUrl?: string;
   author: string | null;
   publishedAt: string | null;
+  summary: string;
   imageUrl: string | null;
   categories: FaithNewsCategory[];
 }

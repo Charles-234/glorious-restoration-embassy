@@ -16,8 +16,8 @@ export default function ContactPage() {
       <section className="space-y-6 text-center">
         <SectionHeading title="Contact us" subtitle="We would love to hear from you." />
         <p className="mx-auto max-w-3xl text-base leading-8 text-muted-foreground">
-          For church enquiries, service times, a first visit, or ministry information, call us or
-          send a message and a member of the team will get back to you.
+          For church enquiries, service times, a first visit, ministry information, or a private
+          prayer request, send us a message. You can also continue to WhatsApp at {siteConfig.phoneDisplay}.
         </p>
       </section>
 

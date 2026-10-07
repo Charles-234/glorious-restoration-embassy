@@ -45,29 +45,6 @@ function parseQuotaResult(data: unknown) {
   };
 }
 
-function getQuotaAdmissionErrorMessage(error: unknown) {
-  if (typeof error !== "object" || error === null) {
-    return "We couldn't verify your AI assistant allowance. Please try again later.";
-  }
-
-  const record = error as Record<string, unknown>;
-  const code = typeof record.code === "string" ? record.code : "";
-  const details = typeof record.details === "string" ? record.details : "";
-  const message = typeof record.message === "string" ? record.message : "";
-  const combined = `${code} ${details} ${message}`.toLowerCase();
-
-  if (
-    ["PGRST205", "42P01", "42703", "42501"].includes(code) ||
-    combined.includes("admit_ai_chat_call") ||
-    combined.includes("ai_chat_daily_usage") ||
-    combined.includes("does not exist")
-  ) {
-    return "The AI assistant allowance is not configured in this Supabase project. Run the chat quota migration before using the assistant.";
-  }
-
-  return "We couldn't verify your AI assistant allowance. Please try again later.";
-}
-
 async function authorize(): Promise<ChatAuthorization> {
   let supabase;
   try {
@@ -100,25 +77,59 @@ async function authorize(): Promise<ChatAuthorization> {
   }
   if (!data.user) return { status: "unauthenticated" };
 
+  let adminChecks;
+  try {
+    adminChecks = await Promise.all([
+      supabase
+        .from("admin_users")
+        .select("id")
+        .eq("id", data.user.id)
+        .maybeSingle(),
+      supabase
+        .from("cms_admins")
+        .select("user_id")
+        .eq("user_id", data.user.id)
+        .maybeSingle(),
+    ]);
+  } catch (error) {
+    console.error("[chat] Administrator membership lookup failed.", error);
+    return { status: "unavailable" };
+  }
+
+  const [adminUserResult, cmsAdminResult] = adminChecks;
+  if (adminUserResult.error || cmsAdminResult.error) {
+    console.error("[chat] Administrator membership lookup returned an error.", {
+      adminUsers: adminUserResult.error
+        ? {
+            code: adminUserResult.error.code,
+            message: adminUserResult.error.message,
+          }
+        : null,
+      cmsAdmins: cmsAdminResult.error
+        ? {
+            code: cmsAdminResult.error.code,
+            message: cmsAdminResult.error.message,
+          }
+        : null,
+    });
+    return { status: "unavailable" };
+  }
+
+  const adminUnlimited = Boolean(adminUserResult.data || cmsAdminResult.data);
   return {
     status: "authenticated",
+    adminUnlimited,
     admitCall: async () => {
       let admissionResult;
       try {
         admissionResult = await supabase.rpc("admit_ai_chat_call");
       } catch (error) {
         console.error("[chat] Supabase quota admission RPC failed.", error);
-        return {
-          status: "unavailable" as const,
-          message: getQuotaAdmissionErrorMessage(error),
-        };
+        return { status: "unavailable" as const };
       }
       if (admissionResult.error) {
         console.error("[chat] Supabase quota admission RPC returned an error.", admissionResult.error);
-        return {
-          status: "unavailable" as const,
-          message: getQuotaAdmissionErrorMessage(admissionResult.error),
-        };
+        return { status: "unavailable" as const };
       }
       return parseQuotaResult(admissionResult.data);
     },

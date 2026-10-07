@@ -9,7 +9,12 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-export default async function CmsPage() {
+type CmsPageProps = {
+  searchParams: Promise<{ kind?: string }>;
+};
+
+export default async function CmsPage({ searchParams }: CmsPageProps) {
+  const params = await searchParams;
   const supabase = await createClient();
   const { data, error: authError } = await supabase.auth.getUser();
 
@@ -23,8 +28,17 @@ export default async function CmsPage() {
     .eq("user_id", data.user.id)
     .maybeSingle();
 
-  if (error) {
-    console.error("[cms] Could not verify CMS administrator membership.", error);
+  const { data: admin, error: adminError } = await supabase
+    .from("admin_users")
+    .select("id")
+    .eq("id", data.user.id)
+    .maybeSingle();
+
+  if (error || adminError) {
+    console.error("[cms] Could not verify CMS administrator membership.", {
+      membershipError: error,
+      adminError,
+    });
     return (
       <main className="container py-24">
         <section className="readable-surface mx-auto max-w-2xl space-y-4 rounded-[2rem] p-8">
@@ -39,7 +53,7 @@ export default async function CmsPage() {
     );
   }
 
-  if (!membership) {
+  if (!membership && !admin) {
     return (
       <main className="container py-24">
         <section className="readable-surface mx-auto max-w-2xl space-y-4 rounded-[2rem] p-8">
@@ -54,5 +68,7 @@ export default async function CmsPage() {
     );
   }
 
-  return <CmsWorkspace email={data.user.email ?? "Signed-in editor"} />;
+  const validKinds = ["sermon", "event", "announcement", "gallery", "setting"] as const;
+  const initialKind = validKinds.find((kind) => kind === params.kind) ?? "sermon";
+  return <CmsWorkspace email={data.user.email ?? "Signed-in editor"} initialKind={initialKind} />;
 }

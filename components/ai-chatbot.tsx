@@ -10,6 +10,7 @@ function getQuotaStatus(data: unknown) {
   if (!data || typeof data !== "object" || Array.isArray(data)) return null;
 
   const quota = data as Record<string, unknown>;
+  if (quota.quotaUnlimited === true) return "Unlimited AI access for administrators.";
   if (
     typeof quota.remainingCalls !== "number" ||
     !Number.isInteger(quota.remainingCalls) ||
@@ -140,7 +141,7 @@ export function AIChatbot() {
             <p className="text-sm uppercase tracking-[0.32em] text-accent">AI Chat Companion</p>
             <h2 className="text-xl md:text-2xl font-semibold text-foreground">Spiritual Guidance Chat</h2>
             <p aria-live="polite" className="mt-1 text-xs text-muted-foreground">
-              {quotaStatus ?? "Sign in for 10 AI questions each day"}
+              {quotaStatus ?? "Sign in to chat · 10 daily questions for members, unlimited for administrators"}
             </p>
             <p role="note" className="mt-2 max-w-xl text-xs leading-5 text-muted-foreground">
               AI responses can be inaccurate or incomplete. Research and verify important details

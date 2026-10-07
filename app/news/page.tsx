@@ -2,7 +2,7 @@ import { FaithDashboard } from "@/components/FaithDashboard";
 
 export const metadata = {
   title: "News & Daily Scripture",
-  description: "Selected headlines from Kenya and Africa, alongside John 14:6 in the World English Bible.",
+  description: "Attributed faith headlines from Christian news publishers, alongside a daily scripture.",
 };
 
 export default function NewsPage() {

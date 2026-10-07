@@ -41,10 +41,60 @@ function settingLabel(slug: string): string {
   return settingOptions.find((item) => item.slug === slug)?.label ?? slug;
 }
 
-export function CmsWorkspace({ email }: { email: string }) {
+async function captureVideoPoster(file: File): Promise<Blob | null> {
+  const video = document.createElement("video");
+  const objectUrl = URL.createObjectURL(file);
+  video.muted = true;
+  video.preload = "auto";
+  video.src = objectUrl;
+
+  try {
+    await new Promise<void>((resolve, reject) => {
+      video.onloadedmetadata = () => resolve();
+      video.onerror = () => reject(new Error("The video could not be decoded for its thumbnail."));
+      video.load();
+    });
+
+    const captureTime = Number.isFinite(video.duration) && video.duration > 1
+      ? Math.min(1, video.duration / 2)
+      : 0;
+    if (captureTime > 0) {
+      await new Promise<void>((resolve, reject) => {
+        video.onseeked = () => resolve();
+        video.onerror = () => reject(new Error("The video thumbnail frame could not be selected."));
+        video.currentTime = captureTime;
+      });
+    }
+
+    if (!video.videoWidth || !video.videoHeight) return null;
+    const canvas = document.createElement("canvas");
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    const context = canvas.getContext("2d");
+    if (!context) return null;
+    context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+    return await new Promise<Blob | null>((resolve) => {
+      canvas.toBlob(resolve, "image/jpeg", 0.82);
+    });
+  } finally {
+    video.pause();
+    video.removeAttribute("src");
+    video.load();
+    URL.revokeObjectURL(objectUrl);
+  }
+}
+
+export function CmsWorkspace({
+  email,
+  initialKind = "sermon",
+}: {
+  email: string;
+  initialKind?: CmsKind;
+}) {
   const router = useRouter();
   const [records, setRecords] = useState<CmsRecord[]>([]);
-  const [kind, setKind] = useState<CmsKind>("sermon");
+  const [kind, setKind] = useState<CmsKind>(initialKind);
   const [settingSlug, setSettingSlug] = useState<string>("hero");
   const [editingId, setEditingId] = useState<string | null>(null);
   const [title, setTitle] = useState("");
@@ -141,41 +191,75 @@ export function CmsWorkspace({ email }: { email: string }) {
     setPayload((current) => ({ ...current, [name]: value }));
   }
 
-  async function uploadImage(event: ChangeEvent<HTMLInputElement>, fieldName: string) {
+  async function uploadMedia(
+    event: ChangeEvent<HTMLInputElement>,
+    fieldName: string,
+    mediaKind: "image" | "video",
+  ) {
     const file = event.currentTarget.files?.[0];
     event.currentTarget.value = "";
     if (!file) return;
-    if (!file.type.startsWith("image/")) {
-      setError("Choose an image file.");
+    const validType = mediaKind === "image"
+      ? file.type.startsWith("image/")
+      : ["video/mp4", "video/webm"].includes(file.type);
+    if (!validType) {
+      setError(mediaKind === "image" ? "Choose an image file." : "Choose an MP4 or WebM video.");
       return;
     }
-    if (file.size > 10 * 1024 * 1024) {
-      setError("Images must be 10 MB or smaller.");
+    const maxBytes = mediaKind === "image" ? 10 * 1024 * 1024 : 50 * 1024 * 1024;
+    if (file.size > maxBytes) {
+      setError(mediaKind === "image"
+        ? "Images must be 10 MB or smaller."
+        : "Videos must be 50 MB or smaller.");
       return;
     }
 
     setSaving(true);
     setError(null);
     setMessage(null);
+    if (mediaKind === "video") setField("videoPoster", "");
 
     const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "-");
     const filePath = `${crypto.randomUUID()}-${safeName}`;
-    const supabase = createClient();
-    const { error: uploadError } = await supabase.storage
-      .from("cms-media")
-      .upload(filePath, file, { contentType: file.type, upsert: false });
+    try {
+      const supabase = createClient();
+      const { error: uploadError } = await supabase.storage
+        .from("media")
+        .upload(filePath, file, { contentType: file.type, upsert: false });
 
-    if (uploadError) {
-      console.error("[cms] Image upload failed.", uploadError);
-      setError("Image upload failed. Confirm the CMS media policies are installed.");
+      if (uploadError) {
+        console.error(`[cms] ${mediaKind} upload failed.`, uploadError);
+        setError(`The ${mediaKind} upload failed. Check the media bucket and administrator storage policies.`);
+        return;
+      }
+
+      const { data } = supabase.storage.from("media").getPublicUrl(filePath);
+      setField(fieldName, data.publicUrl);
+      if (mediaKind === "video") {
+        try {
+          const poster = await captureVideoPoster(file);
+          if (poster) {
+            const posterPath = `posters/${crypto.randomUUID()}.jpg`;
+            const { error: posterError } = await supabase.storage
+              .from("media")
+              .upload(posterPath, poster, { contentType: "image/jpeg", upsert: false });
+            if (posterError) throw posterError;
+            const posterUrl = supabase.storage.from("media").getPublicUrl(posterPath).data.publicUrl;
+            setField("videoPoster", posterUrl);
+          }
+        } catch (posterError) {
+          console.error("[cms] Could not generate or upload the video thumbnail.", posterError);
+          setMessage("Video uploaded. Its thumbnail could not be generated; the item can still be saved.");
+          return;
+        }
+      }
+      setMessage(`${mediaKind === "image" ? "Image" : "Video"} uploaded. Save the content item to publish it.`);
+    } catch (uploadError) {
+      console.error(`[cms] ${mediaKind} upload request failed.`, uploadError);
+      setError(`The ${mediaKind} upload could not reach Supabase Storage.`);
+    } finally {
       setSaving(false);
-      return;
     }
-
-    const { data } = supabase.storage.from("cms-media").getPublicUrl(filePath);
-    setField(fieldName, data.publicUrl);
-    setMessage("Image uploaded. Save the content item to publish its image.");
-    setSaving(false);
   }
 
   async function saveRecord(event: FormEvent<HTMLFormElement>) {
@@ -193,6 +277,10 @@ export function CmsWorkspace({ email }: { email: string }) {
     const contentTitle = kind === "setting" ? settingLabel(settingSlug) : title.trim();
     if (kind !== "setting" && !contentTitle) {
       setError("A title is required.");
+      return;
+    }
+    if (kind === "gallery" && !payload.image && !payload.videoUrl) {
+      setError("Add a photo or video before saving this gallery item.");
       return;
     }
 
@@ -316,7 +404,8 @@ export function CmsWorkspace({ email }: { email: string }) {
       );
     }
 
-    if (field.type === "image") {
+    if (field.type === "image" || field.type === "video") {
+      const isImage = field.type === "image";
       return (
         <label key={field.name} htmlFor={common.id} className="block text-sm font-medium text-foreground">
           {field.label}
@@ -325,14 +414,16 @@ export function CmsWorkspace({ email }: { email: string }) {
             type="url"
             value={typeof value === "string" ? value : ""}
             onChange={(event) => setField(field.name, event.target.value)}
-            placeholder="https://…"
+            placeholder={isImage ? "https://…" : "https://… (or upload MP4/WebM)"}
           />
-          <span className="mt-2 block text-xs text-muted-foreground">Or upload an image (10 MB max)</span>
+          <span className="mt-2 block text-xs text-muted-foreground">
+            Or upload {isImage ? "an image (10 MB max)" : "an MP4/WebM video (50 MB max)"}.
+          </span>
           <input
             type="file"
-            accept="image/*"
+            accept={isImage ? "image/*" : "video/mp4,video/webm"}
             disabled={saving}
-            onChange={(event) => void uploadImage(event, field.name)}
+            onChange={(event) => void uploadMedia(event, field.name, isImage ? "image" : "video")}
             className="mt-2 block w-full text-sm text-muted-foreground file:mr-3 file:rounded-full file:border-0 file:bg-secondary file:px-4 file:py-2 file:font-semibold file:text-secondary-foreground"
           />
         </label>
@@ -405,19 +496,29 @@ export function CmsWorkspace({ email }: { email: string }) {
           </div>
 
           {kind === "setting" && (
-            <label htmlFor="cms-setting" className="mb-5 block text-sm font-medium text-foreground">
-              Setting
-              <select
-                id="cms-setting"
-                value={settingSlug}
-                onChange={(event) => chooseSetting(event.target.value)}
-                className="mt-2 w-full rounded-xl border border-border bg-card px-4 py-3 text-foreground"
-              >
-                {settingOptions.map((option) => (
-                  <option key={option.slug} value={option.slug}>{option.label}</option>
-                ))}
-              </select>
-            </label>
+            <div className="mb-5 space-y-4">
+              <label htmlFor="cms-setting" className="block text-sm font-medium text-foreground">
+                Setting
+                <select
+                  id="cms-setting"
+                  value={settingSlug}
+                  onChange={(event) => chooseSetting(event.target.value)}
+                  className="mt-2 w-full rounded-xl border border-border bg-card px-4 py-3 text-foreground"
+                >
+                  {settingOptions.map((option) => (
+                    <option key={option.slug} value={option.slug}>{option.label}</option>
+                  ))}
+                </select>
+              </label>
+              <p className="rounded-xl border border-border bg-muted/40 p-4 text-sm leading-6 text-muted-foreground">
+                <strong className="text-foreground">What these settings change:</strong>{" "}
+                Homepage hero controls the front-page heading, introduction, and two call-to-action
+                labels. Pastor profile updates the pastor name, title, biography, portrait, and
+                contact email. Giving section changes the giving page heading, description, and
+                button label. Saving a setting publishes it immediately; use the matching public
+                page to confirm the result.
+              </p>
+            </div>
           )}
 
           <form onSubmit={(event) => void saveRecord(event)} className="space-y-5">

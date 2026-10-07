@@ -6,41 +6,63 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { siteConfig } from "@/lib/siteData";
 
+type RequestType = "enquiry" | "prayer";
+
 export function ContactForm() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
+  const [requestType, setRequestType] = useState<RequestType>("enquiry");
+  const [privacyConsent, setPrivacyConsent] = useState(false);
+  const [whatsappUrl, setWhatsappUrl] = useState<string | null>(null);
   const [status, setStatus] = useState<{ type: "success" | "error" | "loading" | null; message?: string }>({ type: null });
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     
-    if (!name.trim() || !email.trim() || !message.trim()) {
-      setStatus({ type: "error", message: "Please fill in all fields." });
+    if (!name.trim() || !email.trim() || !message.trim() || !privacyConsent) {
+      setStatus({ type: "error", message: "Complete all fields and agree to the privacy notice." });
       return;
     }
 
     setStatus({ type: "loading" });
+    const label = requestType === "prayer" ? "Private prayer request" : "Church enquiry";
+    const whatsappText = [
+      `*${label}*`,
+      `Name: ${name.trim()}`,
+      `Email: ${email.trim()}`,
+      message.trim(),
+    ].join("\n");
+    setWhatsappUrl(`https://wa.me/${siteConfig.whatsapp}?text=${encodeURIComponent(whatsappText)}`);
     
     try {
       const response = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, message })
+        body: JSON.stringify({ name, email, message, requestType, privacyConsent })
       });
       
       const result = await response.json();
       
       if (!response.ok) {
-        setStatus({ type: "error", message: result.error || "Failed to send message. Please try again." });
+        setStatus({
+          type: "error",
+          message: `${result.error || "The message could not be saved."} You can still send it directly in WhatsApp.`,
+        });
       } else {
-        setStatus({ type: "success", message: "Thank you! Your message has been received. We'll get back to you soon." });
-        setName("");
-        setEmail("");
-        setMessage("");
+        const successMessage = result.emailSent
+          ? `Saved privately and emailed to ${siteConfig.email}.`
+          : "Saved privately, but the church email notification could not be sent. Please continue in WhatsApp.";
+        setStatus({
+          type: "success",
+          message: successMessage,
+        });
       }
-    } catch (error) {
-      setStatus({ type: "error", message: "Network error. Please check your connection." });
+    } catch {
+      setStatus({
+        type: "error",
+        message: "The message could not be saved. You can still send it directly in WhatsApp.",
+      });
     }
   };
 
@@ -69,6 +91,35 @@ export function ContactForm() {
           />
         </label>
       </div>
+
+      <label className="block text-sm font-semibold text-foreground">
+        Message type
+        <select
+          className="mt-2 w-full rounded-xl border border-border bg-card px-4 py-3 text-foreground"
+          value={requestType}
+          onChange={(event) => setRequestType(event.target.value as RequestType)}
+        >
+          <option value="enquiry">Church enquiry</option>
+          <option value="prayer">Private prayer request</option>
+        </select>
+      </label>
+
+      <label className="flex items-start gap-3 text-sm leading-6 text-muted-foreground">
+        <input
+          type="checkbox"
+          className="mt-1 size-4 accent-primary"
+          checked={privacyConsent}
+          onChange={(event) => setPrivacyConsent(event.target.checked)}
+          required
+        />
+        <span>
+          I agree that Glorious Restoration Embassy may use these details to respond to my message
+          as explained in the{" "}
+          <a href="/privacy" target="_blank" rel="noopener noreferrer" className="underline underline-offset-4">
+            Privacy Policy
+          </a>.
+        </span>
+      </label>
 
       <label className="block text-sm font-semibold text-foreground">
         How can we help?
@@ -105,9 +156,20 @@ export function ContactForm() {
         </div>
       </div>
       
-      {/* Fallback notice when Supabase is not configured */}
-      <p className="text-xs text-muted-foreground/60">
-        Having trouble? You can also email us directly at {siteConfig.email}
+      {whatsappUrl && (
+        <a
+          className="btn btn-secondary inline-flex"
+          href={whatsappUrl}
+          target="_blank"
+          rel="noreferrer"
+        >
+          Continue to WhatsApp · {siteConfig.phoneDisplay}
+        </a>
+      )}
+
+      <p className="text-xs text-muted-foreground">
+        Submissions are saved for authorized church administrators. To send a copy directly, use
+        the WhatsApp link after submitting and press Send in WhatsApp.
       </p>
     </form>
   );
