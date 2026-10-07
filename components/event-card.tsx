@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import { CalendarDays } from "lucide-react";
 import { Card } from "@/components/ui/card";
 
@@ -10,12 +11,24 @@ interface EventCardProps {
   venue: string;
   description: string;
   badge: string;
+  image?: string;
 }
 
-export function EventCard({ title, date, venue, description, badge }: EventCardProps) {
+export function EventCard({ title, date, venue, description, badge, image }: EventCardProps) {
   return (
     <motion.article whileHover={{ y: -6 }} transition={{ type: "spring", stiffness: 150 }} className="group">
       <Card className="space-y-5">
+        {image ? (
+          <div className="relative aspect-video overflow-hidden rounded-2xl bg-muted">
+            <Image
+              src={image}
+              alt={title}
+              fill
+              sizes="(max-width: 768px) 100vw, 33vw"
+              unoptimized
+            />
+          </div>
+        ) : null}
         <div className="flex items-start justify-between gap-4">
           <div>
             <p className="text-xs uppercase tracking-[0.32em] text-accent">{badge}</p>

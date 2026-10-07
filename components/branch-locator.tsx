@@ -17,8 +17,23 @@ export function BranchLocator() {
             <MapPin size={22} />
             <h3 className="text-xl font-semibold text-foreground">{branch.city}</h3>
           </div>
+          <p className="mt-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+            {branch.kind}
+          </p>
           <p className="mt-4 text-sm leading-7 text-muted-foreground">{branch.address}</p>
-          <p className="mt-3 text-sm text-muted-foreground">{branch.phone}</p>
+          {branch.coordinates && (
+            <p className="mt-3 text-sm font-medium text-foreground">{branch.coordinates}</p>
+          )}
+          {branch.mapsUrl && (
+            <a
+              className="mt-4 inline-flex text-sm font-semibold text-accent underline-offset-4 hover:underline"
+              href={branch.mapsUrl}
+              target="_blank"
+              rel="noreferrer"
+            >
+              View on Google Maps
+            </a>
+          )}
         </motion.article>
       ))}
     </div>

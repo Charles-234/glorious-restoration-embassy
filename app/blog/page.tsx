@@ -4,14 +4,15 @@ import { Card } from "@/components/ui/card";
 import { getAnnouncements, getSermons } from "@/lib/content";
 import { siteConfig } from "@/lib/siteData";
 
+export const dynamic = "force-dynamic";
+
 export const metadata = {
   title: `Blog — ${siteConfig.brandName}`,
   description: `News, teaching highlights and announcements from ${siteConfig.brandName}.`
 };
 
-export default function BlogPage() {
-  const announcements = getAnnouncements();
-  const sermons = getSermons();
+export default async function BlogPage() {
+  const [announcements, sermons] = await Promise.all([getAnnouncements(), getSermons()]);
 
   return (
     <main className="container space-y-14 py-24">
@@ -47,29 +48,31 @@ export default function BlogPage() {
         </section>
       )}
 
-      <section className="space-y-6">
-        <h2 className="text-2xl font-semibold text-foreground">Latest messages</h2>
-        <div className="grid gap-6 md:grid-cols-2">
-          {sermons.slice(0, 4).map((sermon) => (
-            <Card key={`${sermon.title}-${sermon.date}`} className="space-y-3">
-              <p className="text-xs font-semibold uppercase tracking-[0.28em] text-accent">
-                {sermon.date}
-              </p>
-              <h3 className="text-xl font-semibold text-foreground">{sermon.title}</h3>
-              <p className="text-sm leading-7 text-muted-foreground">{sermon.summary}</p>
-              <p className="text-sm text-muted-foreground">{sermon.speaker}</p>
-            </Card>
-          ))}
-        </div>
-        <div className="flex flex-col gap-3 sm:flex-row">
-          <Link href="/sermons" className="btn btn-primary">
-            Browse all sermons
-          </Link>
-          <Link href="/livestream" className="btn btn-secondary">
-            Watch live
-          </Link>
-        </div>
-      </section>
+      {sermons.length > 0 && (
+        <section className="space-y-6">
+          <h2 className="text-2xl font-semibold text-foreground">Latest messages</h2>
+          <div className="grid gap-6 md:grid-cols-2">
+            {sermons.slice(0, 4).map((sermon) => (
+              <Card key={`${sermon.title}-${sermon.date}`} className="space-y-3">
+                <p className="text-xs font-semibold uppercase tracking-[0.28em] text-accent">
+                  {sermon.date}
+                </p>
+                <h3 className="text-xl font-semibold text-foreground">{sermon.title}</h3>
+                <p className="text-sm leading-7 text-muted-foreground">{sermon.summary}</p>
+                <p className="text-sm text-muted-foreground">{sermon.speaker}</p>
+              </Card>
+            ))}
+          </div>
+          <div className="flex flex-col gap-3 sm:flex-row">
+            <Link href="/sermons" className="btn btn-primary">
+              Browse all sermons
+            </Link>
+            <Link href="/livestream" className="btn btn-secondary">
+              Watch live
+            </Link>
+          </div>
+        </section>
+      )}
     </main>
   );
 }

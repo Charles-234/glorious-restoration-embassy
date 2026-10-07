@@ -2,7 +2,7 @@ import { AIChatbot } from "@/components/ai-chatbot";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { Card } from "@/components/ui/card";
 import { siteConfig } from "@/lib/siteData";
-import { MessageCircle, Lightbulb, BookOpen, Heart } from "lucide-react";
+import { MessageCircle, Lightbulb, BookOpen } from "lucide-react";
 
 
 export const metadata = {
@@ -22,12 +22,6 @@ const chatSuggestions = [
     description: "Get biblical advice and encouragement for your faith journey",
     icon: Lightbulb,
     example: "How can I find peace in difficult times?"
-  },
-  {
-    title: "Prayer Requests",
-    description: "Share your prayer needs and get comforting scripture references",
-    icon: Heart,
-    example: "Please pray for my family situation"
   },
   {
     title: "Church Information",
@@ -52,7 +46,7 @@ export default function ChatPage() {
         </p>
       </section>
 
-      <section className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+      <section className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {chatSuggestions.map((suggestion, index) => {
           const Icon = suggestion.icon;
           return (

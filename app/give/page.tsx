@@ -3,6 +3,8 @@ import { GivingPanel } from "@/components/giving-panel";
 import { getDonationInfo } from "@/lib/content";
 import { siteConfig } from "@/lib/siteData";
 
+export const dynamic = "force-dynamic";
+
 /**
  * The navbar "Give" button points here. Before this route existed the button
  * was a dead link (HTTP 404).
@@ -12,8 +14,8 @@ export const metadata = {
   description: `Give securely to ${siteConfig.brandName} — tithes, offerings, missions and the building fund.`
 };
 
-export default function GivePage() {
-  const donation = getDonationInfo();
+export default async function GivePage() {
+  const donation = await getDonationInfo();
 
   return (
     <main className="container space-y-14 py-16 sm:py-20 lg:py-24">

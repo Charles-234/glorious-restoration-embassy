@@ -4,25 +4,25 @@ import { SermonCard } from "@/components/sermon-card";
 import { getSermons } from "@/lib/content";
 import { siteConfig } from "@/lib/siteData";
 
+export const dynamic = "force-dynamic";
+
 export const metadata = {
   title: `Sermons — ${siteConfig.brandName}`,
-  description:
-    "Listen back to recent messages and catch up on the teaching series from our Sunday gatherings."
+  description: "Sermon recordings and YouTube links will appear here when available."
 };
 
-export default function SermonsPage() {
-  const sermons = getSermons();
+export default async function SermonsPage() {
+  const sermons = await getSermons();
 
   return (
     <main className="container space-y-14 py-16 sm:py-20 lg:py-24">
       <section className="space-y-6 text-center">
         <SectionHeading
           title="Sermons"
-          subtitle="Messages from our Sunday gatherings, ready to revisit any day of the week."
+          subtitle="Sermon recordings and YouTube links will appear here when available."
         />
         <p className="mx-auto max-w-3xl text-base leading-8 text-muted-foreground">
-          Every message is recorded and published here so you can keep growing in the Word, even when
-          you cannot be with us in person.
+          This page will be updated as sermon recordings become available.
         </p>
       </section>
 
@@ -35,16 +35,15 @@ export default function SermonsPage() {
               speaker={sermon.speaker}
               date={sermon.date}
               summary={sermon.summary}
-              videoUrl={sermon.videoUrl}
               thumbnail={sermon.thumbnail}
+              videoUrl={sermon.videoUrl}
             />
           ))}
         </section>
       ) : (
         <section className="readable-surface rounded-[2rem] p-8 text-center">
           <p className="text-base leading-8 text-muted-foreground">
-            Our sermon library is being prepared. Please check back soon, or watch the livestream on
-            Sunday.
+            There are no sermon recordings to display yet.
           </p>
         </section>
       )}

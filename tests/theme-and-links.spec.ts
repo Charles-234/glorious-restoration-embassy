@@ -2,8 +2,8 @@ import { test, expect } from '@playwright/test';
 
 /** Light and dark are the only two themes this site ships. */
 const THEMES = [
-  { name: 'light', token: 'rgb(249, 247, 243)' },
-  { name: 'dark', token: 'rgb(11, 18, 34)' },
+  { name: 'light', token: 'rgb(236, 231, 223)' },
+  { name: 'dark', token: 'rgb(9, 20, 37)' },
 ] as const;
 
 const THEME_ROUTES = ['/', '/sermons', '/gallery', '/contact'];
@@ -89,7 +89,7 @@ test.describe('SEO plumbing', () => {
     const xml = await response.text();
     expect(xml).toContain('<urlset');
 
-    for (const route of ['/sermons', '/events', '/contact', '/give', '/privacy', '/terms']) {
+    for (const route of ['/sermons', '/news', '/events', '/contact', '/give', '/privacy', '/terms']) {
       expect(xml, `sitemap is missing ${route}`).toMatch(new RegExp(`<loc>[^<]*${route}</loc>`));
     }
   });

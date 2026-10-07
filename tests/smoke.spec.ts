@@ -9,6 +9,7 @@ export const PUBLIC_ROUTES = [
   '/about',
   '/ministries',
   '/sermons',
+  '/news',
   '/events',
   '/gallery',
   '/livestream',

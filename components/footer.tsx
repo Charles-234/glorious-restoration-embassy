@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
+import { siteConfig } from "@/lib/siteData";
 
 const footerGroups = [
   {
@@ -17,7 +18,7 @@ const footerGroups = [
     links: [
       ["Our Faith & Vision", "/about"],
       ["Ministries & Groups", "/#life-at-the-embassy"],
-      ["Contact & Prayer", "/contact"],
+      ["Contact us", "/contact"],
       ["M-Pesa & Giving", "/give"],
     ],
   },
@@ -57,7 +58,10 @@ export function Footer() {
             <p className="gre-eyebrow">Join the service</p>
             <h2>Worship with us.</h2>
             <Link href="/livestream" className="gre-footer-watch">Watch Live <ArrowUpRight size={16} /></Link>
-            <Link href="/chat" className="gre-footer-chat">Contact &amp; Prayer</Link>
+            <Link href="/chat" className="gre-footer-chat">AI Assistant</Link>
+            <Link href={`tel:${siteConfig.phone}`} className="gre-footer-chat">
+              Church enquiries · {siteConfig.phoneDisplay}
+            </Link>
           </div>
         </div>
         <div className="gre-footer-bottom">

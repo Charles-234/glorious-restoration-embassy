@@ -8,25 +8,26 @@ import {
   useState,
   type TransitionEvent,
 } from "react";
-import { ChevronLeft, ChevronRight, Pause, Play } from "lucide-react";
-import { galleryItems } from "@/lib/siteData";
+import type { GalleryMediaItem } from "@/lib/local-gallery";
 import styles from "./gallery-background.module.css";
 
 interface GalleryBackgroundProps {
+  items: GalleryMediaItem[];
   className?: string;
   intervalMs?: number;
 }
 
-function chooseDifferentIndex(currentIndex: number): number {
-  if (galleryItems.length < 2) {
+function chooseDifferentIndex(currentIndex: number, itemCount: number): number {
+  if (itemCount < 2) {
     return currentIndex;
   }
 
-  const randomIndex = Math.floor(Math.random() * (galleryItems.length - 1));
+  const randomIndex = Math.floor(Math.random() * (itemCount - 1));
   return randomIndex >= currentIndex ? randomIndex + 1 : randomIndex;
 }
 
 export function GalleryBackground({
+  items,
   className,
   intervalMs = 8_000,
 }: GalleryBackgroundProps) {
@@ -34,8 +35,6 @@ export function GalleryBackground({
   const [incomingIndex, setIncomingIndex] = useState<number | null>(null);
   const [isFading, setIsFading] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(true);
-  const [startedManually, setStartedManually] = useState(false);
   const activeIndexRef = useRef(0);
   const incomingIndexRef = useRef<number | null>(null);
   const reducedMotionRef = useRef(false);
@@ -81,9 +80,7 @@ export function GalleryBackground({
   }, []);
 
   useEffect(() => {
-    const shouldRotate =
-      isPlaying && (!prefersReducedMotion || startedManually);
-    if (!shouldRotate || galleryItems.length < 2) {
+    if (prefersReducedMotion || items.length < 2) {
       return;
     }
 
@@ -92,50 +89,13 @@ export function GalleryBackground({
         return;
       }
 
-      const nextIndex = chooseDifferentIndex(activeIndexRef.current);
+      const nextIndex = chooseDifferentIndex(activeIndexRef.current, items.length);
       incomingIndexRef.current = nextIndex;
       setIncomingIndex(nextIndex);
     }, Math.max(intervalMs, 1_000));
 
     return () => window.clearInterval(interval);
-  }, [intervalMs, isPlaying, prefersReducedMotion, startedManually]);
-
-  const showSlide = (index: number) => {
-    if (index === incomingIndexRef.current) {
-      return;
-    }
-
-    if (index === activeIndexRef.current) {
-      incomingIndexRef.current = null;
-      setIncomingIndex(null);
-      setIsFading(false);
-      return;
-    }
-
-    incomingIndexRef.current = index;
-    setIncomingIndex(index);
-    setIsFading(false);
-  };
-
-  const showPrevious = () => {
-    const currentIndex = incomingIndexRef.current ?? activeIndexRef.current;
-    showSlide((currentIndex - 1 + galleryItems.length) % galleryItems.length);
-  };
-
-  const showNext = () => {
-    const currentIndex = incomingIndexRef.current ?? activeIndexRef.current;
-    showSlide((currentIndex + 1) % galleryItems.length);
-  };
-
-  const togglePlayback = () => {
-    if (!isPlaying || (prefersReducedMotion && !startedManually)) {
-      setStartedManually(true);
-      setIsPlaying(true);
-      return;
-    }
-
-    setIsPlaying(false);
-  };
+  }, [intervalMs, items.length, prefersReducedMotion]);
 
   const handleIncomingLoad = (index: number) => {
     if (incomingIndexRef.current !== index || reducedMotionRef.current) {
@@ -172,10 +132,11 @@ export function GalleryBackground({
     }
   };
 
-  const currentItem = galleryItems[activeIndex];
-  const activeSlideNumber = String(activeIndex + 1).padStart(2, "0");
-  const totalSlides = String(galleryItems.length).padStart(2, "0");
-  const isAutoPlaying = isPlaying && (!prefersReducedMotion || startedManually);
+  if (items.length === 0) {
+    return null;
+  }
+
+  const currentItem = items[activeIndex] ?? items[0];
 
   return (
     <>
@@ -190,10 +151,11 @@ export function GalleryBackground({
           ].join(" ")}
         >
           <Image
-            src={currentItem.image}
+            src={currentItem.src}
             alt=""
             fill
             sizes="100vw"
+            unoptimized
             loading="eager"
             className={styles.image}
           />
@@ -207,10 +169,11 @@ export function GalleryBackground({
             onTransitionEnd={handleIncomingTransitionEnd}
           >
             <Image
-              src={galleryItems[incomingIndex].image}
+              src={items[incomingIndex].src}
               alt=""
               fill
               sizes="100vw"
+              unoptimized
               loading="lazy"
               className={styles.image}
               onLoad={() => handleIncomingLoad(incomingIndex)}
@@ -218,71 +181,6 @@ export function GalleryBackground({
             />
           </div>
         )}
-      </div>
-
-      <div
-        className={styles.controls}
-        role="group"
-        aria-label="Background slideshow controls"
-      >
-        <p className={styles.caption} aria-live="polite" aria-atomic="true">
-          <span className={styles.captionTitle}>{currentItem.title}</span>
-          <span className={styles.counter}>
-            {activeSlideNumber} / {totalSlides}
-          </span>
-        </p>
-
-        <div className={styles.actions}>
-          <button
-            type="button"
-            className={styles.controlButton}
-            onClick={showPrevious}
-            aria-label="Previous background image"
-            title="Previous image"
-          >
-            <ChevronLeft aria-hidden="true" />
-          </button>
-          <button
-            type="button"
-            className={styles.controlButton}
-            onClick={togglePlayback}
-            aria-label={isAutoPlaying ? "Pause slideshow" : "Play slideshow"}
-            aria-pressed={isAutoPlaying}
-            title={isAutoPlaying ? "Pause slideshow" : "Play slideshow"}
-          >
-            {isAutoPlaying ? (
-              <Pause aria-hidden="true" />
-            ) : (
-              <Play aria-hidden="true" />
-            )}
-          </button>
-          <button
-            type="button"
-            className={styles.controlButton}
-            onClick={showNext}
-            aria-label="Next background image"
-            title="Next image"
-          >
-            <ChevronRight aria-hidden="true" />
-          </button>
-        </div>
-
-        <div className={styles.dots} role="group" aria-label="Choose an image">
-          {galleryItems.map((item, index) => (
-            <button
-              key={item.image}
-              type="button"
-              className={[
-                styles.dot,
-                index === activeIndex ? styles.dotActive : "",
-              ].join(" ")}
-              onClick={() => showSlide(index)}
-              aria-label={`Show image ${index + 1}: ${item.title}`}
-              aria-current={index === activeIndex ? "true" : undefined}
-              title={item.title}
-            />
-          ))}
-        </div>
       </div>
     </>
   );

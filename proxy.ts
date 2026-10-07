@@ -24,7 +24,7 @@ export async function proxy(request: NextRequest) {
     },
   });
 
-  const { error } = await supabase.auth.getClaims();
+  const { error } = await supabase.auth.getUser();
   if (error) {
     console.error("Supabase session refresh failed:", error.message);
   }

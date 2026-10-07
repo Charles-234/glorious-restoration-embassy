@@ -4,8 +4,13 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { GalleryBackground } from "@/components/gallery-background";
+import { LocalMediaGallery } from "@/components/local-media-gallery";
 import { MpesaLogo } from "@/components/mpesa-logo";
 import PastorPortraitCarousel from "@/components/pastor-portrait-carousel";
+import { AIChatbot } from "@/components/ai-chatbot";
+import type { HeroContent } from "@/lib/content";
+import type { GalleryMediaItem } from "@/lib/local-gallery";
+import { branches, siteConfig } from "@/lib/siteData";
 import {
   ArrowDown,
   ArrowRight,
@@ -19,7 +24,6 @@ import {
   MessageCircleQuestion,
   Play,
   Radio,
-  Send,
   Sun,
   UsersRound,
   X,
@@ -58,35 +62,7 @@ const photos = [
   },
 ];
 
-const fellowships = [
-  {
-    label: "Early Sanctuary",
-    title: "First Glory Service",
-    description:
-      "A prayer-saturated start with focused communion, foundational teachings, and corporate praise.",
-    time: "Sundays • 8:30 AM – 10:15 AM",
-    note: "Restoration Nursery available",
-    icon: Sun,
-  },
-  {
-    label: "Flagship",
-    title: "Divine Restoration Service",
-    description:
-      "Dynamic preaching by Apostle Steve Kariuki, prophetic intercession, vibrant praise choir, and youth ministry.",
-    time: "Sundays • 10:45 AM – 1:15 PM",
-    note: "English & Kiswahili simultaneous",
-    icon: UsersRound,
-  },
-  {
-    label: "Mid-Week Spiritual Nourishment",
-    title: "Word Clinic",
-    description:
-      "In-depth chapter-by-chapter Bible exposition, deliverances, and open communion every Wednesday.",
-    time: "Tuesdays from 11:00 AM • Fridays 6:00 PM – 7:45 PM",
-    note: "",
-    icon: CalendarDays,
-  },
-];
+const serviceIcons = [Sun, UsersRound, CalendarDays, CalendarDays];
 
 const ministries = [
   {
@@ -168,7 +144,13 @@ function SectionIntro({
   );
 }
 
-export function StitchHomepage() {
+export function StitchHomepage({
+  mediaItems,
+  heroContent,
+}: {
+  mediaItems: GalleryMediaItem[];
+  heroContent: HeroContent;
+}) {
   const [copied, setCopied] = useState<"paybill" | "account" | null>(null);
   const [audioOnly, setAudioOnly] = useState(false);
   const liveDialog = useRef<HTMLDialogElement>(null);
@@ -190,27 +172,23 @@ export function StitchHomepage() {
 
   return (
     <div className="gre-home">
-      <GalleryBackground />
       <main>
         <section id="heroSection" className="gre-hero" aria-labelledby="home-title">
           <div className="gre-wrap gre-hero-grid">
             <div className="gre-hero-copy">
               <p className="gre-eyebrow">Welcome to Glorious Restoration Embassy</p>
-              <h1 id="home-title">Where Broken Lives Are Restored and Destinies Fulfilled.</h1>
-              <p className="gre-hero-lead">
-                Join Apostle Steve Kariuki and the Glorious Restoration family as we worship in
-                truth, power, and the uncompromised Word of God.
-              </p>
+              <h1 id="home-title">{heroContent.title}</h1>
+              <p className="gre-hero-lead">{heroContent.subtitle}</p>
               <div className="gre-hero-actions">
                 <button
                   type="button"
                   className="gre-button gre-button-primary"
                   onClick={() => liveDialog.current?.showModal()}
                 >
-                  <Play size={17} fill="currentColor" /> Watch Live Stream
+                  <Play size={17} fill="currentColor" />                   {heroContent.ctaPrimary}
                 </button>
                 <Link href="/contact#visit-planner" className="gre-button gre-button-outline">
-                  <CalendarDays size={17} /> Plan Your Visit
+                  <CalendarDays size={17} /> {heroContent.ctaSecondary}
                 </Link>
               </div>
               <Link href="/sermons" className="gre-text-link">
@@ -252,11 +230,6 @@ export function StitchHomepage() {
                     </p>
                   </div>
                 </div>
-                <div className="gre-overseer-stats" aria-label="Embassy details">
-                  <span><strong>3+</strong>Services / Wk</span>
-                  <span><strong>24/7</strong>Prayer Line</span>
-                  <span><strong>12+</strong>Branches</span>
-                </div>
               </div>
               <a className="gre-gallery-peek" href="#atmosphere-gallery">
                 <span className="gre-gallery-peek-title">Atmosphere Gallery</span>
@@ -292,28 +265,21 @@ export function StitchHomepage() {
               description="We believe in deliberate community, heart-felt worship, and tangible transformation through the Holy Spirit."
             />
             <div className="gre-service-grid">
-              {fellowships.map((service) => {
-                const Icon = service.icon;
+              {siteConfig.serviceTimes.map((service, index) => {
+                const Icon = serviceIcons[index];
                 return (
-                  <article className="gre-service-card" key={service.title}>
+                  <article className="gre-service-card" key={`${service.day}-${service.label}`}>
                     <div className="gre-service-card-head">
                       <span className="gre-icon-disc"><Icon size={21} /></span>
-                      <span className={service.label === "Flagship" ? "gre-pill gre-pill-featured" : "gre-pill"}>
-                        {service.label}
+                      <span className="gre-pill">
+                        {service.day}
                       </span>
                     </div>
-                    <h3>{service.title}</h3>
-                    <p>{service.description}</p>
+                    <h3>{service.label}</h3>
                     <div className="gre-service-meta">
                       <Clock3 size={16} />
-                      <span>{service.time}</span>
+                      <span>{service.day} · {service.time}</span>
                     </div>
-                    {service.note && (
-                      <div className="gre-service-meta gre-service-note">
-                        <span aria-hidden="true">✦</span>
-                        <span>{service.note}</span>
-                      </div>
-                    )}
                   </article>
                 );
               })}
@@ -391,12 +357,13 @@ export function StitchHomepage() {
                 </button>
               </div>
               <div className="gre-pay-value">
-                <span>Account Number:</span><strong>0710000000</strong>
-                <button type="button" onClick={() => void copyValue("0710000000", "account")} aria-label="Copy account number">
+                <span>Account Number:</span><strong>{siteConfig.giveChannel.account}</strong>
+                <button type="button" onClick={() => void copyValue(siteConfig.giveChannel.account, "account")} aria-label="Copy account number">
                   {copied === "account" ? <Check size={17} /> : <Copy size={17} />}
                   {copied === "account" ? "Copied" : "Copy Account"}
                 </button>
               </div>
+              <p className="gre-pay-account-name">{siteConfig.giveChannel.accountName}</p>
             </div>
           </div>
         </section>
@@ -432,20 +399,16 @@ export function StitchHomepage() {
               <div className="gre-advisory-symbol"><MessageCircleQuestion size={26} /></div>
               <div className="gre-advisory-copy">
                 <p className="gre-eyebrow">Connect with the Embassy</p>
-                <h2>Have questions about services or religious questions?</h2>
+                <h2>Have a question about the Embassy?</h2>
                 <p>
-                  Connect with our official 24/7 AI Church Assistant or chat directly with the
-                  Telegram Embassy Bot for instant scripture reading, counseling queue, and
-                  location routing.
+                  The website chat and Telegram bot are separate channels to the same AI assistant
+                  and knowledge base.
                 </p>
               </div>
               <div className="gre-advisory-actions">
-                <Link className="gre-button gre-button-primary" href="/chat">
+                <Link className="gre-button gre-button-primary" href="#website-assistant">
                   <MessageCircleQuestion size={17} /> Ask AI Assistant
                 </Link>
-                <a className="gre-button gre-button-outline" href="https://t.me/" target="_blank" rel="noreferrer">
-                  <Send size={17} /> Launch Telegram Bot
-                </a>
               </div>
             </div>
           </div>
@@ -456,43 +419,50 @@ export function StitchHomepage() {
             <div className="gre-branch-heading">
               <SectionIntro
                 eyebrow="Global Footprint"
-                title="Branches"
-                description="Experience the same atmosphere of glory at any of our regional satellite embassies."
+                title="Headquarters"
+                description="Visit Glorious Restoration Embassy in Joska, Machakos County."
               />
-              <Link href="/branches" className="gre-text-link">Find a Branch <ArrowRight size={17} /></Link>
+              <Link href="/branches" className="gre-text-link">View location <ArrowRight size={17} /></Link>
             </div>
             <div className="gre-branch-grid">
-              <article className="gre-branch-card gre-branch-main">
-                <span className="gre-branch-label"><MapPin size={15} /> Mother Church</span>
-                <h3>Machakos Branch</h3>
-                <p>Glorious Restoration Embassy, Joska, Machakos</p>
-                <span className="gre-branch-pastor">Apostle Steve Kariuki</span>
-              </article>
-              <article className="gre-branch-card gre-branch-secondary">
-                <span className="gre-branch-label"><MapPin size={15} /> MURANG&apos;A</span>
-                <h3>Murang&apos;a Branch</h3>
-                <p>Resident Pastor:</p>
-                <span className="gre-branch-pastor">Glorious Restoration Embassy</span>
-              </article>
+              {branches.map((branch) => (
+                <article
+                  className={`gre-branch-card${branch.kind === "Headquarters" ? " gre-branch-main" : ""}`}
+                  key={branch.city}
+                >
+                  <span className="gre-branch-label"><MapPin size={15} /> {branch.kind}</span>
+                  <h3>{branch.city}</h3>
+                  <p>{branch.address}</p>
+                  {branch.coordinates && <p>{branch.coordinates}</p>}
+                  {branch.mapsUrl && (
+                    <a href={branch.mapsUrl} target="_blank" rel="noreferrer" className="gre-branch-map-link">
+                      View on Google Maps
+                    </a>
+                  )}
+                  {branch.kind === "Headquarters" && (
+                    <span className="gre-branch-pastor">Apostle Steve Kariuki</span>
+                  )}
+                </article>
+              ))}
             </div>
           </div>
         </section>
 
         <section className="gre-gallery gre-section" id="atmosphere-gallery">
           <div className="gre-wrap">
-            <SectionIntro eyebrow="Photo Library" title="Atmosphere Gallery" />
-            <div className="gre-gallery-grid">
-              {[
-                { ...photos[3], label: "Apostle Preaching" },
-                { ...photos[0], label: "Consecration" },
-                { ...photos[2], label: "Family Stage" },
-              ].map((photo) => (
-                <a href="#heroSection" className="gre-gallery-card" key={photo.label}>
-                  <Image src={photo.src} alt={photo.alt} fill sizes="(max-width: 760px) 100vw, 33vw" />
-                  <span>{photo.label}<ArrowRight size={17} /></span>
-                </a>
-              ))}
-            </div>
+            <SectionIntro
+              eyebrow="Media Center"
+              title="Gallery & Video Media Highlights"
+              description="Photos and videos from Glorious Restoration Embassy."
+            />
+            <LocalMediaGallery items={mediaItems} limit={8} />
+            <Link href="/gallery" className="gre-gallery-all-link">View all media <ArrowRight size={17} /></Link>
+          </div>
+        </section>
+
+        <section className="gre-section" id="website-assistant" aria-label="Website AI assistant">
+          <div className="gre-wrap">
+            <AIChatbot />
           </div>
         </section>
 

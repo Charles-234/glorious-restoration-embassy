@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { motion } from "framer-motion";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { Card } from "@/components/ui/card";
@@ -12,7 +11,7 @@ export default function AboutPage() {
       <section className="space-y-6 text-center">
         <SectionHeading
           title="About our mission"
-          subtitle="We gather in worship, prayer, and rooted discipleship across Machakos and Murang'a."
+          subtitle="Visit our headquarters in Joska, Machakos County."
         />
         <p className="mx-auto max-w-3xl text-base leading-8 text-muted-foreground">
           {siteConfig.brandName} is a spiritual home crafted for people seeking hope, artistic
@@ -67,17 +66,24 @@ export default function AboutPage() {
                   <div>
                     <h2 className="text-2xl font-semibold text-foreground">{branch.city}</h2>
                     <p className="mt-1 text-sm uppercase tracking-[0.24em] text-accent">
-                      Church location
+                      {branch.kind}
                     </p>
                   </div>
                 </div>
                 <p className="text-sm leading-7 text-muted-foreground">{branch.address}</p>
-                <Link
-                  href={`tel:${branch.phone.replace(/[^\d+]/g, "")}`}
-                  className="inline-flex min-h-[2.75rem] items-center justify-center rounded-2xl border border-border bg-card px-4 py-3 text-sm font-semibold text-foreground transition hover:bg-muted"
-                >
-                  Call {branch.phone}
-                </Link>
+                {branch.coordinates && (
+                  <p className="text-sm font-medium text-foreground">{branch.coordinates}</p>
+                )}
+                {branch.mapsUrl && (
+                  <a
+                    href={branch.mapsUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex min-h-[2.75rem] items-center justify-center rounded-2xl border border-border bg-card px-4 py-3 text-sm font-semibold text-foreground transition hover:bg-muted"
+                  >
+                    View on Google Maps
+                  </a>
+                )}
               </Card>
             </motion.div>
           ))}

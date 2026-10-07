@@ -5,6 +5,13 @@ FastAPI service for the church's document-backed research assistant. It exposes
 PDFs recursively from `content/documents/` in `GITHUB_REPO` and rebuilds the
 Chroma index using `BAAI/bge-small-en-v1.5`.
 
+The daily limit of 10 admitted chat request attempts is enforced by the
+authenticated website's Next.js `POST /api/chat` route using Supabase and the
+Africa/Nairobi calendar day. Attempts count when admitted, whether FastAPI
+succeeds or fails. FastAPI's shared `POST /api/chat` endpoint remains unchanged
+so Telegram can continue to use the same assistant and knowledge base without
+consuming website-user quota.
+
 ## Local setup
 
 From this directory, create and activate a virtual environment, then install

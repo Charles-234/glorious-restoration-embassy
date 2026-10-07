@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import { BookOpenText, Play } from "lucide-react";
 import { Card } from "@/components/ui/card";
 
@@ -9,8 +10,8 @@ interface SermonCardProps {
   speaker: string;
   date: string;
   summary: string;
-  videoUrl?: string;
   thumbnail?: string;
+  videoUrl?: string;
 }
 
 type SermonMedia =
@@ -67,22 +68,32 @@ export function SermonCard({
   speaker,
   date,
   summary,
-  videoUrl,
   thumbnail,
+  videoUrl,
 }: SermonCardProps) {
   const media = resolveSermonMedia(videoUrl);
 
   return (
     <motion.article whileHover={{ y: -8 }} transition={{ type: "spring", stiffness: 160 }} className="group">
       <Card className="space-y-5">
+        {!media && thumbnail ? (
+          <div className="relative aspect-video overflow-hidden rounded-2xl bg-muted">
+            <Image
+              src={thumbnail}
+              alt={title}
+              fill
+              sizes="(max-width: 768px) 100vw, 33vw"
+              unoptimized
+            />
+          </div>
+        ) : null}
         {media ? (
           <div className="relative aspect-video overflow-hidden rounded-2xl bg-muted">
             {media.kind === "file" ? (
               <video
-                className="h-full w-full object-cover"
+                className="h-full w-full object-contain"
                 controls
                 preload="metadata"
-                poster={thumbnail}
                 aria-label={`Sermon video: ${title}`}
               >
                 <source src={media.src} type="video/mp4" />

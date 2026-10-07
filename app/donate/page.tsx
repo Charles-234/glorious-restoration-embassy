@@ -3,13 +3,15 @@ import { GivingPanel } from "@/components/giving-panel";
 import { getDonationInfo } from "@/lib/content";
 import { siteConfig } from "@/lib/siteData";
 
+export const dynamic = "force-dynamic";
+
 export const metadata = {
   title: `Donations — ${siteConfig.brandName}`,
   description: `Give with purpose — tithes, offerings, missions and our building fund at ${siteConfig.brandName}.`
 };
 
-export default function DonatePage() {
-  const donation = getDonationInfo();
+export default async function DonatePage() {
+  const donation = await getDonationInfo();
 
   return (
     <main className="container space-y-14 py-24">

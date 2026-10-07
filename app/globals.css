@@ -10,42 +10,42 @@
 @layer base {
   :root {
     /* Grounds */
-    --background: 40 56% 96.9%; /* #fcf9f2 warm alabaster */
+    --background: 38 24% 90%; /* muted warm linen */
     --foreground: 60 8% 10%; /* #1c1c18 soft charcoal */
 
-    --card: 0 0% 100%;
+    --card: 40 24% 94%;
     --card-foreground: 60 8% 10%;
 
-    --popover: 0 0% 100%;
+    --popover: 40 24% 94%;
     --popover-foreground: 60 8% 10%;
 
     --primary: 216 62% 9%; /* #091426 deep navy */
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 43 25% 92%; /* linen */
+    --secondary: 40 17% 86%; /* muted linen */
     --secondary-foreground: 60 8% 10%;
 
-    --muted: 43 31% 94%;
+    --muted: 40 18% 88%;
     --muted-foreground: 220 5% 28%;
 
-    --accent: 18 100% 34%; /* #ac3400 terracotta */
+    --accent: 18 72% 35%; /* muted terracotta */
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 65% 46%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 40 17% 84%;
-    --input: 40 17% 84%;
-    --ring: 18 100% 34%;
+    --border: 38 14% 78%;
+    --input: 38 14% 78%;
+    --ring: 18 72% 35%;
 
-    --surface: 43 31% 94%;
+    --surface: 40 18% 88%;
     --surface-border: 40 17% 84%;
     --overlay: 216 62% 9%;
 
     --radius: 0.5rem;
 
     --kicker: 18 100% 34%;
-    --panel-border: 40 17% 84%;
+    --panel-border: 38 14% 78%;
     --evening-from: 216 62% 16%;
     --evening-to: 216 62% 9%;
     --evening-border: 18 88% 55%;
@@ -122,6 +122,7 @@
   body {
     background-color: hsl(var(--background));
     color: hsl(var(--foreground));
+    font-family: var(--font-body), sans-serif;
     font-feature-settings: "rlig" 1, "calt" 1;
     overscroll-behavior-y: none; /* no rubber-band page bounce */
   }
@@ -472,7 +473,7 @@
     align-items: center;
     overflow: hidden;
     padding-block: 68px 78px;
-    background: color-mix(in srgb, hsl(var(--background)) 74%, transparent);
+    background: color-mix(in srgb, hsl(var(--background)) 54%, transparent);
   }
 
   .gre-hero-grid {
@@ -527,6 +528,7 @@
     max-width: 590px;
     margin-bottom: 28px;
     color: var(--gre-muted);
+    font-family: var(--font-subheading), sans-serif;
     font-size: 1rem;
     line-height: 1.85;
   }
@@ -730,7 +732,19 @@
   .gre-gatherings,
   .gre-life,
   .gre-gallery {
-    background: color-mix(in srgb, var(--gre-paper) 87%, transparent);
+    background: color-mix(in srgb, var(--gre-paper) 58%, transparent);
+  }
+
+  .gre-gallery {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+  }
+
+  .gre-gallery > .gre-wrap {
+    position: relative;
+    z-index: 1;
+    padding-bottom: 5.5rem;
   }
 
   .gre-section-intro {
@@ -760,6 +774,7 @@
     max-width: 650px;
     margin: 0 auto;
     color: var(--gre-muted);
+    font-family: var(--font-subheading), sans-serif;
     font-size: 0.9rem;
     line-height: 1.8;
   }
@@ -1390,6 +1405,126 @@
     font-weight: 700;
   }
 
+  .gre-media-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+  }
+
+  .gre-media-card {
+    overflow: hidden;
+    border: 1px solid hsl(var(--border));
+    border-radius: 13px;
+    background: hsl(var(--card));
+    box-shadow: var(--shadow-warm);
+  }
+
+  .gre-media-visual {
+    position: relative;
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    background: hsl(var(--primary));
+  }
+
+  .gre-media-image-button {
+    padding: 0;
+    border: 0;
+    cursor: zoom-in;
+  }
+
+  .gre-media-image-button:focus-visible,
+  .gre-media-lightbox button:focus-visible {
+    outline: 3px solid hsl(var(--brand-gold));
+    outline-offset: 3px;
+  }
+
+  .gre-media-visual img {
+    object-fit: contain;
+  }
+
+  .gre-media-visual video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .gre-media-lightbox {
+    position: fixed;
+    z-index: 80;
+    inset: 0;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    justify-items: center;
+    gap: 16px;
+    padding: 72px 28px 28px;
+    background: hsl(var(--overlay) / 0.96);
+  }
+
+  .gre-media-lightbox-image {
+    position: relative;
+    width: min(82vw, 1120px);
+    height: min(82vh, 780px);
+  }
+
+  .gre-media-lightbox-image img {
+    object-fit: contain;
+  }
+
+  .gre-media-lightbox button {
+    display: grid;
+    width: 48px;
+    height: 48px;
+    place-items: center;
+    border: 1px solid hsl(var(--primary-foreground) / 0.3);
+    border-radius: 999px;
+    color: hsl(var(--primary-foreground));
+    background: hsl(var(--primary-foreground) / 0.1);
+    cursor: pointer;
+  }
+
+  .gre-media-lightbox-close {
+    position: absolute;
+    top: 18px;
+    right: 20px;
+  }
+
+  .gre-gallery-all-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 24px;
+    color: hsl(var(--brand-gold));
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    font-weight: 700;
+  }
+
+  .gre-gallery-all-link:hover {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
+  .gre-pay-account-name {
+    margin: 12px 0 0;
+    color: var(--gre-muted);
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+  }
+
+  .gre-branch-map-link {
+    display: inline-flex;
+    margin: 0 0 12px;
+    color: var(--gre-gold-soft);
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-underline-offset: 4px;
+  }
+
   .gre-live {
     padding-top: 0;
     background: hsl(var(--muted) / 0.9);
@@ -1416,6 +1551,11 @@
     border: 1px solid color-mix(in srgb, var(--gre-on-dark) 20%, transparent);
     border-radius: 50%;
     color: var(--gre-gold-soft);
+  }
+
+  .gre-branch-grid > :only-child {
+    width: min(100%, 720px);
+    justify-self: center;
   }
 
   .gre-live-label {
@@ -2069,6 +2209,11 @@
       gap: 12px;
     }
 
+    .gre-media-grid {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
     .gre-gallery-card {
       height: 62vw;
       max-height: 330px;
@@ -2076,6 +2221,31 @@
 
     .gre-gallery-card:first-child {
       height: 72vw;
+    }
+
+    .gre-media-lightbox {
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      padding: 68px 12px 16px;
+    }
+
+    .gre-media-lightbox-image {
+      grid-column: 1 / -1;
+      grid-row: 1;
+      width: 100%;
+      height: min(72vh, 680px);
+    }
+
+    .gre-media-lightbox-previous {
+      grid-column: 1;
+      grid-row: 2;
+      justify-self: end;
+    }
+
+    .gre-media-lightbox-next {
+      grid-column: 2;
+      grid-row: 2;
+      justify-self: start;
     }
 
     .gre-live {

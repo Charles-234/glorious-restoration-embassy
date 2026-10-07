@@ -26,7 +26,7 @@ export default function PrivacyPage() {
           <p className="text-sm leading-7 text-muted-foreground">
             We only receive the information you choose to give us: your email address when you
             subscribe to the newsletter, the details you include when you contact us or request
-            prayer, and the questions submitted through the AI chat companion.
+            information, and the questions submitted through the AI chat companion.
           </p>
         </div>
 
@@ -42,8 +42,8 @@ export default function PrivacyPage() {
         <div className="space-y-3">
           <h2 className="text-2xl font-semibold text-foreground">What we never do</h2>
           <p className="text-sm leading-7 text-muted-foreground">
-            We do not sell, rent or trade your information. We do not use your prayer requests for
-            marketing, and we do not share them beyond the pastoral team.
+            We do not sell, rent or trade your information. We do not use contact messages for
+            marketing, and we limit access to the church team responsible for responding.
           </p>
         </div>
 

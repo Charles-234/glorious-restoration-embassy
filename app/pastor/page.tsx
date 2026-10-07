@@ -4,6 +4,8 @@ import { SectionHeading } from "@/components/ui/section-heading";
 import { Card } from "@/components/ui/card";
 import { getPastor } from "@/lib/content";
 import { siteConfig } from "@/lib/siteData";
+
+export const dynamic = "force-dynamic";
 import { Mail } from "lucide-react";
 
 
@@ -13,8 +15,8 @@ export const metadata = {
 };
 
 
-export default function PastorPage() {
-  const pastor = getPastor();
+export default async function PastorPage() {
+  const pastor = await getPastor();
 
   return (
     <main className="container space-y-14 py-24">
@@ -27,13 +29,13 @@ export default function PastorPage() {
 
       <section className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-center">
         <div className="readable-surface rounded-[2rem] p-3">
-          <div className="relative aspect-[4/5] w-full overflow-hidden rounded-[1.5rem]">
+          <div className="relative aspect-[4/5] w-full overflow-hidden rounded-[1.5rem] bg-muted">
             <Image
               src={pastor.image}
               alt={pastor.name}
               fill
               sizes="(max-width: 1024px) 100vw, 40vw"
-              className="object-cover"
+              className="object-contain"
             />
           </div>
         </div>

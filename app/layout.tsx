@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Merriweather, Plus_Jakarta_Sans } from "next/font/google";
+import { DM_Sans, Merriweather, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/animated-navbar";
 import { Footer } from "@/components/footer";
@@ -10,6 +10,11 @@ import { siteConfig } from "@/lib/siteData";
 const bodyFont = Plus_Jakarta_Sans({
   subsets: ["latin"],
   variable: "--font-body",
+  display: "swap"
+});
+const subtitleFont = DM_Sans({
+  subsets: ["latin"],
+  variable: "--font-subheading",
   display: "swap"
 });
 const displayFont = Merriweather({
@@ -80,7 +85,7 @@ export const viewport: Viewport = {
   themeColor: [
     // These must match --background in globals.css, otherwise the browser
     // chrome colour does not line up with the page on mobile.
-    { media: "(prefers-color-scheme: light)", color: "#fcf9f2" },
+    { media: "(prefers-color-scheme: light)", color: "#e9e4d9" },
     { media: "(prefers-color-scheme: dark)", color: "#091426" }
   ]
 };
@@ -88,13 +93,13 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${bodyFont.variable} ${displayFont.variable} min-h-screen antialiased bg-background text-foreground font-sans`}>
+      <body className={`${bodyFont.variable} ${subtitleFont.variable} ${displayFont.variable} min-h-screen antialiased bg-background text-foreground font-sans`}>
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
           <div className="relative isolate min-h-screen flex flex-col">
-        <Navbar />
-          <PageTransition>{children}</PageTransition>
-        <Footer />
-      </div>
+            <Navbar />
+            <PageTransition>{children}</PageTransition>
+            <Footer />
+          </div>
         </ThemeProvider>
       </body>
     </html>

@@ -9,6 +9,7 @@ const routes = [
   "/about",
   "/ministries",
   "/sermons",
+  "/news",
   "/events",
   "/gallery",
   "/livestream",

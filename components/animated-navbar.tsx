@@ -9,10 +9,13 @@ import { useHydrated } from "@wrksz/themes/client/use-hydrated";
 import { useTheme } from "@wrksz/themes/client/use-theme";
 import { Menu, Moon, Sun, X } from "lucide-react";
 import { MpesaLogo } from "@/components/mpesa-logo";
+import { siteConfig } from "@/lib/siteData";
 
 const navigation = [
   { label: "About", href: "/about" },
   { label: "Sermons", href: "/sermons" },
+  { label: "News", href: "/news" },
+  { label: "Gallery", href: "/gallery" },
   { label: "Gatherings", href: "/events" },
   { label: "M-Pesa Giving", href: "/give" },
   { label: "Branches", href: "/branches" },
@@ -37,10 +40,6 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  useEffect(() => {
-    setMenuOpen(false);
-  }, [pathname]);
-
   return (
     <motion.header
       initial={{ y: -24, opacity: 0 }}
@@ -52,15 +51,16 @@ export function Navbar() {
         <div className="gre-wrap gre-announcement-inner">
           <p className="gre-service-note">
             <span aria-hidden="true">◷</span>
-            Sunday Services: 8:30 AM &amp; 10:45 AM | Midweek: Wed 6:00 PM
+            Sunday Services: {siteConfig.serviceTimes[0].time} {siteConfig.serviceTimes[0].label} · {siteConfig.serviceTimes[1].time} {siteConfig.serviceTimes[1].label}
           </p>
           <div className="gre-announcement-links">
-            <a href="tel:+254700000000">Prayer Line: +254 700 000 000</a>
             <Link href="/give" className="gre-paybill-top">
               <MpesaWordmark small /> Paybill: 247247
             </Link>
             <Link href="/livestream">Watch Live</Link>
-            <Link href="/contact#visit-planner">Prayer Requests</Link>
+            <a href={`tel:${siteConfig.phone}`}>
+              Church Enquiries · {siteConfig.phoneDisplay}
+            </a>
           </div>
         </div>
       </div>
@@ -129,11 +129,12 @@ export function Navbar() {
               key={item.href}
               href={item.href}
               aria-current={pathname === item.href ? "page" : undefined}
+              onClick={() => setMenuOpen(false)}
             >
               {item.label}
             </Link>
           ))}
-          <Link href="/give" className="gre-mobile-give">
+          <Link href="/give" className="gre-mobile-give" onClick={() => setMenuOpen(false)}>
             <MpesaWordmark small /> Give • M-Pesa
           </Link>
         </nav>

@@ -77,7 +77,7 @@ export function ContactForm() {
           rows={5}
           value={message}
           onChange={(event) => setMessage(event.target.value)}
-          placeholder="Share a prayer request, ask about a service time, or tell us how you would like to serve."
+          placeholder="Ask about service times, planning a visit, or church ministries."
           required
         />
       </label>

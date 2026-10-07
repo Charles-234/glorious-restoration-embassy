@@ -2,8 +2,27 @@
 
 import { useState, useRef, useEffect } from "react";
 import { MessageCircle, Send, X, AlertCircle } from "lucide-react";
+import Link from "next/link";
 import { siteConfig } from "@/lib/siteData";
 import { motion, AnimatePresence } from "framer-motion";
+
+function getQuotaStatus(data: unknown) {
+  if (!data || typeof data !== "object" || Array.isArray(data)) return null;
+
+  const quota = data as Record<string, unknown>;
+  if (
+    typeof quota.remainingCalls !== "number" ||
+    !Number.isInteger(quota.remainingCalls) ||
+    quota.remainingCalls < 0 ||
+    typeof quota.quotaLimit !== "number" ||
+    !Number.isInteger(quota.quotaLimit) ||
+    quota.quotaLimit !== 10
+  ) {
+    return null;
+  }
+
+  return `${quota.remainingCalls} of ${quota.quotaLimit} AI questions remain today (Africa/Nairobi).`;
+}
 
 const defaultMessages = [
   {
@@ -18,7 +37,6 @@ const quickReplies = [
   "Tell me about your youth ministry",
   "What's the upcoming event schedule?",
   "How can I grow in my faith?",
-  "Pray for me",
   "What sermons do you recommend?"
 ];
 
@@ -27,11 +45,15 @@ export function AIChatbot() {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [authRequired, setAuthRequired] = useState(false);
+  const [quotaStatus, setQuotaStatus] = useState<string | null>(null);
+  const [loginHref, setLoginHref] = useState("/login?next=%2Fchat");
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Scroll to bottom of chat when messages change
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (messages.length > 1) {
+      messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    }
   }, [messages]);
 
   const handleSend = async () => {
@@ -43,6 +65,7 @@ export function AIChatbot() {
     setInput("");
     setLoading(true);
     setError(null);
+    setAuthRequired(false);
 
     try {
       const response = await fetch("/api/chat", {
@@ -50,9 +73,14 @@ export function AIChatbot() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ query: content })
       });
-      const result = await response.json();
 
-      if (!response.ok) {
+      if (response.status === 401) {
+        const returnTo = `${window.location.pathname}${window.location.search}${window.location.hash}`;
+        setLoginHref(`/login?next=${encodeURIComponent(returnTo)}`);
+        setAuthRequired(true);
+      } else if (!response.ok) {
+        const result = await response.json();
+        setQuotaStatus(getQuotaStatus(result));
         setMessages((current) => [
           ...current,
           { 
@@ -63,6 +91,8 @@ export function AIChatbot() {
         ]);
         setError(result.error || "Chat service unavailable");
       } else {
+        const result = await response.json();
+        setQuotaStatus(getQuotaStatus(result));
         setMessages((current) => [
           ...current,
           { id: Date.now() + 2, role: "assistant" as const, text: result.message }
@@ -95,6 +125,7 @@ export function AIChatbot() {
   const clearChat = () => {
     setMessages(defaultMessages);
     setError(null);
+    setAuthRequired(false);
   };
 
   return (
@@ -103,11 +134,19 @@ export function AIChatbot() {
       <div className="flex items-center justify-between gap-4 mb-6">
         <div className="flex items-center gap-4">
           <div className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 text-primary">
-            <MessageCircle size={22} />
+            <MessageCircle size={22} aria-hidden="true" />
           </div>
           <div>
             <p className="text-sm uppercase tracking-[0.32em] text-accent">AI Chat Companion</p>
             <h2 className="text-xl md:text-2xl font-semibold text-foreground">Spiritual Guidance Chat</h2>
+            <p aria-live="polite" className="mt-1 text-xs text-muted-foreground">
+              {quotaStatus ?? "Sign in for 10 AI questions each day"}
+            </p>
+            <p role="note" className="mt-2 max-w-xl text-xs leading-5 text-muted-foreground">
+              AI responses can be inaccurate or incomplete. Research and verify important details
+              with cited sources and official church channels; this assistant is not a substitute
+              for pastoral care.
+            </p>
           </div>
         </div>
         <button
@@ -162,6 +201,19 @@ export function AIChatbot() {
               <AlertCircle size={16} />
               <span>{error}</span>
             </div>
+          </motion.div>
+        )}
+        {authRequired && (
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="rounded-2xl border border-primary/30 bg-primary/10 p-4 text-sm text-foreground"
+            role="alert"
+          >
+            <p>Sign in to your account to use the AI assistant and its account-based allowance.</p>
+            <Link href={loginHref} className="cta-link mt-2 inline-block">
+              Sign in with an email link
+            </Link>
           </motion.div>
         )}
         <div ref={messagesEndRef} />

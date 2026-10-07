@@ -4,14 +4,16 @@ import { EventCard } from "@/components/event-card";
 import { getEvents } from "@/lib/content";
 import { siteConfig } from "@/lib/siteData";
 
+export const dynamic = "force-dynamic";
+
 export const metadata = {
   title: `Events — ${siteConfig.brandName}`,
   description:
     "Celebrations, ordinations, retreats and outreach gatherings happening across our branches."
 };
 
-export default function EventsPage() {
-  const events = getEvents();
+export default async function EventsPage() {
+  const events = await getEvents();
 
   return (
     <main className="container space-y-14 py-24">
@@ -36,6 +38,7 @@ export default function EventsPage() {
               venue={event.venue}
               description={event.description}
               badge={event.badge}
+              image={event.image}
             />
           ))}
         </section>

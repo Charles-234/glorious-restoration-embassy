@@ -14,7 +14,7 @@ interface GivingPanelProps {
  * Kept as a plain server component so both routes stay in sync.
  */
 export function GivingPanel({ title, description }: GivingPanelProps) {
-  const { label, paybill, account } = siteConfig.giveChannel;
+  const { label, paybill, account, accountName } = siteConfig.giveChannel;
 
   return (
     <div className="space-y-8">
@@ -30,6 +30,8 @@ export function GivingPanel({ title, description }: GivingPanelProps) {
                 Paybill: <span className="font-semibold text-foreground">{paybill}</span>
                 <br />
                 Account: <span className="font-semibold text-foreground">{account}</span>
+                <br />
+                Account name: <span className="font-semibold text-foreground">{accountName}</span>
               </p>
             </>
           ) : (

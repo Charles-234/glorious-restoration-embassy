@@ -1,19 +1,3 @@
-/**
- * lib/content.ts
- *
- * This file reads content from the JSON/Markdown files that Decap CMS writes
- * into the content/ folder. If a file doesn't exist yet (before CMS is set up),
- * it falls back to the static data in siteData.ts so nothing breaks.
- *
- * HOW IT WORKS:
- * - Decap CMS saves content to content/sermons/, content/events/, etc.
- * - This file reads those files at build time
- * - Netlify rebuilds the site automatically after each CMS save
- * - Result: editing in the CMS → site updates within ~2 minutes
- */
-
-import fs from "fs";
-import path from "path";
 import {
   sermons as fallbackSermons,
   events as fallbackEvents,
@@ -22,8 +6,7 @@ import {
   heroContent as fallbackHero,
   donationInfo as fallbackDonation,
 } from "./siteData";
-
-// ─── Types ───────────────────────────────────────────────────────────────────
+import { getPublicSupabaseClient } from "@/lib/public-supabase";
 
 export type Sermon = {
   title: string;
@@ -71,89 +54,85 @@ export type PastorProfile = {
   email?: string;
 };
 
-// ─── Helper: read all JSON files from a content folder ───────────────────────
-
-function readContentFolder<T>(folderName: string): T[] {
+async function readPublishedContent<T>(kind: string): Promise<T[] | null> {
   try {
-    const folderPath = path.join(process.cwd(), "content", folderName);
-    if (!fs.existsSync(folderPath)) return [];
+    const supabase = getPublicSupabaseClient();
+    const { data, error } = await supabase
+      .from("site_content")
+      .select("payload")
+      .eq("kind", kind)
+      .eq("published", true);
 
-    const files = fs.readdirSync(folderPath).filter((f) => f.endsWith(".json"));
-    return files.map((file) => {
-      const raw = fs.readFileSync(path.join(folderPath, file), "utf-8");
-      return JSON.parse(raw) as T;
-    });
-  } catch {
-    return [];
-  }
-}
+    if (error) {
+      if (process.env.NODE_ENV !== "production") {
+        console.warn("[cms] site_content table not yet set up. Using default content.", error);
+      }
+      return null;
+    }
 
-// ─── Helper: read a single JSON settings file ────────────────────────────────
-
-function readSettingsFile<T>(filename: string): T | null {
-  try {
-    const filePath = path.join(process.cwd(), "content", "settings", filename);
-    if (!fs.existsSync(filePath)) return null;
-    const raw = fs.readFileSync(filePath, "utf-8");
-    return JSON.parse(raw) as T;
-  } catch {
+    return data.map((row) => row.payload as T);
+  } catch (error) {
+    console.error(`[cms] Could not initialize the Supabase client for ${kind} content.`, error);
     return null;
   }
 }
 
-// ─── Exported functions ───────────────────────────────────────────────────────
+async function readPublishedSetting<T>(slug: string): Promise<T | null> {
+  try {
+    const supabase = getPublicSupabaseClient();
+    const { data, error } = await supabase
+      .from("site_content")
+      .select("payload")
+      .eq("kind", "setting")
+      .eq("slug", slug)
+      .eq("published", true)
+      .maybeSingle();
 
-/** Returns sermons from CMS, or falls back to siteData.ts */
-export function getSermons(): Sermon[] {
-  const fromCMS = readContentFolder<Sermon>("sermons");
-  if (fromCMS.length > 0) {
-    // Sort newest first
-    return fromCMS.sort(
-      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-    );
+    if (error) {
+      console.error(`[cms] Could not read the ${slug} setting from Supabase.`, error);
+      return null;
+    }
+
+    return data?.payload as T | null;
+  } catch (error) {
+    console.error(`[cms] Could not initialize the Supabase client for the ${slug} setting.`, error);
+    return null;
   }
-  return fallbackSermons;
 }
 
-/** Returns events from CMS, or falls back to siteData.ts */
-export function getEvents(): Event[] {
-  const fromCMS = readContentFolder<Event>("events");
-  if (fromCMS.length > 0) {
-    return fromCMS.sort(
-      (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
-    );
-  }
-  return fallbackEvents;
+export async function getSermons(): Promise<Sermon[]> {
+  const fromSupabase = await readPublishedContent<Sermon>("sermon");
+  const sermons = fromSupabase ?? fallbackSermons;
+  return sermons.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 }
 
-/** Returns gallery photos from CMS, or falls back to siteData.ts */
-export function getGalleryItems(): GalleryItem[] {
-  const fromCMS = readContentFolder<GalleryItem>("gallery");
-  if (fromCMS.length > 0) return fromCMS;
-  return fallbackGallery;
+export async function getEvents(): Promise<Event[]> {
+  const fromSupabase = await readPublishedContent<Event>("event");
+  const events = fromSupabase ?? fallbackEvents;
+  return events.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
 }
 
-/** Returns active announcements from CMS (newest first) */
-export function getAnnouncements(): Announcement[] {
-  const all = readContentFolder<Announcement>("announcements");
-  return all
-    .filter((a) => a.active !== false)
+export async function getGalleryItems(): Promise<GalleryItem[]> {
+  return (await readPublishedContent<GalleryItem>("gallery")) ?? fallbackGallery;
+}
+
+export async function getAnnouncements(): Promise<Announcement[]> {
+  const announcements = (await readPublishedContent<Announcement>("announcement")) ?? [];
+  return announcements
+    .filter((item) => item.active !== false)
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 }
 
-/** Returns hero text from CMS, or falls back to siteData.ts */
-export function getHeroContent(): HeroContent {
-  return readSettingsFile<HeroContent>("hero.json") ?? fallbackHero;
+export async function getHeroContent(): Promise<HeroContent> {
+  return (await readPublishedSetting<HeroContent>("hero")) ?? fallbackHero;
 }
 
-/** Returns pastor profile from CMS, or falls back to siteData.ts */
-export function getPastor(): PastorProfile {
-  return readSettingsFile<PastorProfile>("pastor.json") ?? fallbackPastor;
+export async function getPastor(): Promise<PastorProfile> {
+  return (await readPublishedSetting<PastorProfile>("pastor")) ?? fallbackPastor;
 }
 
-/** Returns donation info from CMS, or falls back to siteData.ts */
 export type DonationInfo = typeof fallbackDonation;
 
-export function getDonationInfo(): DonationInfo {
-  return readSettingsFile<DonationInfo>("donation.json") ?? fallbackDonation;
+export async function getDonationInfo(): Promise<DonationInfo> {
+  return (await readPublishedSetting<DonationInfo>("donation")) ?? fallbackDonation;
 }

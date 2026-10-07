@@ -8,5 +8,13 @@ export default defineConfig([
       "react/react-in-jsx-scope": "off",
     },
   },
-  globalIgnores([".next/**", "out/**", "build/**", "next-env.d.ts"]),
+  globalIgnores([
+    ".next/**",
+    "out/**",
+    "build/**",
+    "artifacts/**",
+    "backend/.venv/**",
+    "backend/venv/**",
+    "next-env.d.ts",
+  ]),
 ]);

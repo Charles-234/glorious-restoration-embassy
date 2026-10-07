@@ -16,8 +16,8 @@ export default function ContactPage() {
       <section className="space-y-6 text-center">
         <SectionHeading title="Contact us" subtitle="We would love to hear from you." />
         <p className="mx-auto max-w-3xl text-base leading-8 text-muted-foreground">
-          Whether you need prayer, want to plan a first visit, or would like to serve on a ministry
-          team, send us a message and a member of the team will get back to you.
+          For church enquiries, service times, a first visit, or ministry information, call us or
+          send a message and a member of the team will get back to you.
         </p>
       </section>
 
@@ -46,7 +46,10 @@ export default function ContactPage() {
                   className="flex items-center gap-3 text-foreground transition hover:text-brand-royal"
                 >
                   <Phone size={18} className="shrink-0 text-accent" />
-                  {siteConfig.phoneDisplay}
+                  <span>
+                    <span className="block font-medium">Church enquiries</span>
+                    <span>{siteConfig.phoneDisplay}</span>
+                  </span>
                 </a>
               </li>
               <li>
@@ -71,8 +74,20 @@ export default function ContactPage() {
                     {branch.city}
                   </span>
                   {branch.address}
-                  <br />
-                  {branch.phone}
+                  {branch.coordinates && <><br />{branch.coordinates}</>}
+                  {branch.mapsUrl && (
+                    <>
+                      <br />
+                      <a
+                        className="font-semibold text-accent underline-offset-4 hover:underline"
+                        href={branch.mapsUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        View on Google Maps
+                      </a>
+                    </>
+                  )}
                 </li>
               ))}
             </ul>

@@ -1,81 +1,225 @@
 import { expect, test } from "@playwright/test";
+import {
+  createChatPostHandler,
+  type ChatAuthorization,
+} from "../lib/chat-api";
 
-test.describe.configure({ mode: "serial" });
+const CHAT_REQUEST = () =>
+  new Request("http://localhost/api/chat", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ query: "  What does the document say?  " }),
+  });
 
-test("website chat proxies to FastAPI and maps answer/sources for the client", async () => {
-  const previousBackendUrl = process.env.FASTAPI_BACKEND_URL;
-  const previousSupabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const previousSupabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-  const originalFetch = globalThis.fetch;
-  let requestUrl = "";
-  let requestBody: unknown;
-  process.env.FASTAPI_BACKEND_URL = "https://fastapi.example.test/";
-  globalThis.fetch = async (input, init) => {
-    requestUrl = String(input);
-    requestBody = JSON.parse(String(init?.body));
-    return Response.json({
+function createHandler({
+  authorize = async (): Promise<ChatAuthorization> => ({
+    status: "authenticated",
+    admitCall: async () => ({ status: "admitted", used: 1, remaining: 9 }),
+  }),
+  backendUrl = "https://fastapi.example.test/",
+  fetcher = async () =>
+    Response.json({
       answer: "A RAG answer.",
       sources: [{ title: "Church document", url: "https://example.test/doc" }],
-    });
-  };
-  delete process.env.NEXT_PUBLIC_SUPABASE_URL;
-  delete process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+    }),
+  saveConversation = async () => undefined,
+}: {
+  authorize?: () => Promise<ChatAuthorization>;
+  backendUrl?: string | undefined;
+  fetcher?: typeof fetch;
+  saveConversation?: (question: string, answer: string) => Promise<unknown>;
+} = {}) {
+  return createChatPostHandler({
+    authorize,
+    getBackendUrl: () => backendUrl,
+    fetcher,
+    saveConversation,
+  });
+}
 
-  try {
-    const { POST } = await import("../app/api/chat/route");
-    const response = await POST(
-      new Request("http://localhost/api/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ query: "  What does the document say?  " }),
-      }),
-    );
+test("website chat proxies to FastAPI and maps answer/sources for the client", async () => {
+  let requestUrl = "";
+  let requestBody: unknown;
+  const handler = createHandler({
+    fetcher: async (input, init) => {
+      requestUrl = String(input);
+      requestBody = JSON.parse(String(init?.body));
+      return Response.json({
+        answer: "A RAG answer.",
+        sources: [{ title: "Church document", url: "https://example.test/doc" }],
+      });
+    },
+  });
+  const response = await handler(CHAT_REQUEST());
 
-    expect(requestUrl).toBe("https://fastapi.example.test/api/chat");
-    expect(requestBody).toEqual({ question: "What does the document say?" });
-    expect(response.status).toBe(200);
-    expect(await response.json()).toEqual({
-      message: "A RAG answer.",
-      sources: [{ title: "Church document", url: "https://example.test/doc" }],
-    });
-  } finally {
-    globalThis.fetch = originalFetch;
-    if (previousBackendUrl === undefined) delete process.env.FASTAPI_BACKEND_URL;
-    else process.env.FASTAPI_BACKEND_URL = previousBackendUrl;
-    if (previousSupabaseUrl === undefined) delete process.env.NEXT_PUBLIC_SUPABASE_URL;
-    else process.env.NEXT_PUBLIC_SUPABASE_URL = previousSupabaseUrl;
-    if (previousSupabaseKey === undefined) delete process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-    else process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY = previousSupabaseKey;
-  }
+  expect(requestUrl).toBe("https://fastapi.example.test/api/chat");
+  expect(requestBody).toEqual({ question: "What does the document say?" });
+  expect(response.status).toBe(200);
+  expect(await response.json()).toEqual({
+    message: "A RAG answer.",
+    sources: [{ title: "Church document", url: "https://example.test/doc" }],
+    quotaUsed: 1,
+    quotaLimit: 10,
+    remainingCalls: 9,
+    resetTimezone: "Africa/Nairobi",
+  });
+});
+
+test("website chat rejects unauthenticated requests before contacting the backend", async () => {
+  let backendCalled = false;
+  const handler = createHandler({
+    authorize: async () => ({ status: "unauthenticated" }),
+    fetcher: async () => {
+      backendCalled = true;
+      return Response.json({});
+    },
+  });
+  const response = await handler(CHAT_REQUEST());
+  const body = await response.json();
+
+  expect(response.status).toBe(401);
+  expect(body).toEqual({
+    error: "You must be signed in to use the AI assistant.",
+    code: "AUTHENTICATION_REQUIRED",
+  });
+  expect(backendCalled).toBe(false);
+});
+
+test("website chat permits exactly ten calls and returns a clear 429 on the next", async () => {
+  let used = 0;
+  let backendCalls = 0;
+  const handler = createHandler({
+    authorize: async () => ({
+      status: "authenticated",
+      admitCall: async () => {
+        if (used >= 10) {
+          return { status: "exhausted", used, remaining: 0 };
+        }
+        used += 1;
+        return {
+          status: "admitted",
+          used,
+          remaining: 10 - used,
+        };
+      },
+    }),
+    fetcher: async () => {
+      backendCalls += 1;
+      return Response.json({ answer: "A RAG answer." });
+    },
+  });
+
+  const responses = await Promise.all(
+    Array.from({ length: 11 }, () => handler(CHAT_REQUEST())),
+  );
+
+  const successfulResponses = responses.filter((response) => response.status === 200);
+  const exhaustedResponse = responses.find((response) => response.status === 429);
+  expect(successfulResponses).toHaveLength(10);
+  expect(exhaustedResponse).toBeDefined();
+  expect(backendCalls).toBe(10);
+  const remainingCounts = await Promise.all(
+    successfulResponses.map(async (response) => (await response.json()).remainingCalls),
+  );
+  expect(remainingCounts.sort((first, second) => first - second)).toEqual([
+    0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
+  ]);
+  expect(await exhaustedResponse?.json()).toEqual({
+    error:
+      "No AI assistant calls remain available in today's allowance. It resets at midnight Africa/Nairobi time.",
+    code: "CHAT_QUOTA_EXCEEDED",
+    quotaUsed: 10,
+    quotaLimit: 10,
+    remainingCalls: 0,
+    resetTimezone: "Africa/Nairobi",
+  });
+  expect(used).toBe(10);
+});
+
+test("website chat does not consume a call for an invalid question", async () => {
+  let quotaConsumed = false;
+  const handler = createHandler({
+    authorize: async () => ({
+      status: "authenticated",
+      admitCall: async () => {
+        quotaConsumed = true;
+        return { status: "admitted", used: 1, remaining: 9 };
+      },
+    }),
+  });
+  const response = await handler(
+    new Request("http://localhost/api/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ query: "  " }),
+    }),
+  );
+
+  expect(response.status).toBe(400);
+  expect(quotaConsumed).toBe(false);
 });
 
 test("website chat surfaces FastAPI errors using the existing error field", async () => {
-  const previousBackendUrl = process.env.FASTAPI_BACKEND_URL;
-  const originalFetch = globalThis.fetch;
-  process.env.FASTAPI_BACKEND_URL = "https://fastapi.example.test";
-  globalThis.fetch = async () =>
-    Response.json(
-      { detail: "The AI assistant is temporarily unavailable. Please try again later." },
-      { status: 502 },
-    );
+  const handler = createHandler({
+    fetcher: async () =>
+      Response.json(
+        { detail: "The AI assistant is temporarily unavailable. Please try again later." },
+        { status: 502 },
+      ),
+  });
+  const response = await handler(CHAT_REQUEST());
 
-  try {
-    const { POST } = await import("../app/api/chat/route");
-    const response = await POST(
-      new Request("http://localhost/api/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ query: "Please help" }),
-      }),
-    );
+  expect(response.status).toBe(502);
+  expect(await response.json()).toEqual({
+    error: "The AI assistant is temporarily unavailable. Please try again later.",
+    quotaUsed: 1,
+    quotaLimit: 10,
+    remainingCalls: 9,
+    resetTimezone: "Africa/Nairobi",
+  });
+});
 
-    expect(response.status).toBe(502);
-    expect(await response.json()).toEqual({
-      error: "The AI assistant is temporarily unavailable. Please try again later.",
-    });
-  } finally {
-    globalThis.fetch = originalFetch;
-    if (previousBackendUrl === undefined) delete process.env.FASTAPI_BACKEND_URL;
-    else process.env.FASTAPI_BACKEND_URL = previousBackendUrl;
-  }
+test("failed FastAPI calls remain counted as admitted attempts", async () => {
+  let used = 0;
+  let nextCallFails = true;
+  const handler = createHandler({
+    authorize: async () => ({
+      status: "authenticated",
+      admitCall: async () => {
+        if (used >= 10) {
+          return { status: "exhausted", used, remaining: 0 };
+        }
+        used += 1;
+        return {
+          status: "admitted",
+          used,
+          remaining: 10 - used,
+        };
+      },
+    }),
+    fetcher: async () => {
+      if (nextCallFails) {
+        nextCallFails = false;
+        return Response.json({ detail: "Temporary error." }, { status: 502 });
+      }
+      return Response.json({ answer: "A successful answer." });
+    },
+  });
+
+  const failedResponse = await handler(CHAT_REQUEST());
+  const successfulResponse = await handler(CHAT_REQUEST());
+
+  expect(failedResponse.status).toBe(502);
+  expect(successfulResponse.status).toBe(200);
+  expect(await failedResponse.json()).toMatchObject({
+    quotaUsed: 1,
+    quotaLimit: 10,
+    remainingCalls: 9,
+  });
+  expect(await successfulResponse.json()).toMatchObject({
+    quotaUsed: 2,
+    quotaLimit: 10,
+    remainingCalls: 8,
+  });
+  expect(used).toBe(2);
 });
