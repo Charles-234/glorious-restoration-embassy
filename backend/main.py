@@ -55,6 +55,22 @@ def health() -> dict[str, str]:
     return {"status": "ok"}
 
 
+@app.get("/health/rag")
+async def health_rag() -> dict[str, object]:
+    try:
+        from knowledge_base import get_db
+
+        db = get_db()
+        count = db.count()
+        return {"rag": "ok", "collection": "church_documents", "documents": count}
+    except Exception as error:
+        logger.exception("RAG health check failed.")
+        return {
+            "rag": "error",
+            "message": "Document search is temporarily unavailable.",
+        }
+
+
 @app.post("/api/ingest")
 async def ingest(files: list[UploadFile] = File(...)) -> dict[str, object]:
     if not files:

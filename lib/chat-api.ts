@@ -5,7 +5,7 @@ export const CHAT_CALL_LIMIT = 10;
 type AdmissionResult =
   | { status: "admitted"; used: number; remaining: number }
   | { status: "exhausted"; used: number; remaining: 0 }
-  | { status: "unavailable" };
+  | { status: "unavailable"; message?: string };
 
 export type ChatAuthorization =
   | {
@@ -135,14 +135,14 @@ export function createChatPostHandler({
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ question: query }),
-        signal: AbortSignal.timeout(30_000),
+        signal: AbortSignal.timeout(60_000),
       });
     } catch (error) {
-      const message =
-        error instanceof Error && error.name === "TimeoutError"
-          ? "The chat service took too long to respond. Please try again."
-          : "The chat service is temporarily unavailable. Please try again.";
-      return failureResponse(message, 503);
+      const isTimeout = error instanceof Error && error.name === "TimeoutError";
+      const message = isTimeout
+        ? "The AI assistant is waking up. Please try again in 30 seconds."
+        : "The AI assistant is offline. Please try again later.";
+      return failureResponse(message, isTimeout ? 504 : 503);
     }
 
     if (!response.ok) {

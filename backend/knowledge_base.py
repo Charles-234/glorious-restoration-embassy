@@ -1,96 +1,99 @@
+"""
+knowledge_base.py — Document ingestion and retrieval using VectrixDB.
+
+VectrixDB is a free, local vector database with embedded ML models.
+No API keys required. Uses bundled English models (~386MB).
+
+Reference: https://pypi.org/project/vectrixdb/ [citation:1]
+"""
+
 import hashlib
 import logging
 import os
-from functools import lru_cache
-from io import BytesIO
 from pathlib import Path
 from typing import Any
 from urllib.parse import quote, urlparse
+from io import BytesIO
 
-import chromadb
 import requests
-from chromadb.utils.embedding_functions import SentenceTransformerEmbeddingFunction
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from pypdf import PdfReader
+from vectrixdb import Vectrix
 
 COLLECTION_NAME = "church_documents"
-EMBEDDING_MODEL = "BAAI/bge-small-en-v1.5"
 CHUNK_SIZE = 1200
 CHUNK_OVERLAP = 200
 UPSERT_BATCH_SIZE = 64
 PAGE_PROGRESS_INTERVAL = 100
 MAX_GITHUB_PDF_SIZE_BYTES = 25 * 1024 * 1024
 GITHUB_API = "https://api.github.com"
+
 logger = logging.getLogger(__name__)
 
+# Global database instance (lazy-loaded)
+_db: Vectrix | None = None
 
-@lru_cache(maxsize=1)
-def get_collection() -> Any:
-    persist_directory = Path(
-        os.getenv(
-            "CHROMA_PERSIST_DIRECTORY",
-            str(Path(__file__).with_name("chroma_db")),
+
+def get_db() -> Vectrix:
+    """Get or create the VectrixDB instance."""
+    global _db
+    if _db is None:
+        persist_dir = Path(
+            os.getenv(
+                "VECTRIX_PERSIST_DIRECTORY",
+                str(Path(__file__).with_name("vectrix_db")),
+            )
         )
-    )
-    persist_directory.mkdir(parents=True, exist_ok=True)
+        persist_dir.mkdir(parents=True, exist_ok=True)
 
-    client = chromadb.PersistentClient(path=str(persist_directory))
-    embedding_function = SentenceTransformerEmbeddingFunction(
-        model_name=EMBEDDING_MODEL,
-        device="cpu",
-    )
-    return client.get_or_create_collection(
-        name=COLLECTION_NAME,
-        embedding_function=embedding_function,
-        metadata={"hnsw:space": "cosine"},
-    )
+        # Use hybrid search for balanced vector and keyword retrieval.
+        _db = Vectrix(
+            name=COLLECTION_NAME,
+            path=str(persist_dir),
+            mode="hybrid",
+            language="en",
+        )
+        logger.info("VectrixDB initialized at %s", persist_dir)
+    return _db
 
 
 def reset_collection() -> None:
-    persist_directory = Path(
-        os.getenv(
-            "CHROMA_PERSIST_DIRECTORY",
-            str(Path(__file__).with_name("chroma_db")),
-        )
-    )
-    persist_directory.mkdir(parents=True, exist_ok=True)
-    client = chromadb.PersistentClient(path=str(persist_directory))
-    collections = client.list_collections()
-    collection_names = {
-        collection if isinstance(collection, str) else collection.name
-        for collection in collections
-    }
-    if COLLECTION_NAME in collection_names:
-        client.delete_collection(COLLECTION_NAME)
-    get_collection.cache_clear()
+    """Reset the VectrixDB document collection."""
+    get_db().clear()
+    logger.info("VectrixDB collection reset.")
 
 
 def search_documents(query: str, limit: int = 5) -> list[dict[str, Any]]:
-    collection = get_collection()
-    if collection.count() == 0:
-        return []
-    results = collection.query(
-        query_texts=[query],
-        n_results=min(max(limit, 1), 10),
-        include=["documents", "metadatas", "distances"],
-    )
+    """Search the document collection and return matching chunks."""
+    db = get_db()
 
-    docs = results.get("documents", [[]])[0]
-    metadatas = results.get("metadatas", [[]])[0]
-    distances = results.get("distances", [[]])[0]
+    results = db.search(query, limit=min(max(limit, 1), 10))
 
     hits: list[dict[str, Any]] = []
-    for document, metadata, distance in zip(docs, metadatas, distances):
-        if not document:
+    for hit in results:
+        if isinstance(hit, dict):
+            text = hit.get("text", "")
+            metadata = hit.get("metadata", {})
+            score = hit.get("score", 0.0)
+        else:
+            text = getattr(hit, "text", "")
+            metadata = getattr(hit, "metadata", {})
+            score = getattr(hit, "score", 0.0)
+
+        if not text:
             continue
+        if not isinstance(metadata, dict):
+            metadata = {}
+
+        source = metadata.get("source", "unknown.pdf")
         hits.append(
             {
-                "content": document,
-                "source": metadata.get("source", "unknown.pdf"),
-                "title": metadata.get("title", Path(metadata.get("source", "unknown.pdf")).stem),
+                "content": text,
+                "source": source,
+                "title": metadata.get("title", Path(source).stem),
                 "page": metadata.get("page"),
-                "distance": distance,
-                "url": metadata.get("url") or f"file://{metadata.get('source', 'unknown.pdf')}",
+                "distance": 1.0 - score if isinstance(score, (int, float)) else 1.0,
+                "url": metadata.get("url") or f"file://{source}",
             }
         )
     return hits
@@ -101,6 +104,7 @@ def ingest_pdf(
     content: bytes,
     source_url: str | None = None,
 ) -> dict[str, object]:
+    """Parse a PDF, split it into chunks, and add them to VectrixDB."""
     try:
         reader = PdfReader(BytesIO(content), strict=False)
     except Exception as error:
@@ -111,44 +115,30 @@ def ingest_pdf(
         chunk_overlap=CHUNK_OVERLAP,
         add_start_index=True,
     )
-    file_hash = hashlib.sha256(filename.encode("utf-8") + b"\0" + content).hexdigest()
+    file_hash = hashlib.sha256(
+        filename.encode("utf-8") + b"\0" + content
+    ).hexdigest()
     total_pages = len(reader.pages)
     text_pages = 0
     total_chunks = 0
     page_number = 0
-    pending_chunks = []
-    collection = None
+    pending_texts: list[str] = []
+    pending_metadatas: list[dict] = []
+    db = get_db()
 
-    def upsert_batch(batch: list[Any]) -> None:
-        nonlocal collection, total_chunks
-        if collection is None:
-            print("Loading local embedding model...", flush=True)
-            collection = get_collection()
-
+    def add_batch(texts: list[str], metadatas: list[dict]) -> None:
+        nonlocal total_chunks
         ids = [
             hashlib.sha256(
                 f"{file_hash}:{total_chunks + index}".encode("utf-8")
             ).hexdigest()
-            for index in range(len(batch))
+            for index in range(len(texts))
         ]
-        collection.upsert(
-            ids=ids,
-            documents=[chunk.page_content for chunk in batch],
-            metadatas=[
-                {
-                    **chunk.metadata,
-                    "source": filename,
-                    "title": Path(filename).stem,
-                    "chunk": total_chunks + index,
-                    **({"url": source_url} if source_url else {}),
-                }
-                for index, chunk in enumerate(batch)
-            ],
-        )
-        total_chunks += len(batch)
+        db.add(texts=texts, metadata=metadatas, ids=ids)
+        total_chunks += len(texts)
         print(
             f"Indexed {total_chunks} chunks from {filename} "
-            f"(through page {batch[-1].metadata['page']}).",
+            f"(through page {metadatas[-1].get('page', '?')}).",
             flush=True,
         )
 
@@ -157,15 +147,30 @@ def ingest_pdf(
             text = (page.extract_text() or "").strip()
             if text:
                 text_pages += 1
-                pending_chunks.extend(
-                    splitter.create_documents(
-                        [text],
-                        metadatas=[{"source": filename, "page": page_number}],
-                    )
+                chunks = splitter.create_documents(
+                    [text],
+                    metadatas=[{"source": filename, "page": page_number}],
                 )
-                while len(pending_chunks) >= UPSERT_BATCH_SIZE:
-                    upsert_batch(pending_chunks[:UPSERT_BATCH_SIZE])
-                    del pending_chunks[:UPSERT_BATCH_SIZE]
+                for chunk in chunks:
+                    pending_texts.append(chunk.page_content)
+                    pending_metadatas.append(
+                        {
+                            **chunk.metadata,
+                            "source": filename,
+                            "title": Path(filename).stem,
+                            "chunk": total_chunks + len(pending_texts) - 1,
+                            **({"url": source_url} if source_url else {}),
+                        }
+                    )
+
+                # Flush when batch is full
+                while len(pending_texts) >= UPSERT_BATCH_SIZE:
+                    add_batch(
+                        pending_texts[:UPSERT_BATCH_SIZE],
+                        pending_metadatas[:UPSERT_BATCH_SIZE],
+                    )
+                    del pending_texts[:UPSERT_BATCH_SIZE]
+                    del pending_metadatas[:UPSERT_BATCH_SIZE]
 
             if page_number % PAGE_PROGRESS_INTERVAL == 0:
                 print(
@@ -177,8 +182,9 @@ def ingest_pdf(
             f"Could not extract text from page {page_number} of {filename}."
         ) from error
 
-    if pending_chunks:
-        upsert_batch(pending_chunks)
+    # Flush remaining
+    if pending_texts:
+        add_batch(pending_texts, pending_metadatas)
 
     if text_pages == 0:
         raise ValueError(f"No extractable text was found in {filename}.")
@@ -194,9 +200,12 @@ def ingest_pdf(
 
 
 def ingest_github_documents() -> list[dict[str, object]]:
+    """Fetch PDFs from GitHub and rebuild the VectrixDB index."""
     repo_name = os.getenv("GITHUB_REPO", "").strip()
     if not repo_name:
-        logger.warning("GITHUB_REPO is not configured; skipping startup document rebuild.")
+        logger.warning(
+            "GITHUB_REPO is not configured; skipping startup document rebuild."
+        )
         return []
 
     repo_parts = repo_name.split("/")
@@ -264,7 +273,9 @@ def ingest_github_documents() -> list[dict[str, object]]:
                     continue
                 content.extend(chunk)
                 if len(content) > MAX_GITHUB_PDF_SIZE_BYTES:
-                    raise ValueError(f"{pdf_path} exceeds the 25 MiB GitHub PDF limit.")
+                    raise ValueError(
+                        f"{pdf_path} exceeds the 25 MiB GitHub PDF limit."
+                    )
 
         result = ingest_pdf(
             pdf_path,
@@ -281,6 +292,7 @@ def ingest_github_documents() -> list[dict[str, object]]:
 
 
 def ingest_url(url: str) -> dict[str, object]:
+    """Download a PDF from a URL and ingest it."""
     response = requests.get(url, timeout=60)
     response.raise_for_status()
     filename = Path(urlparse(url).path).name or "download.pdf"

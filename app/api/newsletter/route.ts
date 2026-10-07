@@ -2,7 +2,12 @@ import { NextResponse } from "next/server";
 import { saveNewsletterSubscriber } from "@/lib/supabaseClient";
 
 export async function POST(request: Request) {
-  const data = await request.json();
+  let data: { email?: string };
+  try {
+    data = await request.json();
+  } catch {
+    return NextResponse.json({ error: "Invalid request." }, { status: 400 });
+  }
 
   if (!data?.email) {
     return NextResponse.json({ error: "Email is required." }, { status: 400 });
@@ -10,7 +15,8 @@ export async function POST(request: Request) {
 
   const { error } = await saveNewsletterSubscriber(data.email);
   if (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    console.error("[newsletter] Could not save subscriber.", error);
+    return NextResponse.json({ error: "Subscription could not be completed. Please try again later." }, { status: 500 });
   }
 
   return NextResponse.json({ success: true });

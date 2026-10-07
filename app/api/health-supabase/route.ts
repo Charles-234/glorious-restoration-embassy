@@ -1,6 +1,23 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/utils/supabase/server";
 
+function getSupabaseErrorMessage(error: unknown) {
+  if (typeof error !== "object" || error === null) {
+    return "Unknown Supabase error";
+  }
+
+  const errorRecord = error as Record<string, unknown>;
+  const code = typeof errorRecord.code === "string" ? errorRecord.code : null;
+  const details = typeof errorRecord.details === "string" ? errorRecord.details : null;
+  const message = typeof errorRecord.message === "string" ? errorRecord.message : null;
+
+  if (code === "PGRST205" || code === "42P01") {
+    return "The public.site_content table is missing in the configured Supabase project. Apply the editorial CMS migration and verify the schema cache.";
+  }
+
+  return message || details || "Supabase health check failed.";
+}
+
 export async function GET() {
   try {
     const supabase = await createClient();
@@ -22,19 +39,22 @@ export async function GET() {
       admins_count: adminsResult.count ?? 0,
     });
   } catch (error) {
-    console.error("[health-supabase] Full error:", error);
-    console.error("[health-supabase] error.name:", (error as Error).name);
-    console.error("[health-supabase] error.message:", (error as Error).message);
-    console.error("[health-supabase] error.stack:", (error as Error).stack);
-    const detail =
-      process.env.NODE_ENV === "production"
-        ? { message: "Supabase health check failed." }
-        : {
-            supabase: "error",
-            name: (error as Error).name,
-            message: (error as Error).message || "(empty)",
-            stack: (error as Error).stack?.split("\n").slice(0, 5),
-          };
-    return NextResponse.json(detail, { status: 500 });
+    const errorCode = typeof error === "object" && error && "code" in error ? String(error.code) : null;
+    const errorMessage = getSupabaseErrorMessage(error);
+
+    console.error("[health-supabase] Health check failed.", {
+      code: errorCode,
+      message: errorMessage,
+      error,
+    });
+
+    return NextResponse.json(
+      {
+        supabase: "error",
+        code: errorCode,
+        message: errorMessage,
+      },
+      { status: 500 },
+    );
   }
 }

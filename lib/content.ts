@@ -6,6 +6,7 @@ import {
   heroContent as fallbackHero,
   donationInfo as fallbackDonation,
 } from "./siteData";
+import { reportSiteContentReadError } from "@/lib/cms-diagnostics";
 import { getPublicSupabaseClient } from "@/lib/public-supabase";
 
 export type Sermon = {
@@ -64,9 +65,7 @@ async function readPublishedContent<T>(kind: string): Promise<T[] | null> {
       .eq("published", true);
 
     if (error) {
-      if (process.env.NODE_ENV !== "production") {
-        console.warn("[cms] site_content table not yet set up. Using default content.", error);
-      }
+      reportSiteContentReadError(`${kind} content`, error);
       return null;
     }
 
@@ -89,7 +88,7 @@ async function readPublishedSetting<T>(slug: string): Promise<T | null> {
       .maybeSingle();
 
     if (error) {
-      console.error(`[cms] Could not read the ${slug} setting from Supabase.`, error);
+      reportSiteContentReadError(`the ${slug} setting`, error);
       return null;
     }
 

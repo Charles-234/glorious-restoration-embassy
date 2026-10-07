@@ -45,7 +45,7 @@ Optional:
 
 The dashboard displays attributed headlines from AllAfrica, Christian Daily, World History Encyclopedia, and Biblical Archaeology Society (Biblical Archaeology Review), linking each item to its publisher. World History Encyclopedia and Biblical Archaeology Society items appear under the History & Exploration filter. The feeds are revalidated hourly. Publisher thumbnails remain disabled unless image reuse rights are confirmed for every enabled source; article descriptions are not republished.
 
-The Standard RSS feed is intentionally not polled or displayed because its published terms do not grant clear permission for automated collection and aggregation. Add it only after obtaining written permission.
+The Standard RSS feed is intentionally not polled or displayed because its published terms do not clearly permit automated collection or displaying feed headlines elsewhere. Nation Africa's feed and applicable terms could not be verified, so it is not polled or displayed either. Add either source only after obtaining written permission or confirming publisher terms that explicitly permit this use.
 
 NewsAPI's free Developer plan is for development and testing only. Production use is disabled unless `NEWS_API_PRODUCTION_ENABLED=true` is set; only set this after securing an appropriate paid plan and confirming content-use rights. Keep `NEWS_API_KEY` server-side and never use a `NEXT_PUBLIC_` variable for production credentials.
 

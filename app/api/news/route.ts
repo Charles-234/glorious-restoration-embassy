@@ -46,8 +46,8 @@ const FEEDS = [
 
 type JsonRecord = Record<string, unknown>;
 type SourceResult<T> =
-  | { source: string; value: T; error: null }
-  | { source: string; value: null; error: string };
+  | { source: string; value: T; error: false }
+  | { source: string; value: null; error: true };
 
 function isRecord(value: unknown): value is JsonRecord {
   return typeof value === "object" && value !== null && !Array.isArray(value);
@@ -80,10 +80,10 @@ async function readSource<T>(
   load: () => Promise<T>,
 ): Promise<SourceResult<T>> {
   try {
-    return { source, value: await load(), error: null };
+    return { source, value: await load(), error: false };
   } catch (error) {
-    const message = error instanceof Error ? error.message : "Unexpected upstream error.";
-    return { source, value: null, error: `${source}: ${message}` };
+    console.error(`[news] ${source} request failed.`, error);
+    return { source, value: null, error: true };
   }
 }
 
@@ -263,11 +263,9 @@ export async function GET() {
   const apiKey = process.env.NEWS_API_KEY?.trim();
   const newsApiRequest = async () => {
     if (isProduction && process.env.NEWS_API_PRODUCTION_ENABLED !== "true") {
-      throw new Error(
-        "NewsAPI is disabled in production until a paid plan and content-use rights are confirmed.",
-      );
+      return [];
     }
-    if (!apiKey) throw new Error("Configure NEWS_API_KEY in .env.local and restart the server.");
+    if (!apiKey) return [];
 
     const url = new URL(NEWS_API_URL);
     url.searchParams.set("q", '(christianity AND politics) OR "church news"');
@@ -297,7 +295,12 @@ export async function GET() {
     const data: FaithDashboardData = {
       articles,
       scripture: scripture.value,
-      errors: [news, scripture, ...feeds].flatMap((result) => result.error ? [result.error] : []),
+      errors: [
+        ...(scripture.error ? ["Daily scripture is temporarily unavailable."] : []),
+        ...([news, ...feeds].some((result) => result.error)
+          ? ["Some news sources are temporarily unavailable."]
+          : []),
+      ],
     };
 
     return NextResponse.json(data);

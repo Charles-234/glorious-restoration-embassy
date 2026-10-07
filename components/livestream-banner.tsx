@@ -26,8 +26,8 @@ export function LivestreamBanner() {
             <Link href="https://www.facebook.com/share/1Xob4wuJwK/" className="btn btn-secondary gap-2 text-sm">
               <Facebook size={16} /> Facebook Live
             </Link>
-            <Link href="https://wa.me/254726791236" className="btn btn-primary gap-2 text-sm">
-              <MessageSquare size={16} /> WhatsApp
+            <Link href="/chat" className="btn btn-primary gap-2 text-sm">
+              <MessageSquare size={16} /> Ask the assistant
             </Link>
           </div>
         </div>

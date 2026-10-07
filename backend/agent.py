@@ -138,7 +138,11 @@ def answer_question(question: str) -> dict[str, Any]:
     if not question:
         return {"answer": "Please provide a question to answer.", "sources": []}
 
-    docs = document_retriever(question)
+    try:
+        docs = document_retriever(question)
+    except Exception as rag_error:
+        print(f"[agent] RAG unavailable, answering without documents: {type(rag_error).__name__}: {rag_error}")
+        docs = []
     web_results = web_search(question)
 
     providers = build_llms()

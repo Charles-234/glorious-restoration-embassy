@@ -1,5 +1,6 @@
 import { readdir } from "node:fs/promises";
 import path from "node:path";
+import { reportSiteContentReadError } from "@/lib/cms-diagnostics";
 import { getPublicSupabaseClient } from "@/lib/public-supabase";
 
 export type GalleryMediaItem = {
@@ -63,9 +64,7 @@ async function readCmsGalleryImages(): Promise<GalleryMediaItem[]> {
       .order("updated_at", { ascending: false });
 
     if (error) {
-      if (process.env.NODE_ENV !== "production") {
-        console.warn("[cms] Gallery table not yet set up. Using static gallery.", error);
-      }
+      reportSiteContentReadError("published gallery images", error);
       return [];
     }
 

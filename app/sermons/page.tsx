@@ -51,14 +51,13 @@ export default async function SermonsPage() {
       <section className="readable-surface space-y-5 rounded-[2rem] p-8 text-center">
         <h2 className="text-2xl font-semibold text-foreground">Never miss a message</h2>
         <p className="mx-auto max-w-2xl text-sm leading-7 text-muted-foreground">
-          Join the livestream on Sunday or send us a WhatsApp message and we will help you find a
-          sermon series for your season.
+          Join the livestream on Sunday or ask our AI assistant to recommend a sermon series for your season.
         </p>
         <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
           <Link href="/livestream" className="btn btn-primary">
             Watch live
           </Link>
-          <Link href={`https://wa.me/${siteConfig.whatsapp}`} className="btn btn-secondary">
+          <Link href="/chat" className="btn btn-secondary">
             Ask for a series
           </Link>
         </div>

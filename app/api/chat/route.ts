@@ -45,6 +45,29 @@ function parseQuotaResult(data: unknown) {
   };
 }
 
+function getQuotaAdmissionErrorMessage(error: unknown) {
+  if (typeof error !== "object" || error === null) {
+    return "We couldn't verify your AI assistant allowance. Please try again later.";
+  }
+
+  const record = error as Record<string, unknown>;
+  const code = typeof record.code === "string" ? record.code : "";
+  const details = typeof record.details === "string" ? record.details : "";
+  const message = typeof record.message === "string" ? record.message : "";
+  const combined = `${code} ${details} ${message}`.toLowerCase();
+
+  if (
+    ["PGRST205", "42P01", "42703", "42501"].includes(code) ||
+    combined.includes("admit_ai_chat_call") ||
+    combined.includes("ai_chat_daily_usage") ||
+    combined.includes("does not exist")
+  ) {
+    return "The AI assistant allowance is not configured in this Supabase project. Run the chat quota migration before using the assistant.";
+  }
+
+  return "We couldn't verify your AI assistant allowance. Please try again later.";
+}
+
 async function authorize(): Promise<ChatAuthorization> {
   let supabase;
   try {
@@ -85,11 +108,17 @@ async function authorize(): Promise<ChatAuthorization> {
         admissionResult = await supabase.rpc("admit_ai_chat_call");
       } catch (error) {
         console.error("[chat] Supabase quota admission RPC failed.", error);
-        return { status: "unavailable" as const };
+        return {
+          status: "unavailable" as const,
+          message: getQuotaAdmissionErrorMessage(error),
+        };
       }
       if (admissionResult.error) {
         console.error("[chat] Supabase quota admission RPC returned an error.", admissionResult.error);
-        return { status: "unavailable" as const };
+        return {
+          status: "unavailable" as const,
+          message: getQuotaAdmissionErrorMessage(admissionResult.error),
+        };
       }
       return parseQuotaResult(admissionResult.data);
     },

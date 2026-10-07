@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { DM_Sans, Merriweather, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
+import "../styles.css";
 import { Navbar } from "@/components/animated-navbar";
 import { Footer } from "@/components/footer";
 import { PageTransition } from "@/components/page-transition";
