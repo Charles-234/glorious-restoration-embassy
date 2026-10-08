@@ -73,3 +73,7 @@ prn
 aux
 com[1-9]
 lpt[1-9]
+# Backup files — never commit
+*.backup
+*.backup2
+*.bak
