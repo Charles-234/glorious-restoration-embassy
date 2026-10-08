@@ -156,7 +156,7 @@ export function createChatPostHandler({
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ question: query }),
-        signal: AbortSignal.timeout(60_000),
+        signal: AbortSignal.timeout(20_000),
       });
     } catch (error) {
       const isTimeout = error instanceof Error && error.name === "TimeoutError";

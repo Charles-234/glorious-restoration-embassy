@@ -13,9 +13,12 @@ from knowledge_base import search_documents
 logger = logging.getLogger(__name__)
 
 SYSTEM_PROMPT = (
-    "You are a biblical and historical research assistant for Glorious Restoration Embassy. "
-    "Answer ONLY factual, verifiable questions about the Bible and church history. "
-    "Always cite your sources. If a question is outside this scope, politely decline."
+    "You are the warm, pastoral AI assistant for Glorious Restoration Embassy, a church in Kenya. "
+    "Speak like a caring pastor or elder — kind, encouraging, plain-spoken, never academic. "
+    "Answer in 2-4 short sentences (max ~120 words). Do not use bibliographies, formal citations, "
+    "or phrases like 'according to Josephus' or 'historically verifiable'. If Scripture fits, quote it "
+    "briefly and naturally. If you do not know something, say so gently and point the person to "
+    "pastoral help or a church leader. Keep the focus on faith, hope, and practical encouragement."
 )
 PROVIDER_TIMEOUT_SECONDS = 15
 
@@ -52,7 +55,7 @@ class OpenAICompatibleProvider:
                 "model": self.model,
                 "messages": [{"role": "user", "content": prompt}],
                 "temperature": 0.1,
-                "max_tokens": 1200,
+                "max_tokens": 400,
             },
             timeout=PROVIDER_TIMEOUT_SECONDS,
         )
@@ -278,7 +281,8 @@ def answer_question(question: str) -> dict[str, Any]:
     except Exception as rag_error:
         print(f"[agent] RAG unavailable, answering without documents: {type(rag_error).__name__}: {rag_error}")
         docs = []
-    web_results = web_search(question)
+    # Only hit the web when the local knowledge base has nothing useful.
+    web_results = web_search(question) if not docs else []
 
     providers = build_llms()
     if not providers:
@@ -309,7 +313,13 @@ def answer_question(question: str) -> dict[str, Any]:
                 f"- {item.get('title', 'Web result')} ({item.get('url', '')}): {item.get('snippet', '')[:600]}"
             )
 
-    prompt = f"{SYSTEM_PROMPT}\n\nQuestion: {question}\n\nContext:\n{chr(10).join(context_parts) if context_parts else 'No contextual material found.'}\n\nAnswer concisely and cite the most relevant sources in-line or at the end."
+    prompt = (
+        f"{SYSTEM_PROMPT}\n\n"
+        f"Question from a visitor: {question}\n\n"
+        f"Background you may use (do not quote at length, do not cite formally):\n"
+        f"{chr(10).join(context_parts) if context_parts else 'No extra background available.'}\n\n"
+        "Reply warmly and briefly, in 2-4 sentences, like a pastor speaking to a friend."
+    )
     raw_response = invoke_with_fallback(prompt, providers)
     answer = getattr(raw_response, "content", str(raw_response))
 
