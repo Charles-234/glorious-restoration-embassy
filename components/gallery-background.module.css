@@ -32,7 +32,7 @@
 }
 
 .image {
-  object-fit: contain;
+  object-fit: cover;
   opacity: 0.3;
 }
 

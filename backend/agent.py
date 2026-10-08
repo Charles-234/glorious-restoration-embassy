@@ -1,8 +1,9 @@
-import json
 import logging
 import os
+from dataclasses import dataclass
 from typing import Any
 
+import requests
 from duckduckgo_search import DDGS
 from langchain_groq import ChatGroq
 from langchain_google_genai import ChatGoogleGenerativeAI
@@ -16,6 +17,70 @@ SYSTEM_PROMPT = (
     "Answer ONLY factual, verifiable questions about the Bible and church history. "
     "Always cite your sources. If a question is outside this scope, politely decline."
 )
+PROVIDER_TIMEOUT_SECONDS = 15
+
+
+@dataclass
+class ChatResponse:
+    content: str
+
+
+class OpenAICompatibleProvider:
+    def __init__(
+        self,
+        name: str,
+        model: str,
+        base_url: str,
+        api_key: str,
+        headers: dict[str, str] | None = None,
+    ) -> None:
+        self.name = name
+        self.model = model
+        self.url = f"{base_url.rstrip('/')}/chat/completions"
+        self.api_key = api_key
+        self.headers = headers or {}
+
+    def invoke(self, prompt: str) -> ChatResponse:
+        response = requests.post(
+            self.url,
+            headers={
+                "Authorization": f"Bearer {self.api_key}",
+                "Content-Type": "application/json",
+                **self.headers,
+            },
+            json={
+                "model": self.model,
+                "messages": [{"role": "user", "content": prompt}],
+                "temperature": 0.1,
+                "max_tokens": 1200,
+            },
+            timeout=PROVIDER_TIMEOUT_SECONDS,
+        )
+        response.raise_for_status()
+        payload = response.json()
+        choices = payload.get("choices")
+        content = (
+            choices[0].get("message", {}).get("content")
+            if isinstance(choices, list) and choices and isinstance(choices[0], dict)
+            else None
+        )
+        if not isinstance(content, str) or not content.strip():
+            raise ValueError(f"{self.name} returned an empty or invalid response.")
+        return ChatResponse(content=content.strip())
+
+
+def _add_openai_provider(
+    providers: list[tuple[str, Any]],
+    name: str,
+    api_key: str | None,
+    base_url: str,
+    model: str,
+    headers: dict[str, str] | None = None,
+) -> None:
+    if api_key:
+        providers.append(
+            (name, OpenAICompatibleProvider(name, model, base_url, api_key, headers))
+        )
 
 
 def document_retriever(query: str) -> list[dict[str, Any]]:
@@ -46,21 +111,40 @@ def web_search(query: str) -> list[dict[str, Any]]:
 def build_llms() -> list[tuple[str, Any]]:
     """Construct configured providers in preferred order, skipping unavailable clients."""
     providers: list[tuple[str, Any]] = []
+    _add_openai_provider(
+        providers,
+        "OmniRoute",
+        os.getenv("OMNIROUTE_API_KEY"),
+        os.getenv("OMNIROUTE_URL", ""),
+        "groq/openai/gpt-oss-120b",
+    )
+
     groq_key = os.getenv("GROQ_API_KEY")
+    groq_backup: tuple[str, Any] | None = None
     if groq_key:
-        try:
-            providers.append(
-                (
-                    "Groq",
+        for index, model in enumerate(
+            ("openai/gpt-oss-120b", "openai/gpt-oss-20b")
+        ):
+            try:
+                provider = (
+                    "Groq" if index == 0 else "Groq backup",
                     ChatGroq(
-                        model="llama-3.3-70b-versatile",
+                        model=model,
                         api_key=groq_key,
                         temperature=0.1,
+                        timeout=PROVIDER_TIMEOUT_SECONDS,
+                        max_retries=0,
                     ),
                 )
-            )
-        except Exception:
-            logger.warning("Could not initialize Groq; trying the next configured provider.")
+                if index == 0:
+                    providers.append(provider)
+                else:
+                    groq_backup = provider
+            except Exception:
+                logger.warning(
+                    "Could not initialize Groq model %s; trying the next configured model.",
+                    model,
+                )
 
     gemini_key = os.getenv("GEMINI_API_KEY")
     if gemini_key:
@@ -72,11 +156,62 @@ def build_llms() -> list[tuple[str, Any]]:
                         model="gemini-1.5-flash",
                         api_key=gemini_key,
                         temperature=0.1,
+                        timeout=PROVIDER_TIMEOUT_SECONDS,
+                        max_retries=0,
                     ),
                 )
             )
         except Exception:
             logger.warning("Could not initialize Gemini.")
+
+    cloudflare_key = os.getenv("CLOUDFLARE_API_TOKEN")
+    cloudflare_account_id = os.getenv("CLOUDFLARE_ACCOUNT_ID")
+    if cloudflare_key and cloudflare_account_id:
+        _add_openai_provider(
+            providers,
+            "Cloudflare",
+            cloudflare_key,
+            f"https://api.cloudflare.com/client/v4/accounts/{cloudflare_account_id}/ai/v1",
+            "@cf/meta/llama-3.3-70b-instruct-fp8-fast",
+        )
+
+    if groq_backup:
+        providers.append(groq_backup)
+
+    provider_configs = (
+        ("Mistral", "MISTRAL_API_KEY", "https://api.mistral.ai/v1", "mistral-small-latest"),
+        ("Cerebras", "CEREBRAS_API_KEY", "https://api.cerebras.ai/v1", "llama-3.3-70b"),
+        ("DeepSeek", "DEEPSEEK_API_KEY", "https://api.deepseek.com/v1", "deepseek-chat"),
+        ("NVIDIA", "NVIDIA_API_KEY", "https://integrate.api.nvidia.com/v1", "meta/llama-3.3-70b-instruct"),
+        (
+            "OpenRouter",
+            "OPENROUTER_API_KEY",
+            "https://openrouter.ai/api/v1",
+            "meta-llama/llama-3.3-70b-instruct:free",
+        ),
+    )
+    for name, key_name, base_url, model in provider_configs:
+        headers = (
+            {"HTTP-Referer": "https://gloriousrestorationembassy.org", "X-Title": "Glorious Restoration Embassy"}
+            if name == "OpenRouter"
+            else None
+        )
+        _add_openai_provider(
+            providers,
+            name,
+            os.getenv(key_name),
+            base_url,
+            model,
+            headers,
+        )
+
+    _add_openai_provider(
+        providers,
+        "LLM7",
+        os.getenv("LLM7_API_KEY", "unused"),
+        "https://api.llm7.io/v1",
+        "openai/default",
+    )
 
     return providers
 
@@ -147,7 +282,7 @@ def answer_question(question: str) -> dict[str, Any]:
 
     providers = build_llms()
     if not providers:
-        answer = "I could not access a live LLM because no Groq or Gemini API key is configured. Based on the local indexed documents and web results available to the system, the most relevant material should be reviewed in the source list below."
+        answer = "I could not access a live LLM because no provider is configured. Based on the local indexed documents and web results available to the system, the most relevant material should be reviewed in the source list below."
         if docs:
             first = docs[0]
             answer = (

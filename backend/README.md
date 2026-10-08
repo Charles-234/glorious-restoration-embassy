@@ -25,7 +25,8 @@ Copy-Item .env.example .env
 ```
 
 Edit `.env` with your provider keys as needed. Groq is the preferred runtime
-provider; if its client cannot initialize or an invocation fails, the assistant
+provider (`openai/gpt-oss-120b`), with `openai/gpt-oss-20b` as its model
+fallback. If Groq models fail and a Gemini key is configured, the assistant
 tries Gemini. Configure both `GROQ_API_KEY` and `GEMINI_API_KEY` to enable that
 fallback. Set `FRONTEND_URL` to the
 frontend origin; multiple comma-separated origins are supported. Provider keys

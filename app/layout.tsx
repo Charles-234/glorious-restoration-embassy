@@ -6,6 +6,8 @@ import { Navbar } from "@/components/animated-navbar";
 import { Footer } from "@/components/footer";
 import { PageTransition } from "@/components/page-transition";
 import { ThemeProvider } from "@/components/theme-provider";
+import { PublicGalleryBackground } from "@/components/public-gallery-background";
+import { getPublicGalleryBackgrounds } from "@/lib/public-gallery-backgrounds";
 import { siteConfig } from "@/lib/siteData";
 
 const bodyFont = Plus_Jakarta_Sans({
@@ -91,12 +93,19 @@ export const viewport: Viewport = {
   ]
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const galleryBackgrounds = await getPublicGalleryBackgrounds();
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${bodyFont.variable} ${subtitleFont.variable} ${displayFont.variable} min-h-screen antialiased bg-background text-foreground font-sans`}>
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
           <div className="relative isolate min-h-screen flex flex-col">
+            <PublicGalleryBackground backgrounds={galleryBackgrounds} />
             <Navbar />
             <PageTransition>{children}</PageTransition>
             <Footer />

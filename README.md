@@ -9,6 +9,12 @@ npm install
 npm run dev
 ```
 
+`npm run dev` starts the local FastAPI assistant backend and the Next.js site
+together, and waits for the backend health check before starting Next.js. The
+backend virtual environment must first be set up as described in
+[`backend/README.md`](./backend/README.md). To run only the frontend against an
+already-running backend, use `npm run dev:frontend`.
+
 Open `http://localhost:3000` in your browser.
 
 ## Environment variables
