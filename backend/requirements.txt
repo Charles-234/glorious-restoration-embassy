@@ -9,7 +9,7 @@ sentence-transformers
 groq
 google-generativeai
 pypdf
-duckduckgo-search
+ddgs
 PyGithub
 python-dotenv
 python-multipart

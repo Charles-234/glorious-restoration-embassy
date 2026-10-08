@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from typing import Any
 
 import requests
-from duckduckgo_search import DDGS
+from ddgs import DDGS
 from langchain_groq import ChatGroq
 from langchain_google_genai import ChatGoogleGenerativeAI
 
