@@ -1,5 +1,5 @@
 ﻿/** Next.js minimal config */
-module.exports = {
+export default {
   allowedDevOrigins: ["127.0.0.1", "localhost", "10.0.11.176"],
   reactStrictMode: true,
   images: {
