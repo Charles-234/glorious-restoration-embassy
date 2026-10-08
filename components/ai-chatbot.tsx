@@ -72,7 +72,13 @@ export function AIChatbot() {
       const response = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ query: content })
+        body: JSON.stringify({
+  query: content,
+  history: messages
+    .filter(m => m.role !== "system")
+    .slice(-10)
+    .map(m => ({ role: m.role, content: m.text }))
+})
       });
 
       if (response.status === 401) {

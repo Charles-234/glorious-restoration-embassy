@@ -130,13 +130,17 @@ async def ingest(
 
 
 @app.post("/api/chat")
-async def chat(payload: dict[str, str]) -> dict[str, object]:
+async def chat(payload: dict) -> dict[str, object]:
     question = (payload or {}).get("question") or (payload or {}).get("query") or ""
+    history = (payload or {}).get("history") or []
+    logger.info("[chat] Received question=%r history_len=%d", question[:60], len(history) if isinstance(history, list) else -1)
+    if not isinstance(history, list):
+        history = []
     if not question.strip():
         raise HTTPException(status_code=400, detail="Question is required.")
 
     try:
-        result = await run_in_threadpool(answer_question, question)
+        result = await run_in_threadpool(answer_question, question, history)
     except Exception as error:
         logger.exception("Chat answer generation failed.")
         raise HTTPException(

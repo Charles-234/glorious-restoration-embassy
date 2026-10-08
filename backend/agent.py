@@ -8,6 +8,7 @@ from duckduckgo_search import DDGS
 from langchain_groq import ChatGroq
 from langchain_google_genai import ChatGoogleGenerativeAI
 
+from langchain_core.messages import AIMessage, HumanMessage, SystemMessage
 from knowledge_base import search_documents
 
 logger = logging.getLogger(__name__)
@@ -18,7 +19,11 @@ SYSTEM_PROMPT = (
     "Answer in 2-4 short sentences (max ~120 words). Do not use bibliographies, formal citations, "
     "or phrases like 'according to Josephus' or 'historically verifiable'. If Scripture fits, quote it "
     "briefly and naturally. If you do not know something, say so gently and point the person to "
-    "pastoral help or a church leader. Keep the focus on faith, hope, and practical encouragement."
+    "pastoral help or a church leader. Keep the focus on faith, hope, and practical encouragement. "
+    "IMPORTANT: If a follow-up question uses pronouns like he, she, his, her, or it "
+"without a clear subject, ask the user to clarify rather than assuming a new subject. "
+"Never introduce unrelated figures (Greek mythology, historical persons, etc.) unless "
+"the user explicitly names them. "
 )
 PROVIDER_TIMEOUT_SECONDS = 15
 
@@ -43,7 +48,7 @@ class OpenAICompatibleProvider:
         self.api_key = api_key
         self.headers = headers or {}
 
-    def invoke(self, prompt: str) -> ChatResponse:
+    def invoke(self, prompt) -> "ChatResponse":
         response = requests.post(
             self.url,
             headers={
@@ -53,7 +58,7 @@ class OpenAICompatibleProvider:
             },
             json={
                 "model": self.model,
-                "messages": [{"role": "user", "content": prompt}],
+                "messages": prompt if isinstance(prompt, list) else [{"role": "user", "content": prompt}],
                 "temperature": 0.1,
                 "max_tokens": 400,
             },
@@ -225,7 +230,7 @@ def build_llm() -> Any:
     return providers[0][1] if providers else None
 
 
-def invoke_with_fallback(prompt: str, providers: list[tuple[str, Any]]) -> Any:
+def invoke_with_fallback(prompt, providers: list[tuple[str, Any]]) -> Any:
     """Invoke configured providers in order, falling back on runtime failures."""
     last_error: Exception | None = None
     for provider_name, provider in providers:
@@ -271,7 +276,7 @@ def _format_sources(docs: list[dict[str, Any]], web_results: list[dict[str, Any]
     return sources[:8]
 
 
-def answer_question(question: str) -> dict[str, Any]:
+def answer_question(question: str, history: list[dict[str, Any]] | None = None) -> dict[str, Any]:
     question = (question or "").strip()
     if not question:
         return {"answer": "Please provide a question to answer.", "sources": []}
@@ -313,14 +318,32 @@ def answer_question(question: str) -> dict[str, Any]:
                 f"- {item.get('title', 'Web result')} ({item.get('url', '')}): {item.get('snippet', '')[:600]}"
             )
 
-    prompt = (
-        f"{SYSTEM_PROMPT}\n\n"
-        f"Question from a visitor: {question}\n\n"
-        f"Background you may use (do not quote at length, do not cite formally):\n"
-        f"{chr(10).join(context_parts) if context_parts else 'No extra background available.'}\n\n"
-        "Reply warmly and briefly, in 2-4 sentences, like a pastor speaking to a friend."
-    )
-    raw_response = invoke_with_fallback(prompt, providers)
+    # ── Build messages list with system prompt + history ──
+    messages = [{"role": "system", "content": SYSTEM_PROMPT}]
+
+    # Inject conversation history (last 10 turns)
+    if history:
+        for msg in history[-10:]:
+            if not isinstance(msg, dict):
+                continue
+            role = msg.get("role")
+            content = (msg.get("content") or "").strip()
+            if role in ("user", "assistant") and content:
+                messages.append({"role": role, "content": content})
+
+    # Add the current question with any RAG context
+    context_block = chr(10).join(context_parts) if context_parts else "No extra background available."
+    messages.append({
+        "role": "user",
+        "content": (
+            f"Question from a visitor: {question}\n\n"
+            f"Background you may use (do not quote at length, do not cite formally):\n"
+            f"{context_block}\n\n"
+            "Reply warmly and briefly, in 2-4 sentences, like a pastor speaking to a friend."
+        )
+    })
+
+    raw_response = invoke_with_fallback(messages, providers)
     answer = getattr(raw_response, "content", str(raw_response))
 
     return {"answer": answer, "sources": _format_sources(docs, web_results)}

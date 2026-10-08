@@ -80,7 +80,7 @@ export function createChatPostHandler({
       );
     }
 
-    let data: { query?: unknown };
+    let data: { query?: unknown; history?: unknown };
     try {
       data = await request.json();
     } catch {
@@ -155,7 +155,8 @@ export function createChatPostHandler({
       response = await fetcher(`${backendUrl.replace(/\/+$/, "")}/api/chat`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ question: query }),
+        body: JSON.stringify({ question: query, history: (data as any).history ?? [] }),
+        // CHAT DEBUG: forwarding
         signal: AbortSignal.timeout(20_000),
       });
     } catch (error) {
