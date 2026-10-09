@@ -79,3 +79,10 @@ lpt[1-9]
 *.bak
 backend/models/
 *.gguf
+
+# All pre-edit backups
+*.prestyle
+*.presave
+*.preedit
+*.orig
+*.rej
