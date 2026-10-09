@@ -47,6 +47,41 @@ const FEEDS = [
     articleHosts: ["faithnewsservice.com"],
     categories: ["Faith"] as FaithNewsCategory[],
   },
+  {
+    name: "Dove Foundation",
+    url: "https://dove.org/feed/",
+    publisherUrl: "https://dove.org",
+    articleHosts: ["dove.org"],
+    categories: ["Entertainment"] as FaithNewsCategory[],
+  },
+  {
+    name: "The Gospel Coalition",
+    url: "https://www.thegospelcoalition.org/feed/",
+    publisherUrl: "https://www.thegospelcoalition.org",
+    articleHosts: ["thegospelcoalition.org"],
+    categories: ["Faith"] as FaithNewsCategory[],
+  },
+  {
+    name: "Plugged In",
+    url: "https://www.pluggedin.com/feed/",
+    publisherUrl: "https://www.pluggedin.com",
+    articleHosts: ["pluggedin.com"],
+    categories: ["Entertainment"] as FaithNewsCategory[],
+  },
+  {
+    name: "Christian Headlines",
+    url: "https://www.christianheadlines.com/rss/feed.xml",
+    publisherUrl: "https://www.christianheadlines.com",
+    articleHosts: ["christianheadlines.com"],
+    categories: ["Faith"] as FaithNewsCategory[],
+  },
+  {
+    name: "Relevant Magazine",
+    url: "https://relevantmagazine.com/feed/",
+    publisherUrl: "https://relevantmagazine.com",
+    articleHosts: ["relevantmagazine.com"],
+    categories: ["Entertainment"] as FaithNewsCategory[],
+  },
 ] as const;
 
 type JsonRecord = Record<string, unknown>;

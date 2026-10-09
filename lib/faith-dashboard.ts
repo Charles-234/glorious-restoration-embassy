@@ -1,6 +1,7 @@
 export const faithNewsCategories = ["Faith", "Politics", "Kenya", "Africa", "Exploration"] as const;
 
-export type FaithNewsCategory = (typeof faithNewsCategories)[number];
+export type FaithNewsCategory = (typeof faithNewsCategories)[number]
+  | "Entertainment";
 
 export interface FaithNewsArticle {
   id: string;
