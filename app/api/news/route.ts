@@ -82,6 +82,27 @@ const FEEDS = [
     articleHosts: ["relevantmagazine.com"],
     categories: ["Entertainment"] as FaithNewsCategory[],
   },
+  {
+    name: "AllAfrica",
+    url: "https://allafrica.com/tools/headlines/rdf/africa/headlines.rdf",
+    publisherUrl: "https://allafrica.com",
+    articleHosts: ["allafrica.com"],
+    categories: ["Africa"] as FaithNewsCategory[],
+  },
+  {
+    name: "World History Encyclopedia",
+    url: "https://www.worldhistory.org/rss/",
+    publisherUrl: "https://www.worldhistory.org",
+    articleHosts: ["worldhistory.org"],
+    categories: ["Exploration"] as FaithNewsCategory[],
+  },
+  {
+    name: "Biblical Archaeology Review",
+    url: "https://www.biblicalarchaeology.org/feed/",
+    publisherUrl: "https://www.biblicalarchaeology.org",
+    articleHosts: ["biblicalarchaeology.org"],
+    categories: ["Exploration"] as FaithNewsCategory[],
+  },
 ] as const;
 
 type JsonRecord = Record<string, unknown>;

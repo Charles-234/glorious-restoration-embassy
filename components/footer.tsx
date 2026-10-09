@@ -67,6 +67,7 @@ export function Footer() {
         <div className="gre-footer-bottom">
           <p>© {new Date().getFullYear()} Glorious Restoration Embassy International • Apostle Steve Kariuki. All spiritual rights reserved.</p>
           <div>
+            <Link href="/library">Library</Link>
             <Link href="/privacy">Privacy</Link>
             <Link href="/terms">Terms</Link>
             <Link href="/admin">Admin Portal</Link>

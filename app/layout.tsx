@@ -103,6 +103,10 @@ export default async function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${bodyFont.variable} ${subtitleFont.variable} ${displayFont.variable} min-h-screen antialiased bg-background text-foreground font-sans`}>
+      <div className="sticky top-0 z-50 bg-primary text-white text-xs sm:text-sm py-2 text-center font-medium">
+        Tue 11 AM · Fri 6 PM · Sun 9 AM
+      </div>
+
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
           <div className="relative isolate min-h-screen flex flex-col">
             <PublicGalleryBackground backgrounds={galleryBackgrounds} />
