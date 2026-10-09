@@ -26,6 +26,10 @@ SYSTEM_PROMPT = (
 "the user explicitly names them. "
 )
 PROVIDER_TIMEOUT_SECONDS = 15
+GRACEFUL_FAILURE_MESSAGE = (
+    "The assistant is briefly resting — try again in a moment."
+)
+LOCAL_BIBLE_URL = os.getenv("LOCAL_BIBLE_URL", "http://127.0.0.1:8080/v1")
 
 
 @dataclass
@@ -88,7 +92,28 @@ def _add_openai_provider(
     if api_key:
         providers.append(
             (name, OpenAICompatibleProvider(name, model, base_url, api_key, headers))
+        ) 
+def _add_local_bible_provider(providers: list[tuple[str, Any]]) -> None:
+    """Add the local Bible model served by llama-cpp-python as the last-resort provider."""
+    try:
+        response = requests.get(LOCAL_BIBLE_URL.replace("/v1", "/health"), timeout=2)
+        if response.status_code >= 500:
+            logger.info("Local Bible model health check returned %s; skipping.", response.status_code)
+            return
+    except Exception:
+        logger.info("Local Bible model is not reachable at %s; skipping.", LOCAL_BIBLE_URL)
+        return
+    providers.append(
+        (
+            "LocalBible",
+            OpenAICompatibleProvider(
+                "LocalBible",
+                "bible-v3.2",
+                LOCAL_BIBLE_URL,
+                "not-needed",
+            ),
         )
+    )
 
 
 def document_retriever(query: str) -> list[dict[str, Any]]:
@@ -221,6 +246,9 @@ def build_llms() -> list[tuple[str, Any]]:
         "openai/default",
     )
 
+    # ── Final fallback: local Bible model running in this Codespace ──
+    _add_local_bible_provider(providers)
+
     return providers
 
 
@@ -343,7 +371,17 @@ def answer_question(question: str, history: list[dict[str, Any]] | None = None) 
         )
     })
 
-    raw_response = invoke_with_fallback(messages, providers)
-    answer = getattr(raw_response, "content", str(raw_response))
+    try:
+        raw_response = invoke_with_fallback(messages, providers)
+        answer = getattr(raw_response, "content", str(raw_response))
+    except Exception as error:
+        logger.error(
+            "All AI providers failed (last error: %s). Returning graceful message.",
+            type(error).__name__,
+        )
+        return {
+            "answer": GRACEFUL_FAILURE_MESSAGE,
+            "sources": _format_sources(docs, web_results),
+        }
 
     return {"answer": answer, "sources": _format_sources(docs, web_results)}

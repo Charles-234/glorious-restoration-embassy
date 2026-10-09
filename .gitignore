@@ -77,3 +77,5 @@ lpt[1-9]
 *.backup
 *.backup2
 *.bak
+backend/models/
+*.gguf
