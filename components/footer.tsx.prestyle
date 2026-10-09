@@ -5,6 +5,16 @@ import { siteConfig } from "@/lib/siteData";
 
 const footerGroups = [
   {
+    title: "Legal & Resources",
+    links: [
+      ["Library", "/library"],
+      ["Privacy Policy", "/privacy"],
+      ["Terms of Use", "/terms"],
+      ["Contact", "/contact"],
+    ],
+  },
+
+  {
     title: "Explore",
     links: [
       ["Sermon Archive", "/sermons"],
@@ -66,11 +76,11 @@ export function Footer() {
         </div>
         <div className="gre-footer-bottom">
           <p>© {new Date().getFullYear()} Glorious Restoration Embassy International • Apostle Steve Kariuki. All spiritual rights reserved.</p>
-          <div>
-            <Link href="/library">Library</Link>
-            <Link href="/privacy">Privacy</Link>
-            <Link href="/terms">Terms</Link>
-            <Link href="/admin">Admin Portal</Link>
+          <div className="gre-footer-legal">
+            <Link href="/library" className="gre-footer-legal-link">Library</Link>
+            <Link href="/privacy" className="gre-footer-legal-link">Privacy Policy</Link>
+            <Link href="/terms" className="gre-footer-legal-link">Terms of Use</Link>
+            <Link href="/admin" className="gre-footer-legal-link gre-footer-legal-admin">Admin Portal</Link>
           </div>
         </div>
       </div>
