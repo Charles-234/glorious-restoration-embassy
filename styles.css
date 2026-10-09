@@ -89,3 +89,49 @@
     text-shadow: none;
   }
 }
+
+/* Legal footer links — visible and prominent */
+.gre-footer-legal {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  justify-content: flex-end;
+  align-items: center;
+}
+.gre-footer-legal-link {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--foreground, #fff);
+  opacity: 0.95;
+  text-decoration: none;
+  padding: 0.4rem 0.85rem;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  transition: all 0.2s ease;
+}
+.gre-footer-legal-link:hover {
+  background: var(--primary, #c59d5f);
+  color: #000;
+  border-color: var(--primary, #c59d5f);
+  opacity: 1;
+}
+.gre-footer-legal-admin {
+  background: transparent;
+  border-color: rgba(255, 255, 255, 0.25);
+  font-size: 0.8rem;
+  opacity: 0.7;
+}
+.gre-footer-legal-admin:hover {
+  opacity: 1;
+}
+@media (max-width: 640px) {
+  .gre-footer-legal {
+    justify-content: flex-start;
+    gap: 0.75rem;
+  }
+  .gre-footer-legal-link {
+    font-size: 0.8rem;
+    padding: 0.35rem 0.7rem;
+  }
+}
