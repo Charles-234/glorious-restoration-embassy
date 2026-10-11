@@ -103,6 +103,27 @@ const FEEDS = [
     articleHosts: ["biblicalarchaeology.org"],
     categories: ["Exploration"] as FaithNewsCategory[],
   },
+  {
+    name: "Christian Today (UK)",
+    url: "https://www.christiantoday.com/rss.xml",
+    publisherUrl: "https://www.christiantoday.com",
+    articleHosts: ["christiantoday.com"],
+    categories: ["Faith"] as FaithNewsCategory[],
+  },
+  {
+    name: "Gateway News (South Africa)",
+    url: "https://gatewaynews.co.za/feed",
+    publisherUrl: "https://gatewaynews.co.za",
+    articleHosts: ["gatewaynews.co.za"],
+    categories: ["Africa"] as FaithNewsCategory[],
+  },
+  {
+    name: "UG Christian News (Uganda)",
+    url: "https://ugchristiannews.com/feed",
+    publisherUrl: "https://ugchristiannews.com",
+    articleHosts: ["ugchristiannews.com"],
+    categories: ["Africa"] as FaithNewsCategory[],
+  },
 ] as const;
 
 type JsonRecord = Record<string, unknown>;
