@@ -16,3 +16,4 @@ python-multipart
 python-telegram-bot
 vectrixdb
 psutil
+langchain-openai
