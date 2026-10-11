@@ -143,14 +143,13 @@ async function readCmsGalleryMedia(): Promise<GalleryMediaItem[]> {
 }
 
 export async function getLocalGalleryMedia(): Promise<GalleryMediaItem[]> {
-  const [rootImages, galleryImages, stitchImages, videos, cmsMedia] = await Promise.all([
-    readMediaDirectory("", "image"),
+  const [galleryImages, videos, cmsMedia] = await Promise.all([
     readMediaDirectory("gallery", "image"),
-    readMediaDirectory("stitch", "image"),
     readMediaDirectory("videos", "video"),
     readCmsGalleryMedia(),
   ]);
-  const images = [...cmsMedia.filter((item) => item.kind === "image"), ...rootImages, ...galleryImages, ...stitchImages];
+  // Only use gallery + CMS media — exclude root and stitch (theme assets)
+  const images = [...cmsMedia.filter((item) => item.kind === "image"), ...galleryImages];
   const cmsVideos = cmsMedia.filter((item) => item.kind !== "image");
   const allVideos = [...cmsVideos, ...videos];
   return [...images, ...allVideos];

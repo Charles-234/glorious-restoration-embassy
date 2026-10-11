@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { LocalMediaGallery } from "@/components/local-media-gallery";
 import { getLocalGalleryMedia } from "@/lib/local-gallery";
@@ -17,6 +18,14 @@ export default async function GalleryPage() {
           browser supports it, but media displayed on the public web cannot be made impossible to
           save or capture.
         </p>
+        <div className="flex justify-center pt-2">
+          <Link
+            href="/cms?kind=gallery"
+            className="inline-flex items-center gap-2 rounded-full border border-primary/40 bg-background px-5 py-2 text-sm font-medium text-foreground hover:bg-primary hover:text-white transition-colors"
+          >
+            Manage Media (Admin)
+          </Link>
+        </div>
       </section>
       <LocalMediaGallery items={mediaItems} />
     </main>
