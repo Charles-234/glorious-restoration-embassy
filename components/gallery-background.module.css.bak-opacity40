@@ -1,0 +1,43 @@
+.background {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background: hsl(var(--background));
+}
+
+.layer {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity 1.6s ease-in-out;
+}
+
+.layerActive {
+  opacity: 1;
+}
+
+.layerLeaving {
+  opacity: 0;
+}
+
+.layerIncoming {
+  opacity: 0;
+}
+
+.layerIncomingActive {
+  opacity: 1;
+}
+
+.image {
+  object-fit: cover;
+  opacity: 0.6;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .layer {
+    transition: none;
+  }
+}

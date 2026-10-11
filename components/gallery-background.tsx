@@ -80,21 +80,48 @@ export function GalleryBackground({
   }, []);
 
   useEffect(() => {
+    if (process.env.NODE_ENV === "development") {
+      console.log("[gallery-bg] effect running", {
+        prefersReducedMotion,
+        itemCount: items.length,
+        intervalMs,
+      });
+    }
+
     if (prefersReducedMotion || items.length < 2) {
+      if (process.env.NODE_ENV === "development") {
+        console.log("[gallery-bg] rotation disabled", {
+          reason: prefersReducedMotion ? "prefers-reduced-motion" : "not enough items",
+        });
+      }
       return;
     }
 
     const interval = window.setInterval(() => {
       if (incomingIndexRef.current !== null) {
+        if (process.env.NODE_ENV === "development") {
+          console.log("[gallery-bg] skipping, transition in progress");
+        }
         return;
       }
 
       const nextIndex = chooseDifferentIndex(activeIndexRef.current, items.length);
+      if (process.env.NODE_ENV === "development") {
+        console.log("[gallery-bg] rotating", {
+          from: activeIndexRef.current,
+          to: nextIndex,
+        });
+      }
       incomingIndexRef.current = nextIndex;
       setIncomingIndex(nextIndex);
     }, Math.max(intervalMs, 1_000));
 
-    return () => window.clearInterval(interval);
+    return () => {
+      if (process.env.NODE_ENV === "development") {
+        console.log("[gallery-bg] effect cleanup");
+      }
+      window.clearInterval(interval);
+    };
   }, [intervalMs, items.length, prefersReducedMotion]);
 
   const handleIncomingLoad = (index: number) => {
