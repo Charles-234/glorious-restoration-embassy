@@ -38,6 +38,7 @@ export function GalleryBackground({
   const activeIndexRef = useRef(0);
   const incomingIndexRef = useRef<number | null>(null);
   const reducedMotionRef = useRef(false);
+  const incomingLoadTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const finishTransition = useCallback(() => {
     const nextIndex = incomingIndexRef.current;
@@ -80,73 +81,74 @@ export function GalleryBackground({
   }, []);
 
   useEffect(() => {
-    if (process.env.NODE_ENV === "development") {
-      console.log("[gallery-bg] effect running", {
-        prefersReducedMotion,
-        itemCount: items.length,
-        intervalMs,
-      });
-    }
+    console.log("[gallery-bg] effect running", {
+      prefersReducedMotion,
+      itemCount: items.length,
+      intervalMs,
+    });
 
     if (prefersReducedMotion || items.length < 2) {
-      if (process.env.NODE_ENV === "development") {
-        console.log("[gallery-bg] rotation disabled", {
-          reason: prefersReducedMotion ? "prefers-reduced-motion" : "not enough items",
-        });
-      }
+      console.log("[gallery-bg] rotation disabled", {
+        reason: prefersReducedMotion ? "prefers-reduced-motion" : "not enough items",
+      });
       return;
     }
 
     const interval = window.setInterval(() => {
       if (incomingIndexRef.current !== null) {
-        if (process.env.NODE_ENV === "development") {
-          console.log("[gallery-bg] skipping, transition in progress");
-        }
+        console.log("[gallery-bg] skipping, transition in progress");
         return;
       }
 
       const nextIndex = chooseDifferentIndex(activeIndexRef.current, items.length);
-      if (process.env.NODE_ENV === "development") {
-        console.log("[gallery-bg] rotating", {
-          from: activeIndexRef.current,
-          to: nextIndex,
-        });
-      }
+      console.log("[gallery-bg] rotating", {
+        from: activeIndexRef.current,
+        to: nextIndex,
+      });
       incomingIndexRef.current = nextIndex;
       setIncomingIndex(nextIndex);
     }, Math.max(intervalMs, 1_000));
 
     return () => {
-      if (process.env.NODE_ENV === "development") {
-        console.log("[gallery-bg] effect cleanup");
-      }
+      console.log("[gallery-bg] effect cleanup");
       window.clearInterval(interval);
     };
   }, [intervalMs, items.length, prefersReducedMotion]);
 
-  const handleIncomingLoad = (index: number) => {
-    if (incomingIndexRef.current !== index || reducedMotionRef.current) {
-      if (
-        incomingIndexRef.current === index &&
-        reducedMotionRef.current
-      ) {
-        finishTransition();
-      }
+  const handleIncomingLoad = useCallback((index: number) => {
+    if (incomingIndexRef.current !== index) {
+      return;
+    }
+
+    if (reducedMotionRef.current) {
+      finishTransition();
       return;
     }
 
     setIsFading(true);
-  };
 
-  const handleIncomingError = (index: number) => {
+    // Clear the loading timeout since image loaded successfully
+    if (incomingLoadTimeoutRef.current) {
+      clearTimeout(incomingLoadTimeoutRef.current);
+      incomingLoadTimeoutRef.current = null;
+    }
+  }, [finishTransition]);
+
+  const handleIncomingError = useCallback((index: number) => {
     if (incomingIndexRef.current !== index) {
       return;
+    }
+
+    // Clear the loading timeout on error
+    if (incomingLoadTimeoutRef.current) {
+      clearTimeout(incomingLoadTimeoutRef.current);
+      incomingLoadTimeoutRef.current = null;
     }
 
     incomingIndexRef.current = null;
     setIncomingIndex(null);
     setIsFading(false);
-  };
+  }, []);
 
   const handleIncomingTransitionEnd = (
     event: TransitionEvent<HTMLDivElement>,
@@ -158,6 +160,27 @@ export function GalleryBackground({
       finishTransition();
     }
   };
+
+  // Setup loading timeout when incoming index changes
+  useEffect(() => {
+    if (incomingIndex !== null) {
+      // Set a timeout to force transition start after 1 second if image doesn't load
+      // This prevents getting stuck if onLoad never fires
+      incomingLoadTimeoutRef.current = setTimeout(() => {
+        if (incomingIndexRef.current === incomingIndex && !reducedMotionRef.current) {
+          console.log("[gallery-bg] image load timeout, forcing transition start");
+          setIsFading(true);
+        }
+      }, 1000);
+
+      return () => {
+        if (incomingLoadTimeoutRef.current) {
+          clearTimeout(incomingLoadTimeoutRef.current);
+          incomingLoadTimeoutRef.current = null;
+        }
+      };
+    }
+  }, [incomingIndex]);
 
   if (items.length === 0) {
     return null;

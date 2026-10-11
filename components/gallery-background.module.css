@@ -12,7 +12,7 @@
   inset: 0;
   overflow: hidden;
   opacity: 0;
-  transition: opacity 1.6s ease-in-out;
+  transition: opacity 1s ease-in-out;
 }
 
 .layerActive {
