@@ -28,24 +28,10 @@ const FEEDS = [
     categories: ["Faith"] as FaithNewsCategory[],
   },
   {
-    name: "Christian Newswire",
-    url: "https://feeds.feedburner.com/christiannewswire",
-    publisherUrl: "https://christiannewswire.com",
-    articleHosts: ["christiannewswire.com"],
-    categories: ["Faith"] as FaithNewsCategory[],
-  },
-  {
     name: "Charisma News",
     url: "https://mycharisma.com/category/news/feed/",
     publisherUrl: "https://charismanews.com",
     articleHosts: ["mycharisma.com"],
-    categories: ["Faith"] as FaithNewsCategory[],
-  },
-  {
-    name: "Faith News Service",
-    url: "https://faithnewsservice.com/feed/",
-    publisherUrl: "https://faithnewsservice.com",
-    articleHosts: ["faithnewsservice.com"],
     categories: ["Faith"] as FaithNewsCategory[],
   },
   {
