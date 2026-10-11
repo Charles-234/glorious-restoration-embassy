@@ -4,7 +4,7 @@ from typing import Any
 
 from langchain_groq import ChatGroq
 from langchain_google_genai import ChatGoogleGenerativeAI
-from langchain_core.messages import HumanMessage, SystemMessage
+from langchain_core.messages import AIMessage, HumanMessage, SystemMessage
 
 from knowledge_base import search_documents
 
@@ -134,7 +134,7 @@ def _format_sources(docs, web_results) -> list[dict[str, Any]]:
     return sources[:5]
 
 
-def answer_question(question: str) -> dict[str, Any]:
+def answer_question(question: str, history: list | None = None) -> dict[str, Any]:
     question = (question or "").strip()
     if not question:
         return {"answer": "Please ask a question.", "sources": []}
@@ -165,10 +165,16 @@ def answer_question(question: str) -> dict[str, Any]:
 
     context = "\n".join(context_parts) if context_parts else "No local context found."
 
-    messages = [
-        SystemMessage(content=SYSTEM_PROMPT),
-        HumanMessage(content=f"Question: {question}\n\nContext:\n{context}\n\nAnswer warmly and briefly."),
-    ]
+    messages = [SystemMessage(content=SYSTEM_PROMPT)]
+    if history:
+        for turn in history[-6:]:
+            role = turn.get("role") if isinstance(turn, dict) else None
+            content = turn.get("content") if isinstance(turn, dict) else None
+            if role == "user" and content:
+                messages.append(HumanMessage(content=content))
+            elif role == "assistant" and content:
+                messages.append(AIMessage(content=content))
+    messages.append(HumanMessage(content=f"Question: {question}\n\nContext:\n{context}\n\nAnswer warmly and briefly."))
 
     raw = invoke_with_fallback(messages, providers)
     answer = getattr(raw, "content", str(raw))
