@@ -74,8 +74,15 @@ export function AIChatbot() {
   }, [messages]);
 
   useEffect(() => {
-    if (messages.length > 1) {
-      messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (messages.length > 1 && messagesEndRef.current) {
+      // Scroll only the message container, not the whole page
+      const container = messagesEndRef.current.parentElement;
+      if (container) {
+        container.scrollTo({
+          top: container.scrollHeight,
+          behavior: "smooth",
+        });
+      }
     }
   }, [messages]);
 
@@ -191,7 +198,7 @@ export function AIChatbot() {
       </div>
 
       {/* Chat messages */}
-      <div className="space-y-4 max-h-[400px] overflow-y-auto pr-2">
+      <div className="space-y-4 max-h-[400px] overflow-y-auto pr-2 scroll-smooth">
         <AnimatePresence mode="popLayout">
           {messages.map((message, index) => (
             <motion.div
@@ -272,7 +279,7 @@ export function AIChatbot() {
       )}
 
       {/* Input area */}
-      <div className="flex flex-col gap-3 sm:flex-row">
+      <div className="flex flex-col gap-3 sm:flex-row sticky bottom-0 pt-4 bg-background/95 backdrop-blur-sm">
         <input
           value={input}
           onChange={(event) => setInput(event.target.value)}
