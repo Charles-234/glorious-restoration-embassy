@@ -29,7 +29,7 @@ function chooseDifferentIndex(currentIndex: number, itemCount: number): number {
 export function GalleryBackground({
   items,
   className,
-  intervalMs = 8_000,
+  intervalMs = 5_000,
 }: GalleryBackgroundProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [incomingIndex, setIncomingIndex] = useState<number | null>(null);
