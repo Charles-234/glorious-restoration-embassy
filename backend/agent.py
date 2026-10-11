@@ -61,7 +61,7 @@ def build_llms() -> list[tuple[str, Any]]:
             providers.append((
                 "Groq",
                 ChatGroq(
-                    model="llama-3.1-8b-instant",
+                    model="openai/gpt-oss-20b",
                     api_key=groq_key,
                     temperature=TEMPERATURE,
                     max_tokens=MAX_TOKENS,
@@ -76,7 +76,7 @@ def build_llms() -> list[tuple[str, Any]]:
             providers.append((
                 "Gemini",
                 ChatGoogleGenerativeAI(
-                    model="gemini-2.0-flash",
+                    model="gemini-3.8-flash",
                     api_key=gemini_key,
                     temperature=TEMPERATURE,
                     max_output_tokens=MAX_TOKENS,
