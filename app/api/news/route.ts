@@ -29,7 +29,7 @@ const FEEDS = [
   },
   {
     name: "Christian Newswire",
-    url: "https://www.christiannewswire.com/feed/",
+    url: "https://feeds.feedburner.com/christiannewswire",
     publisherUrl: "https://christiannewswire.com",
     articleHosts: ["christiannewswire.com"],
     categories: ["Faith"] as FaithNewsCategory[],
@@ -70,10 +70,10 @@ const FEEDS = [
     categories: ["Entertainment"] as FaithNewsCategory[],
   },
   {
-    name: "Christian Headlines",
-    url: "https://www.christianheadlines.com/rss/feed.xml",
-    publisherUrl: "https://www.christianheadlines.com",
-    articleHosts: ["christianheadlines.com"],
+    name: "Crosswalk Headlines",
+    url: "https://www.crosswalk.com/headlines/rss.xml",
+    publisherUrl: "https://www.crosswalk.com",
+    articleHosts: ["crosswalk.com"],
     categories: ["Faith"] as FaithNewsCategory[],
   },
   {
@@ -116,13 +116,6 @@ const FEEDS = [
     url: "https://gatewaynews.co.za/feed",
     publisherUrl: "https://gatewaynews.co.za",
     articleHosts: ["gatewaynews.co.za"],
-    categories: ["Africa"] as FaithNewsCategory[],
-  },
-  {
-    name: "UG Christian News (Uganda)",
-    url: "https://ugchristiannews.com/feed",
-    publisherUrl: "https://ugchristiannews.com",
-    articleHosts: ["ugchristiannews.com"],
     categories: ["Africa"] as FaithNewsCategory[],
   },
 ] as const;
