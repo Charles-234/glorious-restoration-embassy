@@ -42,7 +42,19 @@ const quickReplies = [
 ];
 
 export function AIChatbot() {
-  const [messages, setMessages] = useState(defaultMessages);
+  const [messages, setMessages] = useState(() => {
+    if (typeof window === "undefined") return defaultMessages;
+    try {
+      const saved = window.localStorage.getItem("gre_chat_messages");
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+      }
+    } catch {
+      /* ignore parse errors */
+    }
+    return defaultMessages;
+  });
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -50,6 +62,16 @@ export function AIChatbot() {
   const [quotaStatus, setQuotaStatus] = useState<string | null>(null);
   const [loginHref, setLoginHref] = useState("/login?next=%2Fchat");
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  // Persist chat messages to localStorage so they survive page refresh
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    try {
+      window.localStorage.setItem("gre_chat_messages", JSON.stringify(messages));
+    } catch {
+      /* storage quota or private mode — silently ignore */
+    }
+  }, [messages]);
 
   useEffect(() => {
     if (messages.length > 1) {
@@ -133,6 +155,9 @@ export function AIChatbot() {
     setMessages(defaultMessages);
     setError(null);
     setAuthRequired(false);
+    if (typeof window !== "undefined") {
+      try { window.localStorage.removeItem("gre_chat_messages"); } catch { /* ignore */ }
+    }
   };
 
   return (
