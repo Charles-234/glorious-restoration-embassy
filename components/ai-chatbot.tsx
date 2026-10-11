@@ -253,7 +253,7 @@ export function AIChatbot() {
           onChange={(event) => setInput(event.target.value)}
           onKeyPress={(e) => e.key === "Enter" && !e.shiftKey && handleSend()}
           placeholder="Type a question about worship, sermons, faith, or community..."
-          className="min-w-0 flex-1 rounded-2xl border border-border bg-card px-4 py-3 text-base text-foreground outline-none placeholder:text-muted-foreground focus:border-primary focus:ring-2 focus:ring-primary/25 disabled:opacity-60 disabled:cursor-not-allowed"
+          className="min-w-0 flex-1 rounded-2xl border-2 border-primary/40 bg-background px-4 py-3 text-base font-medium text-foreground outline-none placeholder:text-muted-foreground/70 focus:border-primary focus:ring-2 focus:ring-primary/40 disabled:opacity-60 disabled:cursor-not-allowed"
           disabled={loading}
         />
         <button
