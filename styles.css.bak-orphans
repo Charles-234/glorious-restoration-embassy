@@ -92,14 +92,6 @@
 
 /* Dark mode override — keep white text on dark background */
 
-@media (max-width: 640px) {
-  
-  
-}
-
-.dark 
-.dark 
-
 .gre-footer a {
   color: inherit;
 }
@@ -109,6 +101,4 @@
 }
 
 /* Light mode: invert so they show on light backgrounds */
-html:not(.dark) 
-html:not(.dark) 
 
