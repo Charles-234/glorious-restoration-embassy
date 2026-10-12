@@ -1,6 +1,7 @@
 import { readdir } from "node:fs/promises";
 import path from "node:path";
 import { reportSiteContentReadError } from "@/lib/cms-diagnostics";
+import { getMediaAsGalleryItems } from "@/lib/media-db";
 import { getPublicSupabaseClient } from "@/lib/public-supabase";
 
 export type GalleryMediaItem = {
@@ -143,14 +144,27 @@ async function readCmsGalleryMedia(): Promise<GalleryMediaItem[]> {
 }
 
 export async function getLocalGalleryMedia(): Promise<GalleryMediaItem[]> {
-  const [galleryImages, videos, cmsMedia] = await Promise.all([
+  const [galleryImages, videos, cmsMedia, mediaTableItems] = await Promise.all([
     readMediaDirectory("gallery", "image"),
     readMediaDirectory("videos", "video"),
     readCmsGalleryMedia(),
+    getMediaAsGalleryItems("gallery"),
   ]);
-  // Only use gallery + CMS media — exclude root and stitch (theme assets)
-  const images = [...cmsMedia.filter((item) => item.kind === "image"), ...galleryImages];
-  const cmsVideos = cmsMedia.filter((item) => item.kind !== "image");
-  const allVideos = [...cmsVideos, ...videos];
-  return [...images, ...allVideos];
+
+  const existing: GalleryMediaItem[] = [
+    ...cmsMedia.filter((item) => item.kind === "image"),
+    ...galleryImages,
+    ...cmsMedia.filter((item) => item.kind !== "image"),
+    ...videos,
+  ];
+
+  const seen = new Set(existing.map((item) => item.src));
+  const merged = [...existing];
+  for (const item of mediaTableItems) {
+    if (!seen.has(item.src)) {
+      seen.add(item.src);
+      merged.push(item);
+    }
+  }
+  return merged;
 }

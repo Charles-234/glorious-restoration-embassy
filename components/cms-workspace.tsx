@@ -452,6 +452,7 @@ export function CmsWorkspace({
           <p className="mt-2 text-sm text-muted-foreground">Signed in as {email}</p>
         </div>
         <div className="flex flex-wrap gap-3">
+          <Link href="/cms/media" className="btn btn-secondary">Media library</Link>
           <Link href="/" className="btn btn-secondary">View website</Link>
           <button type="button" className="btn btn-secondary" onClick={() => void signOut()}>
             Sign out
