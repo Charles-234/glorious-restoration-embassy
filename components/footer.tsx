@@ -76,28 +76,28 @@ export function Footer() {
         </div>
         <div className="gre-footer-bottom">
           <p>© {new Date().getFullYear()} Glorious Restoration Embassy International • Apostle Steve Kariuki. All spiritual rights reserved.</p>
-          <div className="flex flex-wrap items-center justify-end gap-3">
+          <div className="flex flex-wrap items-center justify-end gap-3 py-2">
             <Link
               href="/library"
-              className="rounded-full border-2 border-amber-400 bg-amber-400 px-5 py-2.5 text-sm font-extrabold uppercase tracking-wide text-black no-underline transition-colors hover:bg-amber-300"
+              className="rounded-full border-[3px] border-black bg-black px-5 py-2.5 text-sm font-extrabold uppercase tracking-wider text-white no-underline shadow-lg transition-colors hover:bg-[#c59d5f] hover:text-black"
             >
               Library
             </Link>
             <Link
               href="/privacy"
-              className="rounded-full border-2 border-amber-400 bg-amber-400 px-5 py-2.5 text-sm font-extrabold uppercase tracking-wide text-black no-underline transition-colors hover:bg-amber-300"
+              className="rounded-full border-[3px] border-black bg-black px-5 py-2.5 text-sm font-extrabold uppercase tracking-wider text-white no-underline shadow-lg transition-colors hover:bg-[#c59d5f] hover:text-black"
             >
               Privacy Policy
             </Link>
             <Link
               href="/terms"
-              className="rounded-full border-2 border-amber-400 bg-amber-400 px-5 py-2.5 text-sm font-extrabold uppercase tracking-wide text-black no-underline transition-colors hover:bg-amber-300"
+              className="rounded-full border-[3px] border-black bg-black px-5 py-2.5 text-sm font-extrabold uppercase tracking-wider text-white no-underline shadow-lg transition-colors hover:bg-[#c59d5f] hover:text-black"
             >
               Terms of Use
             </Link>
             <Link
               href="/admin"
-              className="rounded-full border-2 border-amber-400 bg-amber-400 px-5 py-2.5 text-sm font-extrabold uppercase tracking-wide text-black no-underline transition-colors hover:bg-amber-300"
+              className="rounded-full border-[3px] border-black bg-black px-5 py-2.5 text-sm font-extrabold uppercase tracking-wider text-white no-underline shadow-lg transition-colors hover:bg-[#c59d5f] hover:text-black"
             >
               Admin Portal
             </Link>
