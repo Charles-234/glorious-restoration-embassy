@@ -33,7 +33,7 @@
 
 .image {
   object-fit: contain;
-  opacity: 0.4;
+  opacity: 0.3;
 }
 
 @media (prefers-reduced-motion: reduce) {
