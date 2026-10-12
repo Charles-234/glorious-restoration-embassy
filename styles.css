@@ -128,9 +128,9 @@
   transform: translateY(-1px);
 }
 .dark .gre-footer-legal-link {
-  color: #ffffff !important;
-  background: rgba(255, 255, 255, 0.15) !important;
-  border: 2px solid rgba(255, 255, 255, 0.6) !important;
+  color: #000000 !important;
+  background: #ffffff !important;
+  border: 2px solid #ffffff !important;
 }
 .dark .gre-footer-legal-link:hover {
   background: #c59d5f !important;
