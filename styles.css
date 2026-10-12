@@ -99,22 +99,34 @@
   align-items: center;
 }
 .gre-footer-legal-link {
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: var(--foreground, #fff);
-  opacity: 0.95;
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #000000;
+  opacity: 1;
   text-decoration: none;
-  padding: 0.4rem 0.85rem;
+  padding: 0.5rem 1rem;
   border-radius: 9999px;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: #ffffff;
+  border: 2px solid #000000;
   transition: all 0.2s ease;
+  letter-spacing: 0.01em;
 }
 .gre-footer-legal-link:hover {
   background: var(--primary, #c59d5f);
-  color: #000;
+  color: #000000;
+  border-color: #000000;
+}
+
+/* Dark mode override — keep white text on dark background */
+.dark .gre-footer-legal-link {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.12);
+  border: 2px solid rgba(255, 255, 255, 0.4);
+}
+.dark .gre-footer-legal-link:hover {
+  background: var(--primary, #c59d5f);
+  color: #000000;
   border-color: var(--primary, #c59d5f);
-  opacity: 1;
 }
 .gre-footer-legal-admin {
   background: transparent;
