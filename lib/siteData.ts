@@ -40,7 +40,7 @@ export const siteConfig = {
   serviceTimes: [
     { day: "Sunday", time: "8:30 AM", label: "First Glory" },
     { day: "Sunday", time: "10:45 AM", label: "Divine Restoration" },
-    { day: "Tuesday", time: "11:00 AM", label: "Deliverance" },
+    { day: "Tuesday", time: "9:00 AM", label: "Deliverance" },
     { day: "Wednesday", time: "6:00 PM", label: "Word Clinic" }
   ],
 

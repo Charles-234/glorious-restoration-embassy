@@ -132,13 +132,18 @@ export function Navbar() {
           {mounted && (
             <button
               type="button"
-              className="gre-theme-toggle"
+              className="gre-liquid-toggle"
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
               aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
-              title={theme === "dark" ? "Light" : "Dark"}
+              title={theme === "dark" ? "Light mode" : "Dark mode"}
+              data-theme-state={theme}
             >
-              {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
-              <span>{theme === "dark" ? "Light" : "Dark"}</span>
+              <span className="gre-liquid-toggle-track">
+                <span className="gre-liquid-toggle-thumb" aria-hidden="true">
+                  <Sun size={14} className="gre-liquid-icon gre-liquid-icon-sun" />
+                  <Moon size={14} className="gre-liquid-icon gre-liquid-icon-moon" />
+                </span>
+              </span>
             </button>
           )}
           <Link href="/give" className="gre-give-button">
