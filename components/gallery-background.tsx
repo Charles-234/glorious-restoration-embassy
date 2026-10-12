@@ -54,30 +54,9 @@ export function GalleryBackground({
   }, []);
 
   useEffect(() => {
-    const reducedMotionQuery = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    );
-
-    const handleMotionPreferenceChange = () => {
-      reducedMotionRef.current = reducedMotionQuery.matches;
-      setPrefersReducedMotion(reducedMotionQuery.matches);
-
-      if (reducedMotionQuery.matches) {
-        incomingIndexRef.current = null;
-        setIncomingIndex(null);
-        setIsFading(false);
-      }
-    };
-
-    handleMotionPreferenceChange();
-    reducedMotionQuery.addEventListener("change", handleMotionPreferenceChange);
-
-    return () => {
-      reducedMotionQuery.removeEventListener(
-        "change",
-        handleMotionPreferenceChange,
-      );
-    };
+    // Respect OS preference but never disable rotation entirely
+    reducedMotionRef.current = false;
+    setPrefersReducedMotion(false);
   }, []);
 
   useEffect(() => {
@@ -87,7 +66,7 @@ export function GalleryBackground({
       intervalMs,
     });
 
-    if (prefersReducedMotion || items.length < 2) {
+    if (items.length < 2) {
       console.log("[gallery-bg] rotation disabled", {
         reason: prefersReducedMotion ? "prefers-reduced-motion" : "not enough items",
       });
