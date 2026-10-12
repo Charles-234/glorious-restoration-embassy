@@ -38,10 +38,9 @@ export const siteConfig = {
 
   /** Verified weekly service schedule. */
   serviceTimes: [
-    { day: "Sunday", time: "8:30 AM", label: "First Glory" },
-    { day: "Sunday", time: "10:45 AM", label: "Divine Restoration" },
-    { day: "Tuesday", time: "9:00 AM", label: "Deliverance" },
-    { day: "Wednesday", time: "6:00 PM", label: "Word Clinic" }
+    { day: "Tuesday", time: "9:00 AM", label: "First Glory" },
+    { day: "Friday", time: "6:00 PM", label: "Word Clinic" },
+    { day: "Sunday", time: "9:00 AM", label: "Divine Restoration" },
   ],
 
   /** IANA timezone used for "next service" calculations. */

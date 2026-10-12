@@ -19,58 +19,50 @@
 }
 
 .layerIncoming {
-  opacity: 0;
   z-index: 2;
-  will-change: opacity, transform, clip-path;
+  opacity: 0;
+  animation-fill-mode: forwards;
 }
 
 .image {
-  object-fit: contain;
-  opacity: 0.4;
+  object-fit: cover;
+  opacity: 0.35;
 }
 
+/* Fade — simple cross-dissolve */
 .effectFade {
-  animation: greFade 1.6s ease-in-out both;
+  animation: greFade 1.5s ease-in-out forwards;
 }
-
-.effectWipe {
-  animation: greWipe 1.6s cubic-bezier(0.65, 0, 0.35, 1) both;
-}
-
-.effectZoom {
-  animation: greZoom 1.6s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-.effectDrift {
-  animation: greDrift 1.6s cubic-bezier(0.33, 1, 0.68, 1) both;
-}
-
 @keyframes greFade {
   from { opacity: 0; }
-  to { opacity: 1; }
+  to   { opacity: 1; }
 }
 
+/* Wipe — left-to-right reveal */
+.effectWipe {
+  animation: greWipe 1.5s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
 @keyframes greWipe {
   from { opacity: 1; clip-path: inset(0 100% 0 0); }
-  to { opacity: 1; clip-path: inset(0 0 0 0); }
+  to   { opacity: 1; clip-path: inset(0 0 0 0); }
 }
 
+/* Zoom — scale in from 1.15 */
+.effectZoom {
+  animation: greZoom 1.5s ease-out forwards;
+}
 @keyframes greZoom {
-  from { opacity: 0; transform: scale(1.08); }
-  to { opacity: 1; transform: scale(1); }
+  from { opacity: 0; transform: scale(1.15); }
+  to   { opacity: 1; transform: scale(1); }
 }
 
+/* Drift — slide up + slight scale */
+.effectDrift {
+  animation: greDrift 1.5s ease-out forwards;
+}
 @keyframes greDrift {
-  from { opacity: 0; transform: translateY(4%) scale(1.04); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
-}
-
-.overlay {
-  position: absolute;
-  inset: 0;
-  z-index: 3;
-  background: radial-gradient(circle at 50% 50%, rgba(255, 220, 160, 0.06) 0%, rgba(0, 0, 0, 0.05) 70%);
-  pointer-events: none;
+  from { opacity: 0; transform: translateY(6%) scale(1.05); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -78,6 +70,6 @@
   .effectWipe,
   .effectZoom,
   .effectDrift {
-    animation: none;
+    animation-duration: 0.01s;
   }
 }

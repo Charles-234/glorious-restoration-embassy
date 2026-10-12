@@ -11,108 +11,106 @@ interface GalleryBackgroundProps {
   intervalMs?: number;
 }
 
-const TRANSITION_KINDS = ["fade", "wipe", "zoom", "drift"] as const;
-type TransitionKind = (typeof TRANSITION_KINDS)[number];
+const EFFECTS = ["fade", "wipe", "zoom", "drift"] as const;
+type EffectKind = (typeof EFFECTS)[number];
 
-const EFFECT_CLASS: Record<TransitionKind, string> = {
-  fade: styles.effectFade,
-  wipe: styles.effectWipe,
-  zoom: styles.effectZoom,
-  drift: styles.effectDrift,
+const EFFECT_CLASS_MAP: Record<EffectKind, string> = {
+  fade: styles.effectFade || "effectFade",
+  wipe: styles.effectWipe || "effectWipe",
+  zoom: styles.effectZoom || "effectZoom",
+  drift: styles.effectDrift || "effectDrift",
 };
 
-const DEFAULT_INTERVAL_MS = 6_000;
-const MIN_INTERVAL_MS = 3_000;
-const TRANSITION_DURATION_MS = 1_600;
-
-interface IncomingSlide {
-  id: number;
-  index: number;
-  kind: TransitionKind;
-}
-
-function chooseDifferentIndex(currentIndex: number, itemCount: number): number {
-  if (itemCount < 2) return currentIndex;
-  const randomIndex = Math.floor(Math.random() * (itemCount - 1));
-  return randomIndex >= currentIndex ? randomIndex + 1 : randomIndex;
-}
+const ROTATE_EVERY_MS = 5_000;   // change image every 5s
+const ANIM_DURATION_MS = 1_500;  // animation duration
 
 export function GalleryBackground({
   items,
   className,
-  intervalMs = DEFAULT_INTERVAL_MS,
+  intervalMs = ROTATE_EVERY_MS,
 }: GalleryBackgroundProps) {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [incoming, setIncoming] = useState<IncomingSlide | null>(null);
-  const activeIndexRef = useRef(0);
-  const incomingIndexRef = useRef<number | null>(null);
+  const [activeIdx, setActiveIdx] = useState(0);
+  const [incoming, setIncoming] = useState<{ idx: number; effect: EffectKind; key: number } | null>(null);
+  const busyRef = useRef(false);
   const cycleRef = useRef(0);
 
+  // Reset when items change (route change)
   useEffect(() => {
-    activeIndexRef.current = 0;
-    incomingIndexRef.current = null;
-    setActiveIndex(0);
+    setActiveIdx(0);
     setIncoming(null);
+    busyRef.current = false;
+    cycleRef.current = 0;
   }, [items]);
 
-  useEffect(() => {
-    for (const item of items) {
-      if (item.kind === "image") {
-        const image = new window.Image();
-        image.src = item.src;
-      }
-    }
-  }, [items]);
-
+  // Main rotation loop
   useEffect(() => {
     if (items.length < 2) return;
 
-    let commitTimer: number | null = null;
-
     const tick = () => {
-      if (incomingIndexRef.current !== null) return;
+      if (busyRef.current) return;
 
-      const nextIndex = chooseDifferentIndex(activeIndexRef.current, items.length);
-      if (nextIndex === activeIndexRef.current) return;
-
-      const kind = TRANSITION_KINDS[cycleRef.current % TRANSITION_KINDS.length];
+      const nextIdx = (activeIdx + 1) % items.length;
+      const effect = EFFECTS[cycleRef.current % EFFECTS.length];
       cycleRef.current += 1;
-      incomingIndexRef.current = nextIndex;
-      setIncoming({ id: cycleRef.current, index: nextIndex, kind });
+      busyRef.current = true;
 
-      commitTimer = window.setTimeout(() => {
-        activeIndexRef.current = nextIndex;
-        incomingIndexRef.current = null;
-        setActiveIndex(nextIndex);
+      console.log("[bg] transition start", { from: activeIdx, to: nextIdx, effect });
+
+      setIncoming({ idx: nextIdx, effect, key: cycleRef.current });
+
+      setTimeout(() => {
+        setActiveIdx(nextIdx);
         setIncoming(null);
-        commitTimer = null;
-      }, TRANSITION_DURATION_MS);
+        busyRef.current = false;
+        console.log("[bg] transition committed", { active: nextIdx });
+      }, ANIM_DURATION_MS);
     };
 
-    const intervalId = window.setInterval(tick, Math.max(intervalMs, MIN_INTERVAL_MS));
-
-    return () => {
-      window.clearInterval(intervalId);
-      if (commitTimer !== null) window.clearTimeout(commitTimer);
-    };
-  }, [intervalMs, items]);
+    const id = window.setInterval(tick, intervalMs);
+    return () => window.clearInterval(id);
+  }, [items, activeIdx, intervalMs]);
 
   if (items.length === 0) return null;
 
-  const currentItem = items[activeIndex] ?? items[0];
-  const incomingItem = incoming !== null ? items[incoming.index] ?? null : null;
+  const current = items[activeIdx] ?? items[0];
+  const incomingItem = incoming ? items[incoming.idx] ?? null : null;
 
   return (
     <div aria-hidden="true" className={[styles.background, className].filter(Boolean).join(" ")}>
+      {/* Base layer — always visible */}
       <div className={[styles.layer, styles.layerActive].join(" ")}>
-        <Image src={currentItem.src} alt="" fill sizes="100vw" unoptimized loading="eager" className={styles.image} />
+        <Image
+          src={current.src}
+          alt=""
+          fill
+          sizes="100vw"
+          unoptimized
+          loading="eager"
+          className={styles.image}
+        />
       </div>
-      {incoming !== null && incomingItem !== null && (
-        <div key={incoming.id} className={[styles.layer, styles.layerIncoming, EFFECT_CLASS[incoming.kind]].join(" ")}>
-          <Image src={incomingItem.src} alt="" fill sizes="100vw" unoptimized loading="eager" className={styles.image} />
+
+      {/* Incoming layer — animated on mount */}
+      {incoming && incomingItem && (
+        <div
+          key={incoming.key}
+          className={[
+            styles.layer,
+            styles.layerIncoming,
+            EFFECT_CLASS_MAP[incoming.effect],
+          ].join(" ")}
+        >
+          <Image
+            src={incomingItem.src}
+            alt=""
+            fill
+            sizes="100vw"
+            unoptimized
+            loading="eager"
+            className={styles.image}
+          />
         </div>
       )}
-      <div className={styles.overlay} />
     </div>
   );
 }
