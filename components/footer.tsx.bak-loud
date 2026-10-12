@@ -79,25 +79,25 @@ export function Footer() {
           <div className="flex flex-wrap items-center justify-end gap-3">
             <Link
               href="/library"
-              className="rounded-full border border-white/60 bg-white px-4 py-2 text-sm font-bold text-slate-900 no-underline transition-colors hover:bg-amber-400 hover:text-black"
+              className="rounded-full border-2 border-amber-400 bg-amber-400 px-5 py-2.5 text-sm font-extrabold uppercase tracking-wide text-black no-underline transition-colors hover:bg-amber-300"
             >
               Library
             </Link>
             <Link
               href="/privacy"
-              className="rounded-full border border-white/60 bg-white px-4 py-2 text-sm font-bold text-slate-900 no-underline transition-colors hover:bg-amber-400 hover:text-black"
+              className="rounded-full border-2 border-amber-400 bg-amber-400 px-5 py-2.5 text-sm font-extrabold uppercase tracking-wide text-black no-underline transition-colors hover:bg-amber-300"
             >
               Privacy Policy
             </Link>
             <Link
               href="/terms"
-              className="rounded-full border border-white/60 bg-white px-4 py-2 text-sm font-bold text-slate-900 no-underline transition-colors hover:bg-amber-400 hover:text-black"
+              className="rounded-full border-2 border-amber-400 bg-amber-400 px-5 py-2.5 text-sm font-extrabold uppercase tracking-wide text-black no-underline transition-colors hover:bg-amber-300"
             >
               Terms of Use
             </Link>
             <Link
               href="/admin"
-              className="rounded-full border border-white/40 bg-transparent px-4 py-2 text-xs font-bold text-white/90 no-underline transition-colors hover:bg-amber-400 hover:text-black"
+              className="rounded-full border-2 border-amber-400 bg-amber-400 px-5 py-2.5 text-sm font-extrabold uppercase tracking-wide text-black no-underline transition-colors hover:bg-amber-300"
             >
               Admin Portal
             </Link>
