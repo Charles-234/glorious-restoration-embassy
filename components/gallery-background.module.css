@@ -21,48 +21,55 @@
 .layerIncoming {
   z-index: 2;
   opacity: 0;
-  animation-fill-mode: forwards;
+  /* Use will-change to hint the browser to promote to its own layer */
+  will-change: opacity, transform, clip-path;
+  backface-visibility: hidden;
+  transform: translateZ(0);
 }
 
 .image {
-  object-fit: cover;
+  /* contain = show full image, no zoom, no crop */
+  object-fit: contain;
+  object-position: center;
   opacity: 0.35;
+  /* Prevent browser blur from re-rendering at low-res during transform */
+  image-rendering: auto;
 }
 
-/* Fade — simple cross-dissolve */
+/* Fade — smooth cross-dissolve */
 .effectFade {
-  animation: greFade 1.5s ease-in-out forwards;
+  animation: greFade 1.5s ease-out forwards;
 }
 @keyframes greFade {
   from { opacity: 0; }
   to   { opacity: 1; }
 }
 
-/* Wipe — left-to-right reveal */
+/* Wipe — left-to-right reveal, no zoom */
 .effectWipe {
-  animation: greWipe 1.5s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+  animation: greWipe 1.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 @keyframes greWipe {
   from { opacity: 1; clip-path: inset(0 100% 0 0); }
   to   { opacity: 1; clip-path: inset(0 0 0 0); }
 }
 
-/* Zoom — scale in from 1.15 */
+/* Zoom — VERY subtle scale (1.02, not 1.15) */
 .effectZoom {
-  animation: greZoom 1.5s ease-out forwards;
+  animation: greZoom 1.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 @keyframes greZoom {
-  from { opacity: 0; transform: scale(1.15); }
+  from { opacity: 0; transform: scale(1.02); }
   to   { opacity: 1; transform: scale(1); }
 }
 
-/* Drift — slide up + slight scale */
+/* Drift — very subtle upward slide */
 .effectDrift {
-  animation: greDrift 1.5s ease-out forwards;
+  animation: greDrift 1.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 @keyframes greDrift {
-  from { opacity: 0; transform: translateY(6%) scale(1.05); }
-  to   { opacity: 1; transform: translateY(0) scale(1); }
+  from { opacity: 0; transform: translateY(2%); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -70,6 +77,6 @@
   .effectWipe,
   .effectZoom,
   .effectDrift {
-    animation-duration: 0.01s;
+    animation-duration: 0.2s;
   }
 }

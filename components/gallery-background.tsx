@@ -15,14 +15,14 @@ const EFFECTS = ["fade", "wipe", "zoom", "drift"] as const;
 type EffectKind = (typeof EFFECTS)[number];
 
 const EFFECT_CLASS_MAP: Record<EffectKind, string> = {
-  fade: styles.effectFade || "effectFade",
-  wipe: styles.effectWipe || "effectWipe",
-  zoom: styles.effectZoom || "effectZoom",
-  drift: styles.effectDrift || "effectDrift",
+  fade: styles.effectFade,
+  wipe: styles.effectWipe,
+  zoom: styles.effectZoom,
+  drift: styles.effectDrift,
 };
 
-const ROTATE_EVERY_MS = 5_000;   // change image every 5s
-const ANIM_DURATION_MS = 1_500;  // animation duration
+const ROTATE_EVERY_MS = 6_000;
+const ANIM_DURATION_MS = 1_500;
 
 export function GalleryBackground({
   items,
@@ -42,32 +42,52 @@ export function GalleryBackground({
     cycleRef.current = 0;
   }, [items]);
 
-  // Main rotation loop
+  // Preload all images so they're ready when their turn comes
+  useEffect(() => {
+    for (const item of items) {
+      if (item.kind === "image") {
+        const img = new window.Image();
+        img.src = item.src;
+      }
+    }
+  }, [items]);
+
+  // Main rotation loop — use setTimeout chain, not setInterval, so timing is exact
   useEffect(() => {
     if (items.length < 2) return;
 
-    const tick = () => {
-      if (busyRef.current) return;
+    let timerId: number | null = null;
+    let commitId: number | null = null;
 
-      const nextIdx = (activeIdx + 1) % items.length;
-      const effect = EFFECTS[cycleRef.current % EFFECTS.length];
-      cycleRef.current += 1;
-      busyRef.current = true;
+    const scheduleNext = () => {
+      timerId = window.setTimeout(() => {
+        if (busyRef.current) {
+          scheduleNext();
+          return;
+        }
 
-      console.log("[bg] transition start", { from: activeIdx, to: nextIdx, effect });
+        const nextIdx = (activeIdx + 1) % items.length;
+        const effect = EFFECTS[cycleRef.current % EFFECTS.length];
+        cycleRef.current += 1;
+        busyRef.current = true;
 
-      setIncoming({ idx: nextIdx, effect, key: cycleRef.current });
+        setIncoming({ idx: nextIdx, effect, key: cycleRef.current });
 
-      setTimeout(() => {
-        setActiveIdx(nextIdx);
-        setIncoming(null);
-        busyRef.current = false;
-        console.log("[bg] transition committed", { active: nextIdx });
-      }, ANIM_DURATION_MS);
+        commitId = window.setTimeout(() => {
+          setActiveIdx(nextIdx);
+          setIncoming(null);
+          busyRef.current = false;
+          scheduleNext();
+        }, ANIM_DURATION_MS);
+      }, intervalMs);
     };
 
-    const id = window.setInterval(tick, intervalMs);
-    return () => window.clearInterval(id);
+    scheduleNext();
+
+    return () => {
+      if (timerId !== null) window.clearTimeout(timerId);
+      if (commitId !== null) window.clearTimeout(commitId);
+    };
   }, [items, activeIdx, intervalMs]);
 
   if (items.length === 0) return null;
@@ -85,12 +105,12 @@ export function GalleryBackground({
           fill
           sizes="100vw"
           unoptimized
-          loading="eager"
+          priority
           className={styles.image}
         />
       </div>
 
-      {/* Incoming layer — animated on mount */}
+      {/* Incoming layer — keyed so React creates a fresh element each cycle */}
       {incoming && incomingItem && (
         <div
           key={incoming.key}
