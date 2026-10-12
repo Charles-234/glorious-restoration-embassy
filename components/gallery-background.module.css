@@ -5,162 +5,79 @@
   overflow: hidden;
   pointer-events: none;
   background: hsl(var(--background));
-  opacity: 0.28;
 }
 
 .layer {
   position: absolute;
   inset: 0;
   overflow: hidden;
-  opacity: 0;
-  will-change: opacity, transform, clip-path;
-}
-
-.layerPrev {
-  opacity: 1;
-  z-index: 1;
 }
 
 .layerActive {
   opacity: 1;
+  z-index: 1;
+}
+
+.layerIncoming {
+  opacity: 0;
   z-index: 2;
+  will-change: opacity, transform, clip-path;
 }
 
 .image {
   object-fit: contain;
+  opacity: 0.4;
 }
 
-/* Soft warm overlay for readability */
+.effectFade {
+  animation: greFade 1.6s ease-in-out both;
+}
+
+.effectWipe {
+  animation: greWipe 1.6s cubic-bezier(0.65, 0, 0.35, 1) both;
+}
+
+.effectZoom {
+  animation: greZoom 1.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.effectDrift {
+  animation: greDrift 1.6s cubic-bezier(0.33, 1, 0.68, 1) both;
+}
+
+@keyframes greFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes greWipe {
+  from { opacity: 1; clip-path: inset(0 100% 0 0); }
+  to { opacity: 1; clip-path: inset(0 0 0 0); }
+}
+
+@keyframes greZoom {
+  from { opacity: 0; transform: scale(1.08); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes greDrift {
+  from { opacity: 0; transform: translateY(4%) scale(1.04); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
 .overlay {
   position: absolute;
   inset: 0;
   z-index: 3;
-  background: radial-gradient(
-    circle at 50% 50%,
-    rgba(255, 220, 160, 0.06) 0%,
-    rgba(0, 0, 0, 0.05) 70%
-  );
+  background: radial-gradient(circle at 50% 50%, rgba(255, 220, 160, 0.06) 0%, rgba(0, 0, 0, 0.05) 70%);
   pointer-events: none;
 }
 
-/* ========= TRANSITION 1: CROSS DISSOLVE ========= */
-.transition-fade .layerCurrentAnimating {
-  animation: fadeIn 2s ease-in-out forwards;
-}
-.transition-fade .layerPrev {
-  animation: fadeOut 2s ease-in-out forwards;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-@keyframes fadeOut {
-  from { opacity: 1; }
-  to   { opacity: 0; }
-}
-
-/* ========= TRANSITION 2: SOFT DIRECTIONAL WIPE ========= */
-.transition-wipeRight .layerCurrentAnimating {
-  animation: wipeRight 1.8s cubic-bezier(0.65, 0, 0.35, 1) forwards;
-}
-.transition-wipeRight .layerPrev {
-  opacity: 1;
-}
-
-@keyframes wipeRight {
-  from {
-    clip-path: inset(0 100% 0 0);
-    opacity: 1;
+@media (prefers-reduced-motion: reduce) {
+  .effectFade,
+  .effectWipe,
+  .effectZoom,
+  .effectDrift {
+    animation: none;
   }
-  to {
-    clip-path: inset(0 0 0 0);
-    opacity: 1;
-  }
-}
-
-/* ========= TRANSITION 3: STRIPE MASK ========= */
-.transition-stripeMask .layerCurrentAnimating {
-  animation: stripeMask 2s ease-out forwards;
-}
-.transition-stripeMask .layerPrev {
-  opacity: 1;
-}
-
-@keyframes stripeMask {
-  0% {
-    clip-path: polygon(
-      0% 0%, 100% 0%, 100% 0%, 0% 0%,
-      0% 25%, 100% 25%, 100% 25%, 0% 25%,
-      0% 50%, 100% 50%, 100% 50%, 0% 50%,
-      0% 75%, 100% 75%, 100% 75%, 0% 75%,
-      0% 100%, 100% 100%, 100% 100%, 0% 100%
-    );
-    opacity: 0.9;
-  }
-  100% {
-    clip-path: polygon(
-      0% 0%, 100% 0%, 100% 25%, 0% 25%,
-      0% 25%, 100% 25%, 100% 50%, 0% 50%,
-      0% 50%, 100% 50%, 100% 75%, 0% 75%,
-      0% 75%, 100% 75%, 100% 100%, 0% 100%,
-      0% 100%, 100% 100%, 100% 100%, 0% 100%
-    );
-    opacity: 1;
-  }
-}
-
-/* ========= TRANSITION 4: SUBTLE ZOOM ========= */
-.transition-zoomIn .layerCurrentAnimating {
-  animation: zoomIn 2.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-.transition-zoomIn .layerPrev {
-  animation: zoomOut 2.2s ease-out forwards;
-}
-
-@keyframes zoomIn {
-  from {
-    transform: scale(1.12);
-    opacity: 0;
-  }
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-@keyframes zoomOut {
-  from {
-    transform: scale(1);
-    opacity: 1;
-  }
-  to {
-    transform: scale(1.04);
-    opacity: 0;
-  }
-}
-
-/* ========= TRANSITION 5: LIGHT LEAK ========= */
-.transition-lightLeak .layerCurrentAnimating {
-  animation: lightLeakReveal 2s ease-out forwards;
-}
-.transition-lightLeak .layerPrev {
-  animation: lightLeakFadeOut 2s ease-out forwards;
-}
-.transition-lightLeak .overlay {
-  animation: lightLeakFlash 2s ease-out forwards;
-}
-
-@keyframes lightLeakReveal {
-  0%   { opacity: 0; filter: brightness(1.8) saturate(1.4); }
-  50%  { opacity: 0.8; filter: brightness(1.4) saturate(1.2); }
-  100% { opacity: 1; filter: brightness(1) saturate(1); }
-}
-@keyframes lightLeakFadeOut {
-  0%   { opacity: 1; }
-  100% { opacity: 0; }
-}
-@keyframes lightLeakFlash {
-  0%   { background: radial-gradient(circle at 30% 40%, rgba(255,220,160,0.55) 0%, transparent 60%); }
-  50%  { background: radial-gradient(circle at 60% 50%, rgba(255,200,120,0.35) 0%, transparent 70%); }
-  100% { background: radial-gradient(circle at 50% 50%, rgba(255,220,160,0.06) 0%, rgba(0,0,0,0.05) 70%); }
 }
