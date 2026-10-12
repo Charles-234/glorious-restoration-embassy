@@ -108,44 +108,7 @@
   font-weight: 700;
 }
 
-/* Footer legal pills — always visible, both modes */
-.gre-footer-legal {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-  justify-content: flex-end;
-  align-items: center;
-}
-.gre-footer-legal-link {
-  font-size: 0.9rem;
-  font-weight: 700;
-  color: #ffffff;
-  background: #1a2332;
-  border: 1px solid #4a5568;
-  padding: 0.5rem 1rem;
-  border-radius: 9999px;
-  text-decoration: none;
-  transition: all 0.2s ease;
-  line-height: 1.2;
-  display: inline-flex;
-  align-items: center;
-}
-.gre-footer-legal-link:hover {
-  background: #c59d5f;
-  color: #000000;
-  border-color: #c59d5f;
-}
 /* Light mode: invert so they show on light backgrounds */
-html:not(.dark) .gre-footer-legal-link {
-  color: #1a2332;
-  background: #ffffff;
-  border: 1px solid #1a2332;
-}
-html:not(.dark) .gre-footer-legal-link:hover {
-  background: #c59d5f;
-  color: #000000;
-  border-color: #c59d5f;
-}
-.gre-footer-legal-admin {
-  font-size: 0.8rem;
-}
+html:not(.dark) 
+html:not(.dark) 
+

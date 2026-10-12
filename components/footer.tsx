@@ -76,11 +76,31 @@ export function Footer() {
         </div>
         <div className="gre-footer-bottom">
           <p>© {new Date().getFullYear()} Glorious Restoration Embassy International • Apostle Steve Kariuki. All spiritual rights reserved.</p>
-          <div className="gre-footer-legal">
-            <Link href="/library" className="gre-footer-legal-link">Library</Link>
-            <Link href="/privacy" className="gre-footer-legal-link">Privacy Policy</Link>
-            <Link href="/terms" className="gre-footer-legal-link">Terms of Use</Link>
-            <Link href="/admin" className="gre-footer-legal-link gre-footer-legal-admin">Admin Portal</Link>
+          <div className="flex flex-wrap items-center justify-end gap-3">
+            <Link
+              href="/library"
+              className="rounded-full border border-white/60 bg-white px-4 py-2 text-sm font-bold text-slate-900 no-underline transition-colors hover:bg-amber-400 hover:text-black"
+            >
+              Library
+            </Link>
+            <Link
+              href="/privacy"
+              className="rounded-full border border-white/60 bg-white px-4 py-2 text-sm font-bold text-slate-900 no-underline transition-colors hover:bg-amber-400 hover:text-black"
+            >
+              Privacy Policy
+            </Link>
+            <Link
+              href="/terms"
+              className="rounded-full border border-white/60 bg-white px-4 py-2 text-sm font-bold text-slate-900 no-underline transition-colors hover:bg-amber-400 hover:text-black"
+            >
+              Terms of Use
+            </Link>
+            <Link
+              href="/admin"
+              className="rounded-full border border-white/40 bg-transparent px-4 py-2 text-xs font-bold text-white/90 no-underline transition-colors hover:bg-amber-400 hover:text-black"
+            >
+              Admin Portal
+            </Link>
           </div>
         </div>
       </div>
