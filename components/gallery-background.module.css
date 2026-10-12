@@ -12,7 +12,7 @@
   inset: 0;
   overflow: hidden;
   opacity: 0;
-  transition: opacity 1s ease-in-out;
+  transition: opacity 0.8s ease-in-out;
 }
 
 .layerActive {
@@ -32,7 +32,7 @@
 }
 
 .image {
-  object-fit: cover;
+  object-fit: contain;
   opacity: 0.4;
 }
 
