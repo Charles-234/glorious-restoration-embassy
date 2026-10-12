@@ -298,7 +298,7 @@ export function StitchHomepage({
               </p>
               <a
                 className="gre-button gre-button-youtube"
-                href="https://youtube.com"
+                href="https://www.youtube.com/@stephenkariuki7444"
                 target="_blank"
                 rel="noreferrer"
               >
@@ -312,7 +312,7 @@ export function StitchHomepage({
               </div>
               <h3>Glorious Restoration Embassy Official Channel</h3>
               <p>Live &amp; Recorded Preachings will sync here</p>
-              <a href="https://youtube.com" target="_blank" rel="noreferrer">
+              <a href="https://www.youtube.com/@stephenkariuki7444" target="_blank" rel="noreferrer">
                 <YouTubeMark size={18} /> Subscribe on YouTube <ArrowRight size={17} />
               </a>
               <small>Channel auto-sync configured for upcoming live streams &amp; Sunday archives.</small>
@@ -488,7 +488,7 @@ export function StitchHomepage({
             Our live broadcast starts 15 minutes before scheduled service times. Presided by
             Apostle Steve Kariuki.
           </p>
-          <a className="gre-button gre-button-youtube" href="https://youtube.com" target="_blank" rel="noreferrer">
+          <a className="gre-button gre-button-youtube" href="https://www.youtube.com/@stephenkariuki7444" target="_blank" rel="noreferrer">
             <YouTubeMark /> Open on YouTube Live
           </a>
           <div className="gre-audio-choice">

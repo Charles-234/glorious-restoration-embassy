@@ -20,7 +20,7 @@ export const siteConfig = {
   facebookLive: "https://www.facebook.com/share/1Xob4wuJwK/",
   facebook: "https://www.facebook.com/share/1Xob4wuJwK/",
   instagram: "",
-  youtube: "",
+  youtube: "https://www.youtube.com/@stephenkariuki7444",
 
   // Confirmed M-Pesa giving details
   giveChannel: {

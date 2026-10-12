@@ -1899,6 +1899,29 @@
       background: var(--gre-paper-deep);
     }
 
+    .gre-mobile-legal-group {
+      display: grid;
+      gap: 2px;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--gre-rule);
+    }
+
+    .gre-mobile-legal-link {
+      border-radius: 8px;
+      padding: 12px 10px;
+      color: var(--gre-ink);
+      font-size: 0.88rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      text-decoration: none;
+      transition: background-color 0.2s ease;
+    }
+
+    .gre-mobile-legal-link:hover {
+      background: var(--gre-rule);
+    }
+
     .gre-mobile-give {
       margin-top: 8px;
     }

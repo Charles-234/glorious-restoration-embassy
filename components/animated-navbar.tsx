@@ -172,13 +172,13 @@ export function Navbar() {
           <Link href="/give" className="gre-mobile-give" onClick={() => setMenuOpen(false)}>
             <MpesaWordmark small /> Give • M-Pesa
           </Link>
-          <div className="mt-4 border-t border-white/20 pt-4">
+          <div className="gre-mobile-legal-group">
             {moreLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
                 onClick={() => setMenuOpen(false)}
-                className="block py-2 text-sm font-semibold"
+                className="gre-mobile-legal-link"
               >
                 {link.label}
               </Link>
