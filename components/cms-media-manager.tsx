@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { FileText, Film, Music, X, Image as ImageIcon } from "lucide-react";
 import type { MediaRow } from "@/lib/media-db";
+import { getContextsThatWouldEmpty } from "@/lib/media-admin-client";
 
 type BulkAction = "publish" | "unpublish" | "delete";
 
@@ -98,7 +99,9 @@ export function CmsMediaManager({
   const [error, setError] = useState<string | null>(null);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [uploadOpen, setUploadOpen] = useState(false);
-  const [pendingDelete, setPendingDelete] = useState<{ id: string; title: string; force: boolean } | null>(null);
+  const [pendingDelete, setPendingDelete] = useState<{ id: string; title: string } | null>(null);
+  const [deletingWithContexts, setDeletingWithContexts] = useState<string[] | null>(null);
+  const [bulkDeleteConfirming, setBulkDeleteConfirming] = useState<number | null>(null);
   const [draftTitle, setDraftTitle] = useState("");
   const [draftCaption, setDraftCaption] = useState("");
   const [draftAltText, setDraftAltText] = useState("");
@@ -249,10 +252,8 @@ export function CmsMediaManager({
     if (ids.length === 0 || bulkBusy) return;
 
     if (action === "delete") {
-      const confirmed = window.confirm(
-        `Delete ${ids.length} ${ids.length === 1 ? "item" : "items"} permanently? This cannot be undone.`,
-      );
-      if (!confirmed) return;
+      setBulkDeleteConfirming(ids.length);
+      return;
     }
 
     setBulkBusy(action);
@@ -462,33 +463,45 @@ export function CmsMediaManager({
     await reloadRows();
   }
 
-  function requestDelete(row: { id: string; title?: string | null }) {
-    setPendingDelete({ id: row.id, title: row.title ?? "this item", force: false });
+  async function requestDelete(row: { id: string; title?: string | null }) {
+    // Check if this deletion would empty any contexts
+    const contexts = await getContextsThatWouldEmpty([row.id]);
+    setPendingDelete({ id: row.id, title: row.title ?? "this item" });
+    setDeletingWithContexts(contexts);
   }
 
-  async function confirmDelete(force: boolean) {
-    if (!pendingDelete) return;
+  async function executeDelete(id: string) {
     const res = await fetch("/api/cms/media/delete", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id: pendingDelete.id, force }),
+      body: JSON.stringify({ id }),
     });
     const json = await res.json().catch(() => ({}));
-    if (res.status === 409 && json?.blocked) {
-      const proceed = window.confirm(
-        `${json.error}\n\nDelete anyway? This will leave a section with too few items for safe rotation.`,
-      );
-      if (proceed) await confirmDelete(true);
-      else setPendingDelete(null);
-      return;
-    }
     if (!res.ok) {
       setError(json?.error ?? "Delete failed.");
-      setPendingDelete(null);
-      return;
+      return false;
     }
-    setPendingDelete(null);
-    await reloadRows();
+    return true;
+  }
+
+  async function handleDeleteConfirmed() {
+    if (!pendingDelete) return;
+    const success = await executeDelete(pendingDelete.id);
+    if (success) {
+      setPendingDelete(null);
+      setDeletingWithContexts(null);
+      await reloadRows();
+    } else {
+      setPendingDelete(null);
+      setDeletingWithContexts(null);
+    }
+  }
+
+  async function handleBulkDeleteConfirmed() {
+    if (bulkDeleteConfirming !== null) {
+      await runBulkAction("delete");
+      setBulkDeleteConfirming(null);
+    }
   }
 
   async function reloadRows() {
@@ -562,6 +575,17 @@ export function CmsMediaManager({
       console.error("[cms-media] Could not replace file.", error);
       setDrawerError(error instanceof Error ? error.message : "The file could not be replaced. Please try again.");
     }
+  }
+
+  // Context display name helper
+  function contextDisplayName(value: string): string {
+    const trimmed = value.trim();
+    const lower = trimmed.toLowerCase();
+    if (lower === "gallery") return "Gallery";
+    if (lower === "homepage") return "Homepage";
+    if (lower === "sermons") return "Sermons";
+    if (!trimmed) return value;
+    return trimmed.charAt(0).toLocaleUpperCase("en") + trimmed.slice(1);
   }
 
   return (
@@ -1021,6 +1045,197 @@ export function CmsMediaManager({
                   Cancel
                 </button>
               </div>
+            </div>
+          </div>
+        </div>
+      ) : null}
+
+      {/* Single Delete Confirmation Dialog - when deletion would empty a context */}
+      {deletingWithContexts && deletingWithContexts.length > 0 ? (
+        <div
+          className="fixed inset-0 z-50 flex items-end justify-center bg-black/60 p-4 sm:items-center"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Confirm deletion"
+          onClick={() => {
+            setDeletingWithContexts(null);
+            setPendingDelete(null);
+          }}
+        >
+          <div
+            className="max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-[2rem] border border-border bg-card p-6 sm:p-8"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-[0.24em] text-accent">
+                  Confirm Delete
+                </p>
+                <h2 className="mt-2 text-2xl font-semibold text-foreground">Delete this item?</h2>
+              </div>
+              <button
+                type="button"
+                onClick={() => {
+                  setDeletingWithContexts(null);
+                  setPendingDelete(null);
+                }}
+                aria-label="Close dialog"
+                className="btn btn-secondary shrink-0"
+              >
+                <X size={16} aria-hidden="true" />
+              </button>
+            </div>
+
+            <div className="mt-6 space-y-4">
+              <p className="text-sm text-muted-foreground">
+                This will leave the following section{deletingWithContexts.length > 1 ? "s" : ""} with 0 items on the public site:
+              </p>
+              <ul className="list-disc list-inside space-y-1 pl-4">
+                {deletingWithContexts.map((ctx) => (
+                  <li key={ctx} className="text-sm text-foreground">
+                    {contextDisplayName(ctx)}
+                  </li>
+                ))}
+              </ul>
+              <p className="text-sm text-muted-foreground">
+                The section may appear empty. Are you sure you want to delete this item?
+              </p>
+            </div>
+
+            <div className="mt-6 flex flex-wrap gap-3 pt-2">
+              <button
+                type="button"
+                onClick={handleDeleteConfirmed}
+                className="btn border border-destructive/40 text-destructive hover:bg-destructive/10"
+              >
+                Delete anyway
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setDeletingWithContexts(null);
+                  setPendingDelete(null);
+                }}
+                className="btn btn-secondary"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      ) : null}
+
+      {/* Bulk Delete Confirmation Dialog */}
+      {bulkDeleteConfirming !== null ? (
+        <div
+          className="fixed inset-0 z-50 flex items-end justify-center bg-black/60 p-4 sm:items-center"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Confirm bulk deletion"
+          onClick={() => setBulkDeleteConfirming(null)}
+        >
+          <div
+            className="max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-[2rem] border border-border bg-card p-6 sm:p-8"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-[0.24em] text-accent">
+                  Confirm Delete
+                </p>
+                <h2 className="mt-2 text-2xl font-semibold text-foreground">
+                  Delete {bulkDeleteConfirming} items?
+                </h2>
+              </div>
+              <button
+                type="button"
+                onClick={() => setBulkDeleteConfirming(null)}
+                aria-label="Close dialog"
+                className="btn btn-secondary shrink-0"
+              >
+                <X size={16} aria-hidden="true" />
+              </button>
+            </div>
+
+            <div className="mt-6 space-y-4">
+              <p className="text-sm text-muted-foreground">
+                Are you sure you want to delete {bulkDeleteConfirming} {bulkDeleteConfirming === 1 ? "item" : "items"}? This cannot be undone.
+              </p>
+            </div>
+
+            <div className="mt-6 flex flex-wrap gap-3 pt-2">
+              <button
+                type="button"
+                onClick={handleBulkDeleteConfirmed}
+                className="btn border border-destructive/40 text-destructive hover:bg-destructive/10"
+              >
+                Delete
+              </button>
+              <button
+                type="button"
+                onClick={() => setBulkDeleteConfirming(null)}
+                className="btn btn-secondary"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      ) : null}
+
+      {/* Single Delete Confirmation Dialog - immediate deletion (no context warning) */}
+      {pendingDelete && deletingWithContexts === null ? (
+        <div
+          className="fixed inset-0 z-50 flex items-end justify-center bg-black/60 p-4 sm:items-center"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Confirm deletion"
+          onClick={() => setPendingDelete(null)}
+        >
+          <div
+            className="max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-[2rem] border border-border bg-card p-6 sm:p-8"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-[0.24em] text-accent">
+                  Confirm Delete
+                </p>
+                <h2 className="mt-2 text-2xl font-semibold text-foreground">
+                  Delete "{pendingDelete.title}"?
+                </h2>
+              </div>
+              <button
+                type="button"
+                onClick={() => setPendingDelete(null)}
+                aria-label="Close dialog"
+                className="btn btn-secondary shrink-0"
+              >
+                <X size={16} aria-hidden="true" />
+              </button>
+            </div>
+
+            <div className="mt-6 space-y-4">
+              <p className="text-sm text-muted-foreground">
+                Are you sure you want to delete this item? This cannot be undone.
+              </p>
+            </div>
+
+            <div className="mt-6 flex flex-wrap gap-3 pt-2">
+              <button
+                type="button"
+                onClick={handleDeleteConfirmed}
+                className="btn border border-destructive/40 text-destructive hover:bg-destructive/10"
+              >
+                Delete
+              </button>
+              <button
+                type="button"
+                onClick={() => setPendingDelete(null)}
+                className="btn btn-secondary"
+              >
+                Cancel
+              </button>
             </div>
           </div>
         </div>

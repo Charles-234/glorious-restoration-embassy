@@ -35,7 +35,14 @@ export async function POST(request: Request) {
 
   if (action === "delete") {
     const result = await bulkDelete(ids as string[]);
-    return NextResponse.json(result);
+    // Return simple success/failure for delete
+    if (result.blocked.length > 0) {
+      return NextResponse.json(
+        { error: "Some items could not be deleted", blocked: result.blocked },
+        { status: 500 },
+      );
+    }
+    return NextResponse.json({ ok: result.ok });
   }
 
   const result = await bulkSetPublished(ids as string[], action === "publish");

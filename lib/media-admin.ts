@@ -3,9 +3,7 @@ import type { MediaRow } from "@/lib/media-db";
 
 export type AdminResult = { ok: true } | { ok: false; error: string };
 
-export type BulkBlockedItem = { id: string; reason: string };
-
-export type BulkActionResult = { ok: string[]; blocked: BulkBlockedItem[] };
+export type BulkActionResult = { ok: string[]; blocked: { id: string; reason: string }[] };
 
 export type MediaUpdatePatch = {
   title?: string | null;
@@ -130,7 +128,7 @@ export async function bulkSetPublished(
 ): Promise<BulkActionResult> {
   const uniqueIds = [...new Set(ids.filter((id) => typeof id === "string" && id))];
   const ok: string[] = [];
-  const blocked: BulkBlockedItem[] = [];
+  const blocked: { id: string; reason: string }[] = [];
 
   for (const id of uniqueIds) {
     const result = await setPublished(id, published);
@@ -147,7 +145,7 @@ export async function bulkSetPublished(
 export async function bulkDelete(ids: string[]): Promise<BulkActionResult> {
   const uniqueIds = [...new Set(ids.filter((id) => typeof id === "string" && id))];
   const ok: string[] = [];
-  const blocked: BulkBlockedItem[] = [];
+  const blocked: { id: string; reason: string }[] = [];
 
   if (uniqueIds.length === 0) return { ok, blocked };
 
@@ -155,7 +153,7 @@ export async function bulkDelete(ids: string[]): Promise<BulkActionResult> {
 
   const { data: targetData, error: targetError } = await supabase
     .from("media")
-    .select("id,published,context")
+    .select("id")
     .in("id", uniqueIds);
 
   if (targetError) {
@@ -177,70 +175,7 @@ export async function bulkDelete(ids: string[]): Promise<BulkActionResult> {
     }
   }
 
-  const affectedContexts = new Set<string>();
   for (const row of targets) {
-    for (const entry of cleanContextList(row.context)) {
-      affectedContexts.add(entry);
-    }
-  }
-
-  const { data: publishedData, error: countError } = await supabase
-    .from("media")
-    .select("id,context")
-    .eq("published", true);
-
-  if (countError) {
-    console.error("[media-admin] Could not count published media before deleting.", countError);
-    return {
-      ok,
-      blocked: [
-        ...blocked,
-        ...targets.map((row) => ({
-          id: row.id,
-          reason: "The item could not be checked before deleting. Please try again.",
-        })),
-      ],
-    };
-  }
-
-  const publishedCountByContext = new Map<string, number>();
-  for (const row of toMediaRows(publishedData)) {
-    for (const entry of cleanContextList(row.context)) {
-      publishedCountByContext.set(entry, (publishedCountByContext.get(entry) ?? 0) + 1);
-    }
-  }
-
-  const publishedBeingDeletedByContext = new Map<string, number>();
-  for (const row of targets) {
-    if (!row.published) continue;
-    for (const entry of cleanContextList(row.context)) {
-      publishedBeingDeletedByContext.set(
-        entry,
-        (publishedBeingDeletedByContext.get(entry) ?? 0) + 1,
-      );
-    }
-  }
-
-  const fragileContexts = new Set<string>();
-  for (const entry of affectedContexts) {
-    const remaining =
-      (publishedCountByContext.get(entry) ?? 0) -
-      (publishedBeingDeletedByContext.get(entry) ?? 0);
-    if (remaining < 3) fragileContexts.add(entry);
-  }
-
-  for (const row of targets) {
-    const hit = cleanContextList(row.context).filter((entry) => fragileContexts.has(entry));
-
-    if (hit.length > 0) {
-      const names = [...new Set(hit.map(contextDisplayName))].join(" and ");
-      blocked.push({
-        id: row.id,
-        reason: `${names} would have fewer than 3 items left on the website, so it was kept.`,
-      });
-      continue;
-    }
-
     const { error: deleteError } = await supabase.from("media").delete().eq("id", row.id);
 
     if (deleteError) {
@@ -261,7 +196,7 @@ export async function bulkUpdateContext(
 ): Promise<BulkActionResult> {
   const uniqueIds = [...new Set(ids.filter((id) => typeof id === "string" && id))];
   const ok: string[] = [];
-  const blocked: BulkBlockedItem[] = [];
+  const blocked: { id: string; reason: string }[] = [];
 
   if (uniqueIds.length === 0) return { ok, blocked };
 
@@ -316,11 +251,7 @@ export async function bulkUpdateContext(
   return { ok, blocked };
 }
 
-const MIN_PUBLISHED_PER_CONTEXT = 3;
-
-export type DeleteResult =
-  | { ok: true }
-  | { ok: false; error: string; wouldDropBelowFloor?: boolean; affectedContext?: string; remaining?: number };
+export type DeleteResult = { ok: true } | { ok: false; error: string };
 
 // Regex patterns for auto-numbering per kind
 const KIND_PATTERNS: Record<string, RegExp> = {
@@ -382,41 +313,17 @@ export async function replaceMediaSrc(id: string, newSrc: string): Promise<Admin
   return { ok: true };
 }
 
-export async function deleteMedia(id: string, force = false): Promise<DeleteResult> {
+export async function deleteMedia(id: string): Promise<DeleteResult> {
   const supabase = await createClient();
 
   const { data: row, error: readErr } = await supabase
     .from("media")
-    .select("id, context, published, title, src")
+    .select("id")
     .eq("id", id)
     .maybeSingle();
 
   if (readErr) return { ok: false, error: readErr.message };
   if (!row) return { ok: false, error: "Media row not found." };
-
-  // Min-count guard: if deleting this row would drop any context below the floor
-  // of published items, block unless force=true.
-  const contexts: string[] = Array.isArray(row.context) ? row.context : [];
-  if (row.published && !force) {
-    for (const ctx of contexts) {
-      const { count, error: cntErr } = await supabase
-        .from("media")
-        .select("id", { count: "exact", head: true })
-        .eq("published", true)
-        .contains("context", [ctx]);
-      if (cntErr) continue;
-      const remaining = (count ?? 0) - 1;
-      if (remaining < MIN_PUBLISHED_PER_CONTEXT) {
-        return {
-          ok: false,
-          error: `Deleting this would leave only ${remaining} published item${remaining === 1 ? "" : "s"} in "${ctx}". Minimum is ${MIN_PUBLISHED_PER_CONTEXT}.`,
-          wouldDropBelowFloor: true,
-          affectedContext: ctx,
-          remaining,
-        };
-      }
-    }
-  }
 
   const { error: delErr } = await supabase.from("media").delete().eq("id", id);
   if (delErr) return { ok: false, error: delErr.message };
@@ -427,4 +334,80 @@ export async function deleteMedia(id: string, force = false): Promise<DeleteResu
   //  is enough for the gallery to stop showing it. Files can be cleaned manually.)
 
   return { ok: true };
+}
+
+export async function getContextsThatWouldEmpty(ids: string[]): Promise<string[]> {
+  const uniqueIds = [...new Set(ids.filter((id) => typeof id === "string" && id))];
+  if (uniqueIds.length === 0) return [];
+
+  const supabase = await createClient();
+
+  // Get the rows being deleted
+  const { data: targetData, error: targetError } = await supabase
+    .from("media")
+    .select("id,context,published")
+    .in("id", uniqueIds);
+
+  if (targetError) {
+    console.error("[media-admin] Could not read media for empty context check.", targetError);
+    return [];
+  }
+
+  const targets = toMediaRows(targetData);
+  
+  // Collect all contexts from the rows being deleted
+  const contextsToCheck = new Set<string>();
+  for (const row of targets) {
+    for (const entry of cleanContextList(row.context)) {
+      contextsToCheck.add(entry);
+    }
+  }
+
+  if (contextsToCheck.size === 0) return [];
+
+  // Get all published items and their contexts
+  const { data: publishedData, error: countError } = await supabase
+    .from("media")
+    .select("id,context")
+    .eq("published", true);
+
+  if (countError) {
+    console.error("[media-admin] Could not count published media for empty context check.", countError);
+    return [];
+  }
+
+  const publishedRows = toMediaRows(publishedData);
+  
+  // Count published items per context (excluding the ones being deleted)
+  const publishedCountByContext = new Map<string, number>();
+  for (const row of publishedRows) {
+    for (const entry of cleanContextList(row.context)) {
+      publishedCountByContext.set(entry, (publishedCountByContext.get(entry) ?? 0) + 1);
+    }
+  }
+
+  // Count how many published items being deleted per context
+  const publishedBeingDeletedByContext = new Map<string, number>();
+  for (const row of targets) {
+    if (!row.published) continue;
+    for (const entry of cleanContextList(row.context)) {
+      publishedBeingDeletedByContext.set(
+        entry,
+        (publishedBeingDeletedByContext.get(entry) ?? 0) + 1,
+      );
+    }
+  }
+
+  // Find contexts that would have 0 published items after deletion
+  const emptyContexts: string[] = [];
+  for (const context of contextsToCheck) {
+    const currentCount = publishedCountByContext.get(context) ?? 0;
+    const beingDeleted = publishedBeingDeletedByContext.get(context) ?? 0;
+    const remaining = currentCount - beingDeleted;
+    if (remaining === 0) {
+      emptyContexts.push(context);
+    }
+  }
+
+  return emptyContexts;
 }

@@ -6,13 +6,13 @@ export async function POST(request: Request) {
   try {
     await requireAdmin();
     const body = await request.json();
-    const { id, force } = body ?? {};
+    const { id } = body ?? {};
     if (typeof id !== "string") {
       return NextResponse.json({ error: "id required" }, { status: 400 });
     }
-    const result = await deleteMedia(id, Boolean(force));
+    const result = await deleteMedia(id);
     if (!result.ok) {
-      return NextResponse.json({ error: result.error, blocked: true }, { status: 409 });
+      return NextResponse.json({ error: result.error }, { status: 500 });
     }
     return NextResponse.json({ ok: true });
   } catch (error) {
