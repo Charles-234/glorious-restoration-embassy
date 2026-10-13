@@ -1,5 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server";
-import { createClient } from "@/utils/supabase/server";
+import { createServerClient } from "@supabase/ssr";
+import { cookies } from "next/headers";
+import { getSupabasePublicConfig } from "@/utils/supabase/config";
 
 function getSafeReturnPath(value: string | null) {
   if (!value || !value.startsWith("/") || value.startsWith("//") || value.includes("\\")) {
@@ -42,12 +44,30 @@ export async function GET(request: NextRequest) {
     returnPath = getSafeReturnPath(searchParams.get("next"));
     const isAdminLogin = returnPath === "/admin" || returnPath.startsWith("/admin/");
     const code = searchParams.get("code");
+    const successUrl = isAdminLogin
+      ? new URL("/admin", request.url)
+      : new URL(returnPath, request.url);
 
     if (!code) {
       return redirectTo(getLoginUrl(request, returnPath, "callback"));
     }
 
-    const supabase = await createClient();
+    const response = NextResponse.redirect(successUrl);
+    const cookieStore = await cookies();
+    const { url, publishableKey } = getSupabasePublicConfig();
+    const supabase = createServerClient(url, publishableKey, {
+      cookies: {
+        getAll() {
+          return cookieStore.getAll();
+        },
+        setAll(cookiesToSet) {
+          for (const { name, value, options } of cookiesToSet) {
+            response.cookies.set(name, value, options);
+          }
+        },
+      },
+    });
+
     const { data: exchangeData, error: exchangeError } =
       await supabase.auth.exchangeCodeForSession(code);
     console.log("[callback] step 1 ok:", {
@@ -77,7 +97,8 @@ export async function GET(request: NextRequest) {
     }
 
     if (!isAdminLogin) {
-      return redirectTo(new URL(returnPath, request.url));
+      console.log("[callback] redirecting to:", successUrl.toString());
+      return response;
     }
 
     const { data, error: queryError } = await supabase
@@ -104,7 +125,8 @@ export async function GET(request: NextRequest) {
       return redirectTo(getLoginUrl(request, returnPath, "access_denied"));
     }
 
-    return redirectTo(new URL("/admin", request.url));
+    console.log("[callback] redirecting to:", successUrl.toString());
+    return response;
   } catch (error) {
     console.error("[callback] FATAL:", error);
     const loginUrl = new URL("/admin/login", request.url);
