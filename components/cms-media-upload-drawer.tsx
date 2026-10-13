@@ -535,11 +535,11 @@ export function CmsMediaUploadDrawer({
             <button
               type="button"
               onClick={() => void handleUpload()}
-              disabled={busy || !file}
+              disabled={busy || !file || generatingPoster}
               className="btn btn-primary disabled:opacity-60"
             >
               <Upload size={14} className="mr-1" />
-              {busy ? "Uploading…" : publishNow ? "Upload and publish" : "Upload as draft"}
+              {busy ? "Uploading…" : generatingPoster ? "Preparing thumbnail…" : publishNow ? "Upload and publish" : "Upload as draft"}
             </button>
           </div>
         </div>

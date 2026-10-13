@@ -6,7 +6,7 @@ export async function POST(request: Request) {
   try {
     await requireAdmin();
     const body = await request.json();
-    const { src, kind, source, title, alt_text, context, tags, published, consent_notes } = body ?? {};
+    const { src, kind, source, title, alt_text, context, tags, published, consent_notes, poster_src } = body ?? {};
 
     if (typeof src !== "string" || !src) return NextResponse.json({ error: "src required" }, { status: 400 });
     if (!["image", "video", "audio", "document"].includes(kind)) {
@@ -16,6 +16,19 @@ export async function POST(request: Request) {
       return NextResponse.json(
         { error: "Kenya DPA: consent basis required to publish an image." },
         { status: 409 },
+      );
+    }
+    if (poster_src !== undefined && poster_src !== null && typeof poster_src !== "string") {
+      return NextResponse.json(
+        { error: "poster_src must be a string or null" },
+        { status: 400 },
+      );
+    }
+    const normalizedPosterSrc = (poster_src === undefined || poster_src === "") ? null : poster_src;
+    if (normalizedPosterSrc !== null && !normalizedPosterSrc.startsWith("http")) {
+      return NextResponse.json(
+        { error: "poster_src must be a valid https URL or null" },
+        { status: 400 },
       );
     }
 
@@ -32,6 +45,7 @@ export async function POST(request: Request) {
         tags: Array.isArray(tags) ? tags : [],
         published: Boolean(published),
         consent_notes: consent_notes ?? null,
+        poster_src: normalizedPosterSrc,
       })
       .select("id")
       .single();
