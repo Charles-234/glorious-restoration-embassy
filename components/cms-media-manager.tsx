@@ -463,43 +463,88 @@ export function CmsMediaManager({
     await reloadRows();
   }
 
+  function closeDeleteModals() {
+    setPendingDelete(null);
+    setDeletingWithContexts(null);
+  }
+
   async function requestDelete(row: { id: string; title?: string | null }) {
-    // Check if this deletion would empty any contexts
-    const contexts = await getContextsThatWouldEmpty([row.id]);
+    let contexts: string[] = [];
+    try {
+      contexts = await getContextsThatWouldEmpty([row.id]);
+    } catch (error) {
+      console.warn("[cms-media] context check failed; "
+        + "showing plain delete confirm.", error);
+    }
     setPendingDelete({ id: row.id, title: row.title ?? "this item" });
-    setDeletingWithContexts(contexts);
+    setDeletingWithContexts(contexts.length > 0 ? contexts : null);
   }
 
   async function executeDelete(id: string) {
-    const res = await fetch("/api/cms/media/delete", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id }),
-    });
-    const json = await res.json().catch(() => ({}));
-    if (!res.ok) {
-      setError(json?.error ?? "Delete failed.");
+    try {
+      const res = await fetch("/api/cms/media/delete", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id }),
+      });
+      const json = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        setError(json?.error ?? "Delete failed.");
+        return false;
+      }
+      return true;
+    } catch (error) {
+      console.error("[cms-media] executeDelete failed.", error);
+      setError("Delete request failed. Please try again.");
       return false;
     }
-    return true;
   }
 
   async function handleDeleteConfirmed() {
     if (!pendingDelete) return;
-    const success = await executeDelete(pendingDelete.id);
-    if (success) {
-      setPendingDelete(null);
-      setDeletingWithContexts(null);
-      await reloadRows();
-    } else {
-      setPendingDelete(null);
-      setDeletingWithContexts(null);
+    try {
+      const success = await executeDelete(pendingDelete.id);
+      if (success) {
+        await reloadRows();
+      }
+    } finally {
+      closeDeleteModals();
     }
   }
 
   async function handleBulkDeleteConfirmed() {
-    if (bulkDeleteConfirming !== null) {
-      await runBulkAction("delete");
+    if (bulkDeleteConfirming === null) return;
+    const ids = [...selected];
+    if (ids.length === 0) return;
+
+    setBulkBusy("delete");
+    setError(null);
+    setMessage(null);
+
+    try {
+      const response = await fetch("/api/cms/media/bulk", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: "delete" as BulkAction, ids }),
+      });
+      const contentType = response.headers.get("content-type") ?? "";
+      if (!response.ok || !contentType.includes("application/json")) {
+        setError("The bulk delete could not be completed. Please try again.");
+        return;
+      }
+      const result = (await response.json()) as BulkApiResult;
+      const refreshed = await refreshRows();
+      clearSelection();
+      setMessage(summarizeBulkResult(result, "delete"));
+      if (result.blocked.length > 0 && refreshed) {
+        const reasons = [...new Set(result.blocked.map((entry) => entry.reason))];
+        setError(`Some items were kept: ${reasons.join(" ")}`);
+      }
+    } catch (bulkError) {
+      console.error("[cms-media] The bulk delete failed.", bulkError);
+      setError("The bulk delete could not be completed. Please try again.");
+    } finally {
+      setBulkBusy(null);
       setBulkDeleteConfirming(null);
     }
   }
@@ -1057,10 +1102,7 @@ export function CmsMediaManager({
           role="dialog"
           aria-modal="true"
           aria-label="Confirm deletion"
-          onClick={() => {
-            setDeletingWithContexts(null);
-            setPendingDelete(null);
-          }}
+          onClick={closeDeleteModals}
         >
           <div
             className="max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-[2rem] border border-border bg-card p-6 sm:p-8"
@@ -1075,10 +1117,7 @@ export function CmsMediaManager({
               </div>
               <button
                 type="button"
-                onClick={() => {
-                  setDeletingWithContexts(null);
-                  setPendingDelete(null);
-                }}
+                onClick={closeDeleteModals}
                 aria-label="Close dialog"
                 className="btn btn-secondary shrink-0"
               >
@@ -1112,10 +1151,7 @@ export function CmsMediaManager({
               </button>
               <button
                 type="button"
-                onClick={() => {
-                  setDeletingWithContexts(null);
-                  setPendingDelete(null);
-                }}
+                onClick={closeDeleteModals}
                 className="btn btn-secondary"
               >
                 Cancel
@@ -1190,7 +1226,7 @@ export function CmsMediaManager({
           role="dialog"
           aria-modal="true"
           aria-label="Confirm deletion"
-          onClick={() => setPendingDelete(null)}
+          onClick={closeDeleteModals}
         >
           <div
             className="max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-[2rem] border border-border bg-card p-6 sm:p-8"
@@ -1207,7 +1243,7 @@ export function CmsMediaManager({
               </div>
               <button
                 type="button"
-                onClick={() => setPendingDelete(null)}
+                onClick={closeDeleteModals}
                 aria-label="Close dialog"
                 className="btn btn-secondary shrink-0"
               >
@@ -1231,7 +1267,7 @@ export function CmsMediaManager({
               </button>
               <button
                 type="button"
-                onClick={() => setPendingDelete(null)}
+                onClick={closeDeleteModals}
                 className="btn btn-secondary"
               >
                 Cancel
