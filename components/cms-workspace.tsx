@@ -96,6 +96,13 @@ export function CmsWorkspace({
   const [records, setRecords] = useState<CmsRecord[]>([]);
   const [kind, setKind] = useState<CmsKind>(initialKind);
   const [settingSlug, setSettingSlug] = useState<string>("hero");
+
+  // [B2] Redirect gallery to sermon as the default
+  useEffect(() => {
+    if (initialKind === "gallery") {
+      setKind("sermon");
+    }
+  }, [initialKind]);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [title, setTitle] = useState("");
   const [payload, setPayload] = useState<Record<string, string | boolean>>({});
@@ -460,22 +467,41 @@ export function CmsWorkspace({
         </div>
       </header>
 
-      <nav aria-label="Content collections" className="flex flex-wrap gap-2">
-        {cmsCollections.map((collection) => (
-          <button
-            key={collection.kind}
-            type="button"
-            aria-pressed={kind === collection.kind}
-            onClick={() => chooseCollection(collection.kind)}
-            className={`rounded-full border px-4 py-2 text-sm font-semibold transition ${
-              kind === collection.kind
-                ? "border-primary bg-primary text-primary-foreground"
-                : "border-border bg-card text-foreground hover:bg-muted"
-            }`}
+      {/* [B2] Show notice when user tries to access legacy gallery via ?kind=gallery */}
+      {initialKind === "gallery" && (
+        <div className="readable-surface rounded-[2rem] border border-amber-300/60 bg-amber-50/60 p-6 text-center dark:bg-amber-950/20">
+          <p className="text-amber-900 dark:text-amber-200">
+            Gallery uploads have moved to the Media Library.<br />
+            Use the Media Library for all image, video, audio and document uploads.
+          </p>
+          <Link
+            href="/cms/media"
+            className="btn btn-primary mt-4 inline-block"
           >
-            {collection.label}
-          </button>
-        ))}
+            Go to Media Library
+          </Link>
+        </div>
+      )}
+
+      <nav aria-label="Content collections" className="flex flex-wrap gap-2">
+        {/* [B1] Filter out gallery from visible tab list */}
+        {cmsCollections
+          .filter((collection) => collection.kind !== "gallery")
+          .map((collection) => (
+            <button
+              key={collection.kind}
+              type="button"
+              aria-pressed={kind === collection.kind}
+              onClick={() => chooseCollection(collection.kind)}
+              className={`rounded-full border px-4 py-2 text-sm font-semibold transition ${
+                kind === collection.kind
+                  ? "border-primary bg-primary text-primary-foreground"
+                  : "border-border bg-card text-foreground hover:bg-muted"
+              }`}
+            >
+              {collection.label}
+            </button>
+          ))}
       </nav>
 
       <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(20rem,0.8fr)]">

@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { createClient } from "@/utils/supabase/client";
 import { Upload, X, RefreshCw } from "lucide-react";
+import { captureVideoPoster } from "@/lib/media-thumbnails";
 
 const KNOWN_CONTEXTS = [
   { value: "gallery", label: "Gallery" },
@@ -56,6 +57,7 @@ export function CmsMediaUploadDrawer({
   const [error, setError] = useState<string | null>(null);
   const [generatingPoster, setGeneratingPoster] = useState(false);
   const [posterBlobUrl, setPosterBlobUrl] = useState<string | null>(null);
+  const [posterWarning, setPosterWarning] = useState<string | null>(null);
 
   useEffect(() => {
     return () => {
@@ -151,92 +153,26 @@ export function CmsMediaUploadDrawer({
   async function generatePosterFromFile(videoFile: File) {
     setGeneratingPoster(true);
     setError(null);
+    setPosterWarning(null);
     
     try {
       const posterBlob = await captureVideoPoster(videoFile);
       if (posterBlob) {
         const blobUrl = URL.createObjectURL(posterBlob);
         setPosterBlobUrl(blobUrl);
+      } else {
+        // [A5] Show visible inline warning when captureVideoPoster returns null
+        console.warn("[upload-drawer] captureVideoPoster returned null for", videoFile.name, "type:", videoFile.type);
+        setPosterWarning(
+          "Could not generate a thumbnail automatically. Click 'Choose custom thumbnail' to pick one, or upload an image instead."
+        );
       }
     } catch (err) {
-      console.error("[upload-drawer] Could not generate video poster.", err);
+      console.error("[upload-drawer] Could not generate video poster:", err);
       setError("Could not generate video thumbnail.");
     } finally {
       setGeneratingPoster(false);
     }
-  }
-
-  function captureVideoPoster(file: File): Promise<Blob | null> {
-    const video = document.createElement("video");
-    const objectUrl = URL.createObjectURL(file);
-    video.muted = true;
-    video.preload = "auto";
-    video.src = objectUrl;
-
-    return new Promise((resolve) => {
-      let cleanedUp = false;
-      const cleanup = () => {
-        if (cleanedUp) return;
-        cleanedUp = true;
-        video.pause();
-        video.removeAttribute("src");
-        video.load();
-        URL.revokeObjectURL(objectUrl);
-      };
-
-      video.onloadedmetadata = async () => {
-        try {
-          const captureTime = Number.isFinite(video.duration) && video.duration > 1
-            ? Math.min(1, video.duration / 2)
-            : 0;
-          if (captureTime > 0) {
-            await new Promise<void>((innerResolve, innerReject) => {
-              video.onseeked = () => innerResolve();
-              video.onerror = () => innerReject(new Error("Seek failed"));
-              video.currentTime = captureTime;
-            });
-          }
-
-          if (!video.videoWidth || !video.videoHeight) {
-            cleanup();
-            resolve(null);
-            return;
-          }
-
-          const canvas = document.createElement("canvas");
-          canvas.width = video.videoWidth;
-          canvas.height = video.videoHeight;
-          const context = canvas.getContext("2d");
-          if (!context) {
-            cleanup();
-            resolve(null);
-            return;
-          }
-          context.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-          canvas.toBlob((blob) => {
-            cleanup();
-            resolve(blob);
-          }, "image/jpeg", 0.82);
-        } catch {
-          cleanup();
-          resolve(null);
-        }
-      };
-
-      video.onerror = () => {
-        cleanup();
-        resolve(null);
-      };
-
-      video.load();
-      
-      // Timeout after 10 seconds
-      setTimeout(() => {
-        cleanup();
-        resolve(null);
-      }, 10000);
-    });
   }
 
   async function handleUpload() {
@@ -466,6 +402,15 @@ export function CmsMediaUploadDrawer({
                   style={{ display: "none" }}
                 />
               </div>
+              {/* [A5] Visible amber warning when thumbnail generation fails */}
+              {posterWarning ? (
+                <p
+                  role="status"
+                  className="rounded-xl border border-amber-300/60 bg-amber-50/60 p-3 text-sm text-amber-900 dark:bg-amber-950/20 dark:text-amber-200"
+                >
+                  {posterWarning}
+                </p>
+              ) : null}
             </div>
           ) : null}
 
