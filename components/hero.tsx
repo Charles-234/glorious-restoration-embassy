@@ -4,21 +4,26 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
-import { heroContent } from "@/lib/siteData";
+import { heroContent, fallbackHeroImages } from "@/lib/siteData";
 import { PlayCircle, ArrowRight } from "lucide-react";
 
-const heroImages = ["/gallery/photo12.jpeg", "/gallery/photo37.jpeg", "/gallery/photo38.jpeg"];
+export interface HeroProps {
+  images?: string[];
+}
 
-export function Hero() {
+export function Hero({ images = fallbackHeroImages }: HeroProps) {
+  const heroImages = images;
   const [imageIndex, setImageIndex] = useState(0);
 
   useEffect(() => {
+    if (heroImages.length === 0) return;
+
     const interval = window.setInterval(() => {
       setImageIndex((current) => (current + 1) % heroImages.length);
     }, 6500);
 
     return () => window.clearInterval(interval);
-  }, []);
+  }, [heroImages.length]);
 
   return (
     <section className="relative overflow-hidden pt-28 pb-16 text-white sm:pb-20">

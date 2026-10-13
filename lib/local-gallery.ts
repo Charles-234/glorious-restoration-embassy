@@ -144,11 +144,18 @@ async function readCmsGalleryMedia(): Promise<GalleryMediaItem[]> {
 }
 
 export async function getLocalGalleryMedia(): Promise<GalleryMediaItem[]> {
-  const [galleryImages, videos, cmsMedia, mediaTableItems] = await Promise.all([
+  const mediaTableItems = await getMediaAsGalleryItems("gallery");
+
+  if (mediaTableItems.length > 0) {
+    return mediaTableItems;
+  }
+
+  console.warn("[local-gallery] media table returned 0 rows for context 'gallery'; falling back to legacy sources.");
+
+  const [galleryImages, videos, cmsMedia] = await Promise.all([
     readMediaDirectory("gallery", "image"),
     readMediaDirectory("videos", "video"),
     readCmsGalleryMedia(),
-    getMediaAsGalleryItems("gallery"),
   ]);
 
   const existing: GalleryMediaItem[] = [
@@ -158,13 +165,5 @@ export async function getLocalGalleryMedia(): Promise<GalleryMediaItem[]> {
     ...videos,
   ];
 
-  const seen = new Set(existing.map((item) => item.src));
-  const merged = [...existing];
-  for (const item of mediaTableItems) {
-    if (!seen.has(item.src)) {
-      seen.add(item.src);
-      merged.push(item);
-    }
-  }
-  return merged;
+  return existing;
 }

@@ -90,3 +90,21 @@ backend/models/
 # Local backups — do not commit
 *.bak
 *.bak-*
+
+# AI agent tool artifacts — do not commit
+.cursor/
+.superdesign/
+.windsurfrules
+CLAUDE.md
+
+# AI agent tool artifacts — do not commit
+.cursor/
+.superdesign/
+.windsurfrules
+CLAUDE.md
+
+# AI agent tool artifacts — do not commit
+.cursor/
+.superdesign/
+.windsurfrules
+CLAUDE.md

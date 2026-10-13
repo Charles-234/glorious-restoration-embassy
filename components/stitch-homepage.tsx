@@ -29,7 +29,7 @@ import {
   X,
 } from "lucide-react";
 
-const photos = [
+const fallbackPhotos = [
   {
     src: "/stitch/ordination-consecration-prayer-with-bishops-in-p.jpg",
     alt: "Ordination consecration prayer with bishops in purple",
@@ -144,12 +144,18 @@ function SectionIntro({
   );
 }
 
+import type { PastorPortraitSlide } from "@/components/pastor-portrait-carousel";
+
 export function StitchHomepage({
   mediaItems,
   heroContent,
+  portraitSlides,
+  stitchPhotos,
 }: {
   mediaItems: GalleryMediaItem[];
   heroContent: HeroContent;
+  portraitSlides?: PastorPortraitSlide[];
+  stitchPhotos?: Array<{ src: string; alt: string; title: string }>;
 }) {
   const [copied, setCopied] = useState<"paybill" | "account" | null>(null);
   const [audioOnly, setAudioOnly] = useState(false);
@@ -203,7 +209,7 @@ export function StitchHomepage({
                     className="gre-overseer-carousel"
                     ariaLabel="Apostle Steve Kariuki portraits"
                     intervalMs={6500}
-                    slides={[
+                    slides={portraitSlides && portraitSlides.length > 0 ? portraitSlides : [
                       {
                         src: "/stitch/pastor-3.jpg",
                         alt: "Apostle Steve Kariuki speaking with a microphone under sanctuary drapery",

@@ -1,3 +1,5 @@
+import { getMediaAsGalleryItems } from "@/lib/media-db";
+
 /** Central site identity and confirmed location, giving, and service details. */
 export const siteConfig = {
   /** Canonical display name. Used by the navbar, footer, headings and metadata. */
@@ -112,7 +114,7 @@ export type SiteEvent = {
 };
 export const events: SiteEvent[] = [];
 
-export const galleryItems = [
+export const fallbackGalleryItems = [
   { title: "Worship Night", image: "/gallery/photo12.jpeg" },
   { title: "Community Fellowship", image: "/gallery/photo19.jpeg" },
   { title: "Outreach Ministry", image: "/gallery/photo21.jpeg" },
@@ -126,6 +128,68 @@ export const galleryItems = [
   { title: "Church Conference", image: "/gallery/photo2.jpg" },
   { title: "Couples Ministry", image: "/gallery/photo14.jpeg" }
 ];
+
+export const fallbackHeroImages = [
+  "/gallery/photo12.jpeg",
+  "/gallery/photo37.jpeg",
+  "/gallery/photo38.jpeg",
+];
+
+export const fallbackPastorPortraits = [
+  {
+    src: "/stitch/pastor-3.jpg",
+    alt: "Apostle Steve Kariuki speaking with a microphone under sanctuary drapery",
+    caption: "Apostolic Preaching",
+  },
+  {
+    src: "/stitch/pastor-4.jpg",
+    alt: "Apostle Steve Kariuki in a white suit and purple vestment",
+    caption: "Consecration",
+  },
+  {
+    src: "/stitch/pastor-10.jpg",
+    alt: "Apostle Steve Kariuki greeting presiding bishops and elders",
+    caption: "Presbytery & Council",
+  },
+];
+
+// Backward compatibility: galleryItems still exported for existing code
+export const galleryItems = fallbackGalleryItems;
+
+// Async functions to fetch from media table with fallback
+export async function getGalleryItems(): Promise<Array<{ title: string; image: string }>> {
+  const mediaItems = await getMediaAsGalleryItems("gallery");
+  if (mediaItems.length > 0) {
+    return mediaItems.map((item) => ({
+      title: item.title,
+      image: item.src,
+    }));
+  }
+  return fallbackGalleryItems;
+}
+
+export async function getHeroImages(): Promise<string[]> {
+  const mediaItems = await getMediaAsGalleryItems("hero");
+  if (mediaItems.length > 0) {
+    return mediaItems.map((item) => item.src);
+  }
+  return fallbackHeroImages;
+}
+
+export async function getPastorPortraits(): Promise<Array<{ src: string; alt: string; caption: string }>> {
+  // The carousel renders <Image> layers, so only image rows are eligible.
+  const mediaItems = (await getMediaAsGalleryItems("stitch")).filter(
+    (item) => item.kind === "image",
+  );
+  if (mediaItems.length > 0) {
+    return mediaItems.map((item) => ({
+      src: item.src,
+      alt: item.alt,
+      caption: item.title,
+    }));
+  }
+  return fallbackPastorPortraits;
+}
 
 export const donationInfo = {
   title: "Give",

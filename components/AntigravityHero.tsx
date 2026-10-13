@@ -7,10 +7,15 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { PlayCircle, ArrowRight } from 'lucide-react';
+import { fallbackHeroImages } from "@/lib/siteData";
 
 gsap.registerPlugin(ScrollTrigger);
 
-export default function AntigravityHero() {
+export interface AntigravityHeroProps {
+  images?: string[];
+}
+
+export default function AntigravityHero({ images = fallbackHeroImages }: AntigravityHeroProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const imagesRef = useRef<HTMLDivElement[]>([]);
   const titleRef = useRef<HTMLHeadingElement>(null);
@@ -181,34 +186,38 @@ export default function AntigravityHero() {
         </div>
 
         <div className="z-20 grid w-full grid-cols-2 items-center gap-4 preserve-3d sm:gap-5">
-          {[
-            { src: '/gallery/photo24.jpeg', alt: 'Worship Moment 1' },
-            { src: '/gallery/photo30.jpeg', alt: 'Church Community' },
-            { src: '/gallery/photo26.jpeg', alt: 'Worship Moment 2' },
-          ].map((img, i) => (
-            <motion.div
-              key={img.src}
-              ref={addToRefs}
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.8 + i * 0.2, duration: 0.8 }}
-              className={`glass relative aspect-[4/5] w-full rounded-2xl p-2 shadow-warm transition-transform duration-500 hover:scale-[1.02] preserve-3d ${i === 1 ? "col-span-2 aspect-[16/10] sm:col-span-1 sm:aspect-[4/5]" : ""}`}
-              style={{ transformOrigin: 'center center' }}
-              whileHover={{ scale: 1.05, zIndex: 50 }}
-            >
-              <div className="relative h-full w-full overflow-hidden rounded-xl">
-                <Image
-                  src={img.src}
-                  alt={img.alt}
-                  fill
-                  className="object-cover transition-transform duration-700 hover:scale-105"
-                  priority={i === 1}
-                  sizes="(max-width: 768px) 100vw, 33vw"
-                />
-              </div>
-              <div className="absolute -bottom-10 left-1/2 h-8 w-3/4 -translate-x-1/2 rounded-full bg-brand-deep/10 blur-xl" />
-            </motion.div>
-          ))}
+          {images.map((src, i) => {
+            const imageConfigs = [
+              { alt: 'Worship Moment 1' },
+              { alt: 'Church Community' },
+              { alt: 'Worship Moment 2' },
+            ];
+            const img = { src, alt: imageConfigs[i]?.alt || `Worship moment ${i + 1}` };
+            return (
+              <motion.div
+                key={img.src}
+                ref={addToRefs}
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.8 + i * 0.2, duration: 0.8 }}
+                className={`glass relative aspect-[4/5] w-full rounded-2xl p-2 shadow-warm transition-transform duration-500 hover:scale-[1.02] preserve-3d ${i === 1 ? "col-span-2 aspect-[16/10] sm:col-span-1 sm:aspect-[4/5]" : ""}`}
+                style={{ transformOrigin: 'center center' }}
+                whileHover={{ scale: 1.05, zIndex: 50 }}
+              >
+                <div className="relative h-full w-full overflow-hidden rounded-xl">
+                  <Image
+                    src={img.src}
+                    alt={img.alt}
+                    fill
+                    className="object-cover transition-transform duration-700 hover:scale-105"
+                    priority={i === 1}
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                  />
+                </div>
+                <div className="absolute -bottom-10 left-1/2 h-8 w-3/4 -translate-x-1/2 rounded-full bg-brand-deep/10 blur-xl" />
+              </motion.div>
+            );
+          })}
         </div>
       </div>
 
