@@ -21,10 +21,17 @@ export default {
         ],
       },
       {
+        source: "/cms",
+        headers: [
+          { key: "X-Robots-Tag", value: "noindex, nofollow" },
+          { key: "Cache-Control", value: "no-store, must-revalidate" },
+        ],
+      },
+      {
         source: "/cms/:path*",
         headers: [
           { key: "X-Robots-Tag", value: "noindex, nofollow" },
-          { key: "Cache-Control", value: "no-store" },
+          { key: "Cache-Control", value: "no-store, must-revalidate" },
         ],
       },
     ];
