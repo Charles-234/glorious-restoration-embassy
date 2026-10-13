@@ -1,8 +1,8 @@
 "use client";
 
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { createClient } from "@/utils/supabase/client";
-import { Upload, X } from "lucide-react";
+import { Upload, X, RefreshCw } from "lucide-react";
 
 const KNOWN_CONTEXTS = [
   { value: "gallery", label: "Gallery" },
@@ -42,9 +42,11 @@ export function CmsMediaUploadDrawer({
   onUploaded: () => void;
 }) {
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const posterFileInputRef = useRef<HTMLInputElement>(null);
   const [file, setFile] = useState<File | null>(null);
   const [title, setTitle] = useState("");
   const [altText, setAltText] = useState("");
+  const [filename, setFilename] = useState("");
   const [contexts, setContexts] = useState<string[]>(["gallery"]);
   const [customContext, setCustomContext] = useState("");
   const [tags, setTags] = useState("");
@@ -52,6 +54,16 @@ export function CmsMediaUploadDrawer({
   const [consentNotes, setConsentNotes] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [generatingPoster, setGeneratingPoster] = useState(false);
+  const [posterBlobUrl, setPosterBlobUrl] = useState<string | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (posterBlobUrl) {
+        URL.revokeObjectURL(posterBlobUrl);
+      }
+    };
+  }, [posterBlobUrl]);
 
   const detectedKind: DetectedKind | null = useMemo(
     () => (file ? detectKind(file) : null),
@@ -67,6 +79,18 @@ export function CmsMediaUploadDrawer({
     if (nextFile) {
       const base = nextFile.name.replace(/\.[^.]+$/, "").replace(/[-_]+/g, " ");
       setTitle((prev) => prev || base);
+      const extension = nextFile.name.split(".").pop()?.toLowerCase() || "";
+      const kind = detectKind(nextFile);
+      
+      // Auto-generate filename
+      generateFilename(kind, extension);
+      
+      // For videos, auto-generate poster
+      if (kind === "video") {
+        generatePosterFromFile(nextFile);
+      }
+    } else {
+      setPosterBlobUrl(null);
     }
   }
 
@@ -84,6 +108,135 @@ export function CmsMediaUploadDrawer({
     }
     setContexts((prev) => [...prev, trimmed]);
     setCustomContext("");
+  }
+
+  function generateFilename(kind: string, extension: string) {
+    const patterns: Record<string, RegExp> = {
+      image: /^photo(\d+)\.\w+$/,
+      video: /^[Vv]ideo(\d+)\.\w+$/,
+      audio: /^audio(\d+)\.\w+$/,
+      document: /^doc(\d+)\.\w+$/,
+    };
+    const baseNames: Record<string, string> = {
+      image: "photo",
+      video: "video",
+      audio: "audio",
+      document: "doc",
+    };
+    
+    // For now, use a simple incrementing number
+    // We'll fetch the next number from the API if we have a file
+    async function fetchNextNumber() {
+      try {
+        const response = await fetch(`/api/cms/media/next-number?kind=${kind}`);
+        if (response.ok) {
+          const data = await response.json();
+          if (data?.ok && typeof data.nextNumber === "number") {
+            const base = baseNames[kind] ?? "file";
+            setFilename(`${base}${data.nextNumber}.${extension}`);
+            return;
+          }
+        }
+      } catch {
+        // Fallback to default
+      }
+      // Fallback: use a simple default
+      const base = baseNames[kind] ?? "file";
+      setFilename(`${base}1.${extension}`);
+    }
+    
+    void fetchNextNumber();
+  }
+
+  async function generatePosterFromFile(videoFile: File) {
+    setGeneratingPoster(true);
+    setError(null);
+    
+    try {
+      const posterBlob = await captureVideoPoster(videoFile);
+      if (posterBlob) {
+        const blobUrl = URL.createObjectURL(posterBlob);
+        setPosterBlobUrl(blobUrl);
+      }
+    } catch (err) {
+      console.error("[upload-drawer] Could not generate video poster.", err);
+      setError("Could not generate video thumbnail.");
+    } finally {
+      setGeneratingPoster(false);
+    }
+  }
+
+  function captureVideoPoster(file: File): Promise<Blob | null> {
+    const video = document.createElement("video");
+    const objectUrl = URL.createObjectURL(file);
+    video.muted = true;
+    video.preload = "auto";
+    video.src = objectUrl;
+
+    return new Promise((resolve) => {
+      let cleanedUp = false;
+      const cleanup = () => {
+        if (cleanedUp) return;
+        cleanedUp = true;
+        video.pause();
+        video.removeAttribute("src");
+        video.load();
+        URL.revokeObjectURL(objectUrl);
+      };
+
+      video.onloadedmetadata = async () => {
+        try {
+          const captureTime = Number.isFinite(video.duration) && video.duration > 1
+            ? Math.min(1, video.duration / 2)
+            : 0;
+          if (captureTime > 0) {
+            await new Promise<void>((innerResolve, innerReject) => {
+              video.onseeked = () => innerResolve();
+              video.onerror = () => innerReject(new Error("Seek failed"));
+              video.currentTime = captureTime;
+            });
+          }
+
+          if (!video.videoWidth || !video.videoHeight) {
+            cleanup();
+            resolve(null);
+            return;
+          }
+
+          const canvas = document.createElement("canvas");
+          canvas.width = video.videoWidth;
+          canvas.height = video.videoHeight;
+          const context = canvas.getContext("2d");
+          if (!context) {
+            cleanup();
+            resolve(null);
+            return;
+          }
+          context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+          canvas.toBlob((blob) => {
+            cleanup();
+            resolve(blob);
+          }, "image/jpeg", 0.82);
+        } catch {
+          cleanup();
+          resolve(null);
+        }
+      };
+
+      video.onerror = () => {
+        cleanup();
+        resolve(null);
+      };
+
+      video.load();
+      
+      // Timeout after 10 seconds
+      setTimeout(() => {
+        cleanup();
+        resolve(null);
+      }, 10000);
+    });
   }
 
   async function handleUpload() {
@@ -108,23 +261,52 @@ export function CmsMediaUploadDrawer({
       const { data: urlData } = supabase.storage.from("media").getPublicUrl(filePath);
       const publicUrl = urlData.publicUrl;
 
+      // Handle poster for videos
+      let posterSrc: string | null = null;
+      const detected = detectedKind ?? detectKind(file);
+      
+      if (detected === "video" && posterBlobUrl) {
+        // Upload the poster
+        const posterBlob = await fetch(posterBlobUrl).then((r) => r.blob());
+        const posterPath = `posters/${crypto.randomUUID()}.jpg`;
+        const { error: posterUploadError } = await supabase.storage
+          .from("media")
+          .upload(posterPath, posterBlob, { contentType: "image/jpeg", upsert: false });
+        if (posterUploadError) {
+          console.error("[upload-drawer] Poster upload failed.", posterUploadError);
+        } else {
+          const { data: posterUrlData } = supabase.storage.from("media").getPublicUrl(posterPath);
+          posterSrc = posterUrlData.publicUrl;
+        }
+      }
+
+      // Use the custom filename if provided, otherwise use the original file name
+      const finalTitle = title.trim() || (filename ? filename.replace(/\.[^.]+$/, "").replace(/[-_]+/g, " ") : file.name);
+      
       const res = await fetch("/api/cms/media/upload", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           src: publicUrl,
-          kind: detectedKind,
+          kind: detected,
           source: "supabase-storage",
-          title: title.trim() || file.name,
-          alt_text: isImage ? altText.trim() || title.trim() || file.name : null,
+          title: finalTitle,
+          alt_text: isImage ? altText.trim() || finalTitle : null,
           context: contexts,
           tags: tags.split(",").map((s) => s.trim()).filter(Boolean),
+          poster_src: posterSrc,
           published: publishNow,
           consent_notes: isImage ? consentNotes.trim() || null : null,
         }),
       });
       const json = await res.json();
       if (!res.ok) throw new Error(json?.error ?? "Saving media record failed");
+
+      // Clean up poster blob URL
+      if (posterBlobUrl) {
+        URL.revokeObjectURL(posterBlobUrl);
+        setPosterBlobUrl(null);
+      }
 
       onUploaded();
     } catch (err) {
@@ -191,6 +373,15 @@ export function CmsMediaUploadDrawer({
             />
           </label>
 
+          <label className="block text-sm font-medium text-foreground">
+            Filename (optional - leave to auto-generate)
+            <input
+              value={filename}
+              onChange={(event) => setFilename(event.target.value)}
+              className="mt-2 w-full rounded-xl border border-border bg-background px-4 py-3 text-foreground outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
+            />
+          </label>
+
           {isImage ? (
             <label className="block text-sm font-medium text-foreground">
               Alt text (helps screen readers and search engines)
@@ -201,6 +392,81 @@ export function CmsMediaUploadDrawer({
                 className="mt-2 w-full rounded-xl border border-border bg-background px-4 py-3 text-foreground outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
               />
             </label>
+          ) : null}
+
+          {detectedKind === "video" ? (
+            <div className="space-y-3">
+              <label className="block text-sm font-medium text-foreground">
+                Thumbnail preview
+                {posterBlobUrl ? (
+                  <div className="mt-2">
+                    <img
+                      src={posterBlobUrl}
+                      alt="Video thumbnail preview"
+                      className="h-32 w-full rounded-xl border border-border object-cover"
+                    />
+                  </div>
+                ) : (
+                  <div className="mt-2 flex h-32 w-full items-center justify-center rounded-xl border-2 border-dashed border-border bg-muted text-muted-foreground">
+                    No thumbnail generated
+                  </div>
+                )}
+              </label>
+              <div className="flex gap-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (file) {
+                      generatePosterFromFile(file);
+                    } else {
+                      setError("Please select a video file first");
+                    }
+                  }}
+                  disabled={generatingPoster || !file}
+                  className="btn btn-secondary disabled:opacity-60"
+                >
+                  <RefreshCw size={14} className={generatingPoster ? "animate-spin" : ""} />
+                  {generatingPoster ? "Generating..." : "Generate thumbnail"}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => posterFileInputRef.current?.click()}
+                  className="btn btn-secondary"
+                >
+                  Choose custom thumbnail
+                </button>
+                <input
+                  ref={posterFileInputRef}
+                  type="file"
+                  accept="image/*"
+                  onChange={async (event) => {
+                    const customPoster = event.currentTarget.files?.[0];
+                    if (!customPoster) return;
+                    event.currentTarget.value = "";
+                    
+                    try {
+                      const supabase = createClient();
+                      const safeName = customPoster.name.replace(/[^a-zA-Z0-9._-]/g, "-");
+                      const posterPath = `posters/${crypto.randomUUID()}-${safeName}`;
+                      
+                      const { error: uploadError } = await supabase.storage
+                        .from("media")
+                        .upload(posterPath, customPoster, { contentType: customPoster.type, upsert: false });
+                      
+                      if (uploadError) {
+                        throw new Error(`Upload failed: ${uploadError.message}`);
+                      }
+                      
+                      const { data: urlData } = supabase.storage.from("media").getPublicUrl(posterPath);
+                      setPosterBlobUrl(urlData.publicUrl);
+                    } catch (err) {
+                      setError(err instanceof Error ? err.message : "Failed to upload custom thumbnail");
+                    }
+                  }}
+                  style={{ display: "none" }}
+                />
+              </div>
+            </div>
           ) : null}
 
           <div>

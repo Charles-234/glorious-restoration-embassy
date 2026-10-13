@@ -6,7 +6,7 @@ import { CmsMediaUploadDrawer } from "@/components/cms-media-upload-drawer";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { FileText, Film, Music, X } from "lucide-react";
+import { FileText, Film, Music, X, Image as ImageIcon } from "lucide-react";
 import type { MediaRow } from "@/lib/media-db";
 
 type BulkAction = "publish" | "unpublish" | "delete";
@@ -110,6 +110,8 @@ export function CmsMediaManager({
   const [draftConsentNotes, setDraftConsentNotes] = useState("");
   const [saving, setSaving] = useState(false);
   const [drawerError, setDrawerError] = useState<string | null>(null);
+  const [replaceFileInputRef, setReplaceFileInputRef] = useState<HTMLInputElement | null>(null);
+  const [replacingFile, setReplacingFile] = useState<string | null>(null);
   const anchorRef = useRef<number | null>(null);
   const router = useRouter();
 
@@ -296,6 +298,7 @@ export function CmsMediaManager({
     setDraftSortOrder(String(row.sort_order ?? 0));
     setDraftPublished(row.published);
     setDraftConsentNotes(row.consent_notes ?? "");
+    setReplacingFile(null);
   }
 
   function closeDrawer() {
@@ -422,6 +425,20 @@ export function CmsMediaManager({
         />
       );
     }
+    if (row.kind === "video" && row.poster_src) {
+      return (
+        <img
+          src={row.poster_src}
+          alt=""
+          aria-hidden="true"
+          loading="lazy"
+          className="h-40 w-full object-cover"
+          onError={(event) => {
+            event.currentTarget.style.display = "none";
+          }}
+        />
+      );
+    }
     const Icon = row.kind === "video" ? Film : row.kind === "audio" ? Music : FileText;
     return (
       <span className="flex h-40 w-full flex-col items-center justify-center gap-2 bg-muted text-muted-foreground">
@@ -478,6 +495,73 @@ export function CmsMediaManager({
     const refreshed = await fetch("/api/cms/media/list", { cache: "no-store" });
     if (refreshed.ok) setRows(await refreshed.json());
     router.refresh();
+  }
+
+  function requestReplace(row: MediaRow) {
+    setEditingId(row.id);
+    setDrawerError(null);
+    setDraftTitle(row.title ?? "");
+    setDraftCaption(row.caption ?? "");
+    setDraftAltText(row.alt_text ?? "");
+    setDraftContexts([...(row.context ?? [])]);
+    setDraftNewContext("");
+    setDraftTags((row.tags ?? []).join(", "));
+    setDraftSortOrder(String(row.sort_order ?? 0));
+    setDraftPublished(row.published);
+    setDraftConsentNotes(row.consent_notes ?? "");
+    setReplacingFile(row.id);
+  }
+
+  async function handleReplaceFile(event: React.ChangeEvent<HTMLInputElement>, rowId: string) {
+    const file = event.currentTarget.files?.[0];
+    if (!file) return;
+
+    event.currentTarget.value = "";
+    setReplacingFile(null);
+    setDrawerError(null);
+
+    try {
+      const supabase = (await import("@/utils/supabase/client")).createClient();
+      const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "-");
+      const filePath = `${crypto.randomUUID()}-${safeName}`;
+
+      const { error: uploadError } = await supabase.storage
+        .from("media")
+        .upload(filePath, file, { contentType: file.type, upsert: false });
+      if (uploadError) throw new Error(`Upload failed: ${uploadError.message}`);
+
+      const { data: urlData } = supabase.storage.from("media").getPublicUrl(filePath);
+      const publicUrl = urlData.publicUrl;
+
+      const replaceResponse = await fetch("/api/cms/media/replace", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: rowId, newSrc: publicUrl }),
+      });
+
+      if (!replaceResponse.ok) {
+        const json = await replaceResponse.json().catch(() => ({}));
+        throw new Error(json?.error ?? "Replace failed");
+      }
+
+      setRows((current) =>
+        current.map((row) =>
+          row.id === rowId ? { ...row, src: publicUrl, updated_at: new Date().toISOString() } : row,
+        ),
+      );
+      setMessage("File replaced. The list was updated without reloading the page.");
+      
+      // Refresh the editing drawer with updated src
+      if (editingId === rowId) {
+        const updatedRow = rows.find(r => r.id === rowId);
+        if (updatedRow) {
+          openDrawer({ ...updatedRow, src: publicUrl });
+        }
+      }
+    } catch (error) {
+      console.error("[cms-media] Could not replace file.", error);
+      setDrawerError(error instanceof Error ? error.message : "The file could not be replaced. Please try again.");
+    }
   }
 
   return (
@@ -647,6 +731,7 @@ export function CmsMediaManager({
                     title={title}
                     published={row.published}
                     onEdit={() => openDrawer(row)}
+                    onReplace={() => requestReplace(row)}
                     onTogglePublished={() => void togglePublished(row)}
                     onDelete={() => requestDelete(row)}
                   />
@@ -754,6 +839,27 @@ export function CmsMediaManager({
               >
                 <X size={16} aria-hidden="true" />
               </button>
+            </div>
+
+            <div className="mt-4 flex gap-2">
+              <button
+                type="button"
+                onClick={() => {
+                  if (replaceFileInputRef) {
+                    replaceFileInputRef.click();
+                  }
+                }}
+                className="btn btn-secondary"
+              >
+                Replace file
+              </button>
+              <input
+                ref={setReplaceFileInputRef}
+                type="file"
+                onChange={(event) => void handleReplaceFile(event, editingRow.id)}
+                style={{ display: "none" }}
+                disabled={saving}
+              />
             </div>
 
             <div className="mt-6 space-y-5">

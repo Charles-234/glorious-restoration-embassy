@@ -322,6 +322,66 @@ export type DeleteResult =
   | { ok: true }
   | { ok: false; error: string; wouldDropBelowFloor?: boolean; affectedContext?: string; remaining?: number };
 
+// Regex patterns for auto-numbering per kind
+const KIND_PATTERNS: Record<string, RegExp> = {
+  image: /^photo(\d+)\.\w+$/,
+  video: /^[Vv]ideo(\d+)\.\w+$/,
+  audio: /^audio(\d+)\.\w+$/,
+  document: /^doc(\d+)\.\w+$/,
+};
+
+// Extract number from filename using the pattern for the given kind
+function extractNumberFromFilename(filename: string, kind: string): number | null {
+  const pattern = KIND_PATTERNS[kind];
+  if (!pattern) return null;
+  const match = filename.match(pattern);
+  if (!match || match.length < 2) return null;
+  const num = Number.parseInt(match[1], 10);
+  return Number.isFinite(num) ? num : null;
+}
+
+export async function getNextNumber(kind: string): Promise<number> {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("media")
+    .select("src")
+    .eq("kind", kind);
+
+  if (error) {
+    console.error("[media-admin] Could not query media for numbering.", error);
+    return 1;
+  }
+
+  const rows = Array.isArray(data) ? data : [];
+  const numbers: number[] = [];
+
+  for (const row of rows) {
+    if (typeof row.src !== "string") continue;
+    const filename = row.src.split("/").pop()?.split("?")[0] ?? "";
+    const num = extractNumberFromFilename(filename, kind);
+    if (num !== null) numbers.push(num);
+  }
+
+  if (numbers.length === 0) return 1;
+  return Math.max(...numbers) + 1;
+}
+
+export async function replaceMediaSrc(id: string, newSrc: string): Promise<AdminResult> {
+  const supabase = await createClient();
+  const patch: Record<string, unknown> = {
+    src: newSrc,
+    updated_at: new Date().toISOString(),
+  };
+
+  const { error } = await supabase.from("media").update(patch).eq("id", id);
+
+  if (error) {
+    console.error("[media-admin] Could not replace media src.", error);
+    return { ok: false, error: "The file could not be replaced. Please try again." };
+  }
+  return { ok: true };
+}
+
 export async function deleteMedia(id: string, force = false): Promise<DeleteResult> {
   const supabase = await createClient();
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { MoreVertical, Pencil, EyeOff, Eye, Trash2 } from "lucide-react";
+import { MoreVertical, Pencil, EyeOff, Eye, Trash2, RefreshCw } from "lucide-react";
 
 type Props = {
   title: string;
@@ -9,6 +9,7 @@ type Props = {
   onEdit: () => void;
   onTogglePublished: () => void;
   onDelete: () => void;
+  onReplace: () => void;
 };
 
 export function CmsMediaRowActions({
@@ -17,6 +18,7 @@ export function CmsMediaRowActions({
   onEdit,
   onTogglePublished,
   onDelete,
+  onReplace,
 }: Props) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -68,6 +70,17 @@ export function CmsMediaRowActions({
             className="flex w-full items-center gap-2 px-3 py-2 text-left text-sm text-foreground hover:bg-muted"
           >
             <Pencil size={14} /> Edit
+          </button>
+          <button
+            type="button"
+            role="menuitem"
+            onClick={() => {
+              setOpen(false);
+              onReplace();
+            }}
+            className="flex w-full items-center gap-2 px-3 py-2 text-left text-sm text-foreground hover:bg-muted"
+          >
+            <RefreshCw size={14} /> Replace
           </button>
           <button
             type="button"
