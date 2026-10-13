@@ -86,3 +86,7 @@ backend/models/
 *.preedit
 *.orig
 *.rej
+
+# Local backups — do not commit
+*.bak
+*.bak-*
