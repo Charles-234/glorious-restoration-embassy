@@ -1,4 +1,4 @@
-import { getMediaAsGalleryItems } from "@/lib/media-db";
+import { getMediaAsGalleryItems, getMediaByContext } from "@/lib/media-db";
 
 /** Central site identity and confirmed location, giving, and service details. */
 export const siteConfig = {
@@ -158,7 +158,9 @@ export const galleryItems = fallbackGalleryItems;
 
 // Async functions to fetch from media table with fallback
 export async function getGalleryItems(): Promise<Array<{ title: string; image: string }>> {
-  const mediaItems = await getMediaAsGalleryItems("gallery");
+  const mediaItems = (await getMediaAsGalleryItems("gallery")).filter(
+    (item) => item.kind === "image",
+  );
   if (mediaItems.length > 0) {
     return mediaItems.map((item) => ({
       title: item.title,
@@ -169,7 +171,7 @@ export async function getGalleryItems(): Promise<Array<{ title: string; image: s
 }
 
 export async function getHeroImages(): Promise<string[]> {
-  const mediaItems = await getMediaAsGalleryItems("hero");
+  const mediaItems = await getMediaByContext("hero", { kind: "image", limit: 3 });
   if (mediaItems.length > 0) {
     return mediaItems.map((item) => item.src);
   }
@@ -177,15 +179,20 @@ export async function getHeroImages(): Promise<string[]> {
 }
 
 export async function getPastorPortraits(): Promise<Array<{ src: string; alt: string; caption: string }>> {
-  // The carousel renders <Image> layers, so only image rows are eligible.
-  const mediaItems = (await getMediaAsGalleryItems("stitch")).filter(
-    (item) => item.kind === "image",
+  const portraitTitles = ["pastor 3", "pastor 4", "pastor 10"];
+  const rows = await getMediaByContext("stitch", { kind: "image" });
+  const rowsByTitle = new Map(
+    rows.map((row) => [row.title?.trim().toLowerCase() ?? "", row]),
   );
+  const mediaItems = portraitTitles.flatMap((title) => {
+    const row = rowsByTitle.get(title);
+    return row ? [row] : [];
+  }).slice(0, 3);
   if (mediaItems.length > 0) {
     return mediaItems.map((item) => ({
       src: item.src,
-      alt: item.alt,
-      caption: item.title,
+      alt: item.alt_text?.trim() || `Pastor portrait: ${item.title?.trim() ?? "Pastor"}`,
+      caption: item.title?.trim() || "Pastor portrait",
     }));
   }
   return fallbackPastorPortraits;
