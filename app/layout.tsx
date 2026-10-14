@@ -106,14 +106,16 @@ export default async function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
           <div className="relative isolate min-h-screen flex flex-col">
             <PublicGalleryBackground backgrounds={galleryBackgrounds} />
-            <div className="sticky top-0 z-50">
-              <div className="bg-primary text-white text-xs sm:text-sm py-2 text-center font-medium">
-                Tue 9 AM · Fri 6 PM · Sun 9 AM
+            <div className="relative z-10 flex min-h-screen flex-col">
+              <div className="sticky top-0 z-50">
+                <div className="bg-primary text-white text-xs sm:text-sm py-2 text-center font-medium">
+                  Tue 9 AM · Fri 6 PM · Sun 9 AM
+                </div>
+                <Navbar />
               </div>
-              <Navbar />
+              <PageTransition>{children}</PageTransition>
+              <Footer />
             </div>
-            <PageTransition>{children}</PageTransition>
-            <Footer />
           </div>
         </ThemeProvider>
       </body>

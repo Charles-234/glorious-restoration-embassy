@@ -11,21 +11,25 @@ interface GalleryBackgroundProps {
   intervalMs?: number;
 }
 
-const EFFECTS = ["fade", "wipe", "zoom", "slideRight", "slideUp", "blur", "reveal"] as const;
+const EFFECTS = ["fade", "zoom", "slideRight", "slideUp", "scaleOut", "crossSlide"] as const;
 type EffectKind = (typeof EFFECTS)[number];
 
 const EFFECT_CLASS_MAP: Record<EffectKind, string> = {
   fade: styles.effectFade,
-  wipe: styles.effectWipe,
   zoom: styles.effectZoom,
   slideRight: styles.effectSlideRight,
   slideUp: styles.effectSlideUp,
-  blur: styles.effectBlur,
-  reveal: styles.effectReveal,
+  scaleOut: styles.effectScaleOut,
+  crossSlide: styles.effectCrossSlide,
+};
+
+const OUTGOING_EFFECT_CLASS_MAP: Partial<Record<EffectKind, string>> = {
+  scaleOut: styles.effectScaleOutOutgoing,
+  crossSlide: styles.effectCrossSlideOutgoing,
 };
 
 const ROTATE_EVERY_MS = 6_000;
-const ANIM_DURATION_MS = 1_500;
+const ANIM_DURATION_MS = 1_800;
 
 export function GalleryBackground({
   items,
@@ -101,7 +105,13 @@ export function GalleryBackground({
   return (
     <div aria-hidden="true" className={[styles.background, className].filter(Boolean).join(" ")}>
       {/* Base layer — always visible */}
-      <div className={[styles.layer, styles.layerActive].join(" ")}>
+      <div
+        className={[
+          styles.layer,
+          styles.layerActive,
+          incoming ? OUTGOING_EFFECT_CLASS_MAP[incoming.effect] : undefined,
+        ].filter(Boolean).join(" ")}
+      >
         <Image
           src={current.src}
           alt=""

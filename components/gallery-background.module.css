@@ -22,7 +22,7 @@
   z-index: 2;
   opacity: 0;
   /* Use will-change to hint the browser to promote to its own layer */
-  will-change: opacity, transform, clip-path;
+  will-change: opacity, transform;
   backface-visibility: hidden;
   transform: translateZ(0);
 }
@@ -38,25 +38,16 @@
 
 /* Fade — smooth cross-dissolve */
 .effectFade {
-  animation: greFade 1.5s ease-out forwards;
+  animation: greFade 1.8s ease-out forwards;
 }
 @keyframes greFade {
   from { opacity: 0; }
   to   { opacity: 1; }
 }
 
-/* Wipe — left-to-right reveal, no zoom */
-.effectWipe {
-  animation: greWipe 1.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-}
-@keyframes greWipe {
-  from { opacity: 1; clip-path: inset(0 100% 0 0); }
-  to   { opacity: 1; clip-path: inset(0 0 0 0); }
-}
-
 /* Zoom — scale up from a smaller image for a clearly visible reveal */
 .effectZoom {
-  animation: greZoom 1.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation: greZoom 1.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 @keyframes greZoom {
   from { opacity: 0; transform: scale(0.78); }
@@ -65,7 +56,7 @@
 
 /* Slide from the right edge. */
 .effectSlideRight {
-  animation: greSlideRight 1.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation: greSlideRight 1.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 @keyframes greSlideRight {
   from { opacity: 0; transform: translateX(100%); }
@@ -74,39 +65,59 @@
 
 /* Rise from below the viewport. */
 .effectSlideUp {
-  animation: greSlideUp 1.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation: greSlideUp 1.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 @keyframes greSlideUp {
   from { opacity: 0; transform: translateY(100%); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* Resolve from a strong blur to a sharp image. */
-.effectBlur {
-  animation: greBlur 1.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+.effectScaleOut {
+  animation: greScaleOut 1.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
-@keyframes greBlur {
-  from { opacity: 0; filter: blur(18px); }
-  to   { opacity: 1; filter: blur(0); }
+@keyframes greScaleOut {
+  from { opacity: 0; transform: scale(0.98); }
+  to   { opacity: 1; transform: scale(1); }
 }
 
-/* Reveal from the center outward. */
-.effectReveal {
-  animation: greReveal 1.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+.effectScaleOutOutgoing {
+  animation: greScaleOutOutgoing 1.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
-@keyframes greReveal {
-  from { opacity: 1; clip-path: inset(50% 50% 50% 50%); }
-  to   { opacity: 1; clip-path: inset(0 0 0 0); }
+@keyframes greScaleOutOutgoing {
+  from { opacity: 1; transform: scale(1); }
+  to   { opacity: 1; transform: scale(0.98); }
+}
+
+.effectCrossSlide {
+  animation: greCrossSlide 1.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+@keyframes greCrossSlide {
+  from { opacity: 0; transform: translateX(4%); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+.effectCrossSlideOutgoing {
+  animation: greCrossSlideOutgoing 1.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+@keyframes greCrossSlideOutgoing {
+  from { opacity: 1; transform: translateX(0); }
+  to   { opacity: 0.6; transform: translateX(-4%); }
+}
+
+.effectScaleOutOutgoing,
+.effectCrossSlideOutgoing {
+  will-change: opacity, transform;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .effectFade,
-  .effectWipe,
   .effectZoom,
   .effectSlideRight,
   .effectSlideUp,
-  .effectBlur,
-  .effectReveal {
+  .effectScaleOut,
+  .effectCrossSlide,
+  .effectScaleOutOutgoing,
+  .effectCrossSlideOutgoing {
     animation-duration: 0.2s;
   }
 }

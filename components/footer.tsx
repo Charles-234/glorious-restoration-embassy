@@ -36,7 +36,7 @@ const footerGroups = [
 
 export function Footer() {
   return (
-    <footer className="gre-footer">
+    <footer className="gre-footer relative z-10">
       <div className="gre-wrap">
         <div className="gre-footer-main">
           <div className="gre-footer-brand">
