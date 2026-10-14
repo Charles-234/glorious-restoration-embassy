@@ -419,7 +419,7 @@ export function CmsMediaManager({
           alt=""
           aria-hidden="true"
           loading="lazy"
-          className="h-40 w-full object-cover"
+          className="h-40 w-full object-contain"
           onError={(event) => {
             event.currentTarget.style.display = "none";
           }}
@@ -433,7 +433,7 @@ export function CmsMediaManager({
           alt=""
           aria-hidden="true"
           loading="lazy"
-          className="h-40 w-full object-cover"
+          className="h-40 w-full object-contain"
           onError={(event) => {
             event.currentTarget.style.display = "none";
           }}

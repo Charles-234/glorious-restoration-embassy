@@ -11,14 +11,17 @@ interface GalleryBackgroundProps {
   intervalMs?: number;
 }
 
-const EFFECTS = ["fade", "wipe", "zoom", "drift"] as const;
+const EFFECTS = ["fade", "wipe", "zoom", "slideRight", "slideUp", "blur", "reveal"] as const;
 type EffectKind = (typeof EFFECTS)[number];
 
 const EFFECT_CLASS_MAP: Record<EffectKind, string> = {
   fade: styles.effectFade,
   wipe: styles.effectWipe,
   zoom: styles.effectZoom,
-  drift: styles.effectDrift,
+  slideRight: styles.effectSlideRight,
+  slideUp: styles.effectSlideUp,
+  blur: styles.effectBlur,
+  reveal: styles.effectReveal,
 };
 
 const ROTATE_EVERY_MS = 6_000;

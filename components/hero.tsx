@@ -42,7 +42,7 @@ export function Hero({ images = fallbackHeroImages }: HeroProps) {
               fill
               priority={index === 0}
               sizes="100vw"
-              className="object-cover"
+              className="object-contain"
             />
           </motion.div>
         ))}

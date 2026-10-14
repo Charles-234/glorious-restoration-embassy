@@ -146,7 +146,7 @@ export function LocalMediaGallery({ items, limitPerKind }: LocalMediaGalleryProp
   function changePage(setPage: (page: number) => void, page: number) {
     setPage(page);
     setPlayingEmbed(null);
-    galleryRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    galleryRef.current?.scrollIntoView({ behavior: "auto", block: "start" });
   }
 
   return (
@@ -181,7 +181,7 @@ export function LocalMediaGallery({ items, limitPerKind }: LocalMediaGalleryProp
                       fill
                       unoptimized
                       draggable={false}
-                      style={{ objectFit: "cover" }}
+                      style={{ objectFit: "contain" }}
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     />
                   </button>
@@ -222,7 +222,7 @@ export function LocalMediaGallery({ items, limitPerKind }: LocalMediaGalleryProp
                           fill
                           unoptimized
                           draggable={false}
-                          className="object-cover"
+                          className="object-contain"
                           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                         />
                       ) : null}

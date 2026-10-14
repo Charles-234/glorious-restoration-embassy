@@ -125,7 +125,7 @@
     -webkit-text-size-adjust: 100%; /* stop iOS inflating text in landscape */
     text-size-adjust: 100%;
     -webkit-tap-highlight-color: transparent; /* no grey flash on tap */
-    scroll-behavior: smooth;
+    scroll-behavior: auto;
   }
 
   body {
@@ -256,9 +256,6 @@
   }
 
   .gre-header {
-    position: sticky;
-    top: 0;
-    z-index: 50;
     color: var(--gre-ink);
     background: var(--gre-paper);
     box-shadow: 0 1px 0 var(--gre-rule);
@@ -1186,12 +1183,7 @@
   }
 
   .gre-ministry-image img {
-    object-fit: cover;
-    transition: transform 400ms ease;
-  }
-
-  .gre-ministry-card:hover .gre-ministry-image img {
-    transform: scale(1.05);
+    object-fit: contain;
   }
 
   .gre-ministry-content {
@@ -1391,12 +1383,7 @@
   }
 
   .gre-gallery-card img {
-    object-fit: cover;
-    transition: transform 650ms ease;
-  }
-
-  .gre-gallery-card:hover img {
-    transform: scale(1.055);
+    object-fit: contain;
   }
 
   .gre-gallery-card > span {

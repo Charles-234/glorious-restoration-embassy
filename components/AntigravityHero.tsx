@@ -200,7 +200,7 @@ export default function AntigravityHero({ images = fallbackHeroImages }: Antigra
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.8 + i * 0.2, duration: 0.8 }}
-                className={`glass relative aspect-[4/5] w-full rounded-2xl p-2 shadow-warm transition-transform duration-500 hover:scale-[1.02] preserve-3d ${i === 1 ? "col-span-2 aspect-[16/10] sm:col-span-1 sm:aspect-[4/5]" : ""}`}
+                className={`glass relative aspect-[4/5] w-full rounded-2xl p-2 shadow-warm preserve-3d ${i === 1 ? "col-span-2 aspect-[16/10] sm:col-span-1 sm:aspect-[4/5]" : ""}`}
                 style={{ transformOrigin: 'center center' }}
                 whileHover={{ scale: 1.05, zIndex: 50 }}
               >
@@ -209,7 +209,7 @@ export default function AntigravityHero({ images = fallbackHeroImages }: Antigra
                     src={img.src}
                     alt={img.alt}
                     fill
-                    className="object-cover transition-transform duration-700 hover:scale-105"
+                    className="object-contain"
                     priority={i === 1}
                     sizes="(max-width: 768px) 100vw, 33vw"
                   />

@@ -14,7 +14,7 @@ export function PageTransition({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
 
   return (
-    <AnimatePresence mode="wait">
+    <AnimatePresence mode="popLayout">
       <motion.div key={pathname} initial="initial" animate="animate" exit="exit" variants={pageMotion} transition={pageMotion.transition} className="relative flex-grow">
         {children}
       </motion.div>

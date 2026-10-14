@@ -26,6 +26,7 @@ export function EventCard({ title, date, venue, description, badge, image }: Eve
               fill
               sizes="(max-width: 768px) 100vw, 33vw"
               unoptimized
+              className="object-contain"
             />
           </div>
         ) : null}

@@ -339,7 +339,7 @@ export function CmsMediaUploadDrawer({
                     <img
                       src={posterBlobUrl}
                       alt="Video thumbnail preview"
-                      className="h-32 w-full rounded-xl border border-border object-cover"
+                      className="h-32 w-full rounded-xl border border-border object-contain"
                     />
                   </div>
                 ) : (

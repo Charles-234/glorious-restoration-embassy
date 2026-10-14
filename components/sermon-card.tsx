@@ -84,6 +84,7 @@ export function SermonCard({
               fill
               sizes="(max-width: 768px) 100vw, 33vw"
               unoptimized
+              className="object-contain"
             />
           </div>
         ) : null}

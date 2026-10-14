@@ -1,4 +1,14 @@
 import { getMediaAsGalleryItems, getMediaByContext } from "@/lib/media-db";
+import { getPublicSupabaseClient } from "@/lib/public-supabase";
+
+export type LibraryMediaItem = {
+  id: string;
+  kind: "document" | "audio";
+  src: string;
+  title: string | null;
+  caption: string | null;
+  alt_text: string | null;
+};
 
 /** Central site identity and confirmed location, giving, and service details. */
 export const siteConfig = {
@@ -196,6 +206,28 @@ export async function getPastorPortraits(): Promise<Array<{ src: string; alt: st
     }));
   }
   return fallbackPastorPortraits;
+}
+
+export async function getLibraryMedia(): Promise<LibraryMediaItem[]> {
+  try {
+    const supabase = getPublicSupabaseClient();
+    const { data, error } = await supabase
+      .from("media")
+      .select("id,kind,src,title,caption,alt_text")
+      .in("kind", ["document", "audio"])
+      .eq("published", true)
+      .order("sort_order", { ascending: true });
+
+    if (error) {
+      console.error("[site-data] Could not load published library media.", error);
+      return [];
+    }
+
+    return (data ?? []) as LibraryMediaItem[];
+  } catch (error) {
+    console.error("[site-data] Could not initialize the library media query.", error);
+    return [];
+  }
 }
 
 export const donationInfo = {

@@ -24,6 +24,7 @@ export interface PastorPortraitCarouselProps {
 }
 
 const DEFAULT_INTERVAL_MS = 6000;
+const STORAGE_KEY = "gre-pastor-portrait-slide";
 
 export default function PastorPortraitCarousel({
   slides,
@@ -32,10 +33,36 @@ export default function PastorPortraitCarousel({
   className,
 }: PastorPortraitCarouselProps) {
   const [activeIndex, setActiveIndex] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(true);
   const [reducedMotion, setReducedMotion] = useState(true);
   const rotationTimer = useRef<ReturnType<typeof setInterval> | null>(null);
+  const hasRestoredSlide = useRef(false);
   const slideCount = slides.length;
+
+  useEffect(() => {
+    try {
+      const storedIndex = window.sessionStorage.getItem(STORAGE_KEY);
+      if (storedIndex !== null) {
+        const parsedIndex = Number(storedIndex);
+        if (Number.isInteger(parsedIndex) && parsedIndex >= 0 && parsedIndex < slideCount) {
+          setActiveIndex(parsedIndex);
+        }
+      }
+      hasRestoredSlide.current = true;
+    } catch (error) {
+      console.error("[pastor-portrait-carousel] Could not restore the active slide.", error);
+      hasRestoredSlide.current = true;
+    }
+  }, [slideCount]);
+
+  useEffect(() => {
+    if (!hasRestoredSlide.current) return;
+    try {
+      window.sessionStorage.setItem(STORAGE_KEY, String(activeIndex));
+    } catch (error) {
+      console.error("[pastor-portrait-carousel] Could not persist the active slide.", error);
+    }
+  }, [activeIndex]);
 
   useEffect(() => {
     const preference = window.matchMedia("(prefers-reduced-motion: reduce)");
