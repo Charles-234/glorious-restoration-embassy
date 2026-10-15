@@ -17,7 +17,7 @@ export const siteConfig = {
   /** Short form for tight spaces. */
   brandShort: "GRE",
   /** Canonical origin — used by metadataBase and the sitemap so they agree. */
-  url: "https://gloriousrestorationembassy.org",
+  url: "https://glorious-restoration-embassy.vercel.app",
   tagline:
     "A place of weightless faith, boundless grace, and immersive spiritual depth.",
 

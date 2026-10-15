@@ -11,6 +11,7 @@ import { getPublicGalleryBackgrounds } from "@/lib/public-gallery-backgrounds";
 import { siteConfig } from "@/lib/siteData";
 import { CookieConsent } from "@/components/cookie-consent";
 import { AnalyticsLoader } from "@/components/analytics-loader";
+import { JsonLd } from "@/components/json-ld";
 
 const bodyFont = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -122,6 +123,7 @@ export default async function RootLayout({
         </ThemeProvider>
         <CookieConsent />
         <AnalyticsLoader />
+        <JsonLd />
       </body>
     </html>
   );
