@@ -5,6 +5,7 @@ import { Send, CheckCircle, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { siteConfig } from "@/lib/siteData";
+import { track, CHURCH_EVENTS } from "@/lib/analytics";
 
 type RequestType = "enquiry" | "prayer";
 
@@ -57,6 +58,8 @@ export function ContactForm() {
           type: "success",
           message: successMessage,
         });
+        // Batch 8: analytics — type only, never the name/email/message (DPA)
+        track(CHURCH_EVENTS.PRAYER_REQUEST_SUBMIT, { type: requestType });
       }
     } catch {
       setStatus({

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import { track, CHURCH_EVENTS } from "@/lib/analytics";
 import { MessageCircle, Send, X, AlertCircle } from "lucide-react";
 import Link from "next/link";
 import { siteConfig } from "@/lib/siteData";
@@ -97,6 +98,9 @@ export function AIChatbot() {
     setError(null);
     setAuthRequired(false);
 
+    // Batch 8: analytics — no PII, just the fact a question was asked
+    track(CHURCH_EVENTS.AI_QUESTION_ASKED, { source: "chatbot" });
+
     try {
       const response = await fetch("/api/chat", {
         method: "POST",
@@ -133,6 +137,8 @@ export function AIChatbot() {
           ...current,
           { id: Date.now() + 2, role: "assistant" as const, text: result.message }
         ]);
+        // Batch 8: analytics — response received (no PII)
+        track(CHURCH_EVENTS.AI_RESPONSE_RECEIVED, { source: "chatbot" });
       }
     } catch (error) {
       setMessages((current) => [

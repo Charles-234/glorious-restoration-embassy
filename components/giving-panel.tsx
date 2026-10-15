@@ -1,8 +1,11 @@
+"use client";
+
 import Link from "next/link";
 import { Building2, HeartHandshake } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { siteConfig } from "@/lib/siteData";
 import { MpesaLogo } from "@/components/mpesa-logo";
+import { track, CHURCH_EVENTS } from "@/lib/analytics";
 
 interface GivingPanelProps {
   title: string;
@@ -71,7 +74,11 @@ export function GivingPanel({ title, description }: GivingPanelProps) {
           WhatsApp and we will help you give today.
         </p>
         <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
-          <Link href={`https://wa.me/${siteConfig.whatsapp}`} className="btn btn-primary">
+          <Link
+            href={`https://wa.me/${siteConfig.whatsapp}`}
+            className="btn btn-primary"
+            onClick={() => track(CHURCH_EVENTS.GIVING_METHOD_CLICK, { method: "whatsapp" })}
+          >
             Give via WhatsApp
           </Link>
           <Link href="/contact" className="btn btn-secondary">

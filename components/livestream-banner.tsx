@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Clock, Facebook, MessageSquare } from "lucide-react";
+import { track, CHURCH_EVENTS } from "@/lib/analytics";
 
 const sundaySchedule = [
   { time: "8.00 AM - 10.00 AM", label: "Prayers and Bible study" },
@@ -23,7 +24,11 @@ export function LivestreamBanner() {
             Join our Facebook service, connect with the church family, and tune in for prophetic teaching and prayer.
           </p>
           <div className="grid gap-3 sm:grid-cols-2">
-            <Link href="https://www.facebook.com/share/1Xob4wuJwK/" className="btn btn-secondary gap-2 text-sm">
+            <Link
+              href="https://www.facebook.com/share/1Xob4wuJwK/"
+              className="btn btn-secondary gap-2 text-sm"
+              onClick={() => track(CHURCH_EVENTS.LIVESTREAM_JOIN, { channel: "facebook" })}
+            >
               <Facebook size={16} /> Facebook Live
             </Link>
             <Link href="/chat" className="btn btn-primary gap-2 text-sm">
