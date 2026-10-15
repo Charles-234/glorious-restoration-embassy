@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import type { ConsentValue } from "@/components/cookie-consent";
@@ -24,7 +24,7 @@ function readConsent(): ConsentValue | null {
   return null;
 }
 
-export function AnalyticsLoader() {
+function AnalyticsLoaderInner() {
   const [consent, setConsent] = useState<ConsentValue | null>(null);
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -53,7 +53,18 @@ export function AnalyticsLoader() {
     });
   }, [pathname, searchParams, consent]);
 
-  // GA4 only mounts after explicit consent — this is the Kenya DPA gate.
+    // GA4 only mounts after explicit consent — this is the Kenya DPA gate.
   if (consent !== "accepted") return null;
   return <GoogleAnalytics gaId={GA_ID} />;
+}
+
+// Wrapper so `useSearchParams` has the Suspense boundary Next.js requires
+// when this component renders inside the root layout (affects every route,
+// including /404). Inner component holds the actual logic.
+export function AnalyticsLoader() {
+  return (
+    <Suspense fallback={null}>
+      <AnalyticsLoaderInner />
+    </Suspense>
+  );
 }
