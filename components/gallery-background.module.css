@@ -29,8 +29,8 @@
 
 .image {
   /* contain = show full image, no zoom, no crop */
-  object-fit: contain;
-  object-position: center;
+  object-fit: cover;
+  object-position: top center;
   opacity: 0.35;
   /* Prevent browser blur from re-rendering at low-res during transform */
   image-rendering: auto;
