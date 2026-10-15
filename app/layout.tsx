@@ -36,6 +36,9 @@ export const metadata: Metadata = {
     template: `%s | ${siteConfig.brandName}`
   },
   description: siteConfig.tagline,
+  verification: {
+    google: "IFkvYHbeWGGBvU8GbGVfjmsT0wl6pS5rQDqJTzt4yok"
+  },
   metadataBase: new URL(siteConfig.url),
   // './' resolves against metadataBase, so every route emits its own canonical
   // URL. Without this Next.js renders no <link rel="canonical"> at all.
