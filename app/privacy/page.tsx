@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   description: `How ${siteConfig.brandName} collects, uses, stores, and protects personal information.`,
 };
 
-const lastUpdated = "October 7, 2026";
+const lastUpdated = "October 15, 2026";
 
 export default function PrivacyPage() {
   return (
@@ -69,14 +69,33 @@ export default function PrivacyPage() {
 
         <section className="space-y-3">
           <h2 className="text-2xl font-semibold text-foreground">Cookies, local storage, and tracking</h2>
-          <p className="text-sm leading-7 text-muted-foreground">
+                    <p className="text-sm leading-7 text-muted-foreground">
             Authentication may use strictly necessary session cookies, and the site may store your
             display preference in your browser. This site does not intentionally use advertising
             cookies or sell/share data for cross-context behavioural advertising. Your browser
             settings let you inspect or clear cookies and site storage; clearing a sign-in cookie
-            may sign you out. If non-essential analytics or tracking is added later, we will update
-            this notice and provide a consent and withdrawal control before setting it where law
-            requires.
+            may sign you out.
+          </p>
+          <p className="text-sm leading-7 text-muted-foreground">
+            <strong className="font-medium text-foreground">Optional analytics.</strong> With your
+            consent, we use Google Analytics 4 to understand how visitors use this site &mdash;
+            which pages are read, what device type is used, and roughly which country a visitor is
+            in. We do not send names, emails, phone numbers, prayer request content, or chat
+            content to Google. Google Analytics cookies are only set after you press
+            &ldquo;Accept analytics&rdquo; in the consent banner. Choosing &ldquo;Reject
+            non-essential&rdquo; leaves analytics disabled. You can withdraw consent at any time by
+            clearing this site&rsquo;s cookies and local storage in your browser; the banner will
+            reappear and analytics will stop. Google processes the data on servers outside Kenya,
+            including the United States, under the Google Ads Data Processing Terms and Standard
+            Contractual Clauses. For details on how Google handles this data, see{" "}
+            <a
+              href="https://policies.google.com/technologies/partner-sites"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline underline-offset-4 hover:text-foreground"
+            >
+              How Google uses information from sites or apps that use our services
+            </a>.
           </p>
         </section>
 
