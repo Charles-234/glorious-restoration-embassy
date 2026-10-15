@@ -9,6 +9,8 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { PublicGalleryBackground } from "@/components/public-gallery-background";
 import { getPublicGalleryBackgrounds } from "@/lib/public-gallery-backgrounds";
 import { siteConfig } from "@/lib/siteData";
+import { CookieConsent } from "@/components/cookie-consent";
+import { AnalyticsLoader } from "@/components/analytics-loader";
 
 const bodyFont = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -118,6 +120,8 @@ export default async function RootLayout({
             </div>
           </div>
         </ThemeProvider>
+        <CookieConsent />
+        <AnalyticsLoader />
       </body>
     </html>
   );
