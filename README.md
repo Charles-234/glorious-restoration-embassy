@@ -1,139 +1,310 @@
-﻿# Glorious Restoration Embassy
+<div align="center">
 
-A premium Next.js church website built with App Router, TypeScript, Tailwind CSS, Framer Motion, and Supabase.
+![Glorious Restoration Embassy — Capsule Banner](https://capsule-render.vercel.app/api?type=waving&color=009688&height=220&section=header&text=Glorious%20Restoration%20Embassy&fontSize=48&fontColor=ffffff&animation=twinkling)
 
-## Quick start
+<h3 align="center">🕊️ A premium digital ministry platform • Secure by design • Built for restoration • Open for impact</h3>
 
-```bash
-npm install
-npm run dev
+<br/>
+
+<p align="center">
+  <a href="https://nextjs.org/" target="_blank"><img src="https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white" alt="Next.js"/></a>
+  <a href="https://www.typescriptlang.org/" target="_blank"><img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript"/></a>
+  <a href="https://supabase.com/" target="_blank"><img src="https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white" alt="Supabase"/></a>
+  <a href="https://fastapi.tiangolo.com/" target="_blank"><img src="https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white" alt="FastAPI"/></a>
+  <a href="https://www.alxafrica.com/" target="_blank"><img src="https://img.shields.io/badge/ALX-Cybersecurity-009688?style=for-the-badge&logo=shield&logoColor=white" alt="ALX Cybersecurity Aligned"/></a>
+</p>
+
+<br/>
+
+<p align="center">
+  <a href="https://github.com/Charles-234/glorious-restoration-embassy" target="_blank">
+
+---
+
+## 🚀 Technical Highlights
+
+| Focus Area | Engineering Logic & Outcome |
+|---|---|
+| **Server-first rendering** | Public pages are Next.js Server Components, reducing client-side JavaScript and improving first-contentful paint on low-bandwidth connections. |
+| **Theme-aware UI** | Dark/light mode via `next-themes` (class-based on `<html>`), with every user-facing colour bound to semantic CSS tokens so both themes remain legible and WCAG-friendly. |
+| **Performance** | Hero animation via GSAP, page transitions via Framer Motion, `next/image` with explicit dimensions, and font self-optimisation via `next/font`. |
+| **Stability** | TypeScript `strict: true`, Playwright E2E smoke suite (status codes, CSS application, console errors, broken images, a11y), and theme/link crawling tests. |
+| **Secure by default** | Security headers (`X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff`, `Referrer-Policy`, `Permissions-Policy`), `robots.txt` disallow on admin/api/auth paths, and HMAC-signed admin sessions with timing-safe verification. |
+| **Data minimisation** | Contact and prayer requests stored with explicit privacy fields (`is_private`, `privacy_consent`, versioned notice); analytics tracks event type only — never names, emails, or message bodies (DPA-aligned). |
+| **Graceful degradation** | Supabase client initialises only when env vars are present; API failures degrade to user-facing fallbacks (e.g., WhatsApp backup for contact) rather than crashing. |
+| **Giving integrity** | `/give` and `/donate` expose confirmed M-Pesa Paybill details only — no simulated payment flow, no fake success states. |
+
+    <img src="https://github-readme-stats.vercel.app/api/pin/?username=Charles-234&repo=glorious-restoration-embassy&theme=tokyonight&show_owner=true&border_color=009688" alt="Glorious Restoration Embassy Repo Card"/>
+  </a>
+</p>
+
+</div>
+
+---
+
+## 🎯 Project Title & High-Level Pitch
+
+**Glorious Restoration Embassy** is a public-facing church website built on the Next.js App Router with React 18 and TypeScript (strict mode). It serves as a digital branch of a physical ministry, giving visitors and members access to service times, ministries, sermons, events, a livestream, branch locations, secure online giving, contact/prayer-request submission, and an AI-assisted help chat.
+
+From an infrastructure and operations viewpoint, the site is designed as a **hardened, theme-aware, server-first public surface** with a gated administrative area. Public content is rendered as server components where possible; interactivity is isolated to client components that require it. Sensitive administrative surfaces are separated from public routes and protected by signed session tokens and strict HTTP security headers.
+
+
+---
+
+## 🏗️ System Architecture Diagram
+
+The diagram below is a text-based representation of request/data flow. It shows trust boundaries (public internet vs. internal administrative surface), where validation gates sit, and where secrets are resolved (environment variables — never hardcoded).
+
+```text
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                              PUBLIC INTERNET                                 │
+│  Visitors · Members · Search Engines · Recruiters                           │
+└──────────────────┬──────────────────────────────────────────────────────────┘
+                   │ HTTPS / WSS
+                   ▼
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                     EDGE / CDN (Vercel)                                      │
+│  • Global edge delivery                                                     │
+│  • Security headers injected at the edge                                    │
+│    ├─ X-Frame-Options: DENY                                                 │
+│    ├─ X-Content-Type-Options: nosniff                                       │
+│    ├─ Referrer-Policy: strict-origin-when-cross-origin                      │
+│    └─ Permissions-Policy: camera/mic/geo = ()                               │
+└──────────────────┬──────────────────────────────────────────────────────────┘
+                   │
+      ┌────────────┴────────────┐
+      ▼                         ▼
+┌───────────────┐      ┌────────────────────┐
+│  Next.js App  │      │  Next.js Middleware │
+│  Router (SSR) │      │  (route guarding)   │
+│  • Server     │      │  • Public vs gated  │
+│    Components │      │    route split      │
+│  • API Routes │      └──────────┬─────────┘
+└───────┬───────┘                 │
+        │                         │
+        │  (1) Public content     │  (2) Admin path → session check
+        ▼                         ▼
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                    APPLICATION LAYER (Next.js)                              │
+│                                                                             │
+│  ┌──────────────┐   ┌──────────────┐   ┌──────────────┐   ┌────────────┐  │
+│  │  Page Routes │   │  API Routes  │   │  Client      │   │  Admin     │  │
+│  │  (/ , /about │   │  (/api/* )   │   │  Components  │   │  Sessions  │  │
+│  │   …)         │   │              │   │  (chat,      │   │  HMAC-SHA  │  │
+│  └──────┬───────┘   └──────┬───────┘   │   contact,   │   │ 256,       │  │
+│         │                  │           │   gallery,   │   │ 24h TTL,   │  │
+│         │                  │           │   navbar,…)  │   │ roles      │  │
+│         ▼                  ▼                  │                 │          │
+└───────────┴────────────────┴──────────────────┴────────────────────────────┘
+        │                  │                  │                 │
+        │                  │                  │                 │
+        ▼                  ▼                  ▼                 ▼
+┌──────────────┐   ┌──────────────┐   ┌──────────────┐   ┌──────────────┐
+│   Supabase   │   │  FastAPI     │   │  WhatsApp    │   │  Env Vars    │
+│  (public     │   │  Backend     │   │  (wa.me)     │   │  ADMIN_*     │
+│  client,     │   │  (/api/chat) │   │  (contact    │   │  SESSION_*   │
+│  RLS-aware   │   │  auth + rate │   │   fallback)  │   │  SUPABASE_*  │
+│  design)     │   │  limiting    │   │              │   │  (never      │
+└──────┬───────┘   │  20s timeout │   └──────────────┘   │   hardcoded) │
+       │           │  input val.  │                      └──────────────┘
+       │           │  (4000 char) │
+       │           └──────┬───────┘
+       │                  │
+       └──────────────────┘
+                      (trust boundary)
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  DATA FLOW SUMMARY                                                          │
+│                                                                             │
+│  1. Visitor requests a page  →  Edge → Next.js SSR → HTML to browser        │
+│  2. Contact / prayer POST    →  /api/contact → Supabase (is_private=true)   │
+│                             →  WhatsApp fallback rendered on client         │
+│  3. AI chat POST             →  Auth check → quota (10 calls/day)           │
+│                             →  FastAPI backend → answer → persisted         │
+│  4. Admin login              →  HMAC-signed token → /admin (gated)          │
+│  5. Newsletter subscribe     →  Supabase insert (email only)                │
+└─────────────────────────────────────────────────────────────────────────────┘
 ```
 
-`npm run dev` starts the local FastAPI assistant backend and the Next.js site
-together, and waits for the backend health check before starting Next.js. The
-backend virtual environment must first be set up as described in
-[`backend/README.md`](./backend/README.md). To run only the frontend against an
-already-running backend, use `npm run dev:frontend`.
+**Trust boundaries enforced:**
+- Public internet → Edge: TLS only; security headers applied at ingress.
+- Edge → App: route split; `/admin`, `/api`, `/auth`, `/cms`, `/login`, `/search` disallowed to crawlers via `robots.txt`.
+- App → Supabase: public/anon key treated as **not** an authorization boundary; RLS and least-privilege grants are the intended server-side enforcement layer.
+- App → FastAPI: authenticated call only; rate-limited and time-boxed.
+- Admin → Session: HMAC-SHA256 token verified with `timingSafeEqual` to resist timing attacks.
 
-Open `http://localhost:3000` in your browser.
+---
 
-## Environment variables
+## 🔐 Security Implementation & Cyber Hygiene
 
-Create a `.env.local` file with the following values:
+The following controls are framed using standard industry and ALX Cybersecurity program concepts. Nothing here exposes source code or secrets; it describes the control logic only.
 
-- `NEXT_PUBLIC_SUPABASE_URL` — your Supabase project URL.
-- `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` — your Supabase publishable key; existing deployments can keep using `NEXT_PUBLIC_SUPABASE_ANON_KEY`.
-- `FASTAPI_BACKEND_URL` — the base URL of the deployed FastAPI assistant service.
-- `RESEND_API_KEY` — a server-only Resend API key for contact-email notifications.
-- `CONTACT_FROM_EMAIL` — an email address on a domain verified with Resend.
-- `ADMIN_PASSWORD` — a secure password for the protected logs dashboard at `/admin`.
-- `ADMIN_SESSION_SECRET` — a separate random secret for signing admin sessions.
-- `NEWS_API_KEY` — an optional server-only NewsAPI key for local dashboard development.
-- `INGEST_API_TOKEN` — a long random bearer token required by the FastAPI PDF-ingestion endpoint.
+### 1. Secure Session Handling
 
-Optional:
+Administrative access uses a stateless, HMAC-signed session token:
 
-- `MPESA_NUMBER` — donation number if you want to customize the giving CTA.
-- `NEWS_API_PRODUCTION_ENABLED=true` — enable NewsAPI in production only after confirming a paid NewsAPI plan and rights to display the returned headlines. Unset by default.
-- `NEWS_THUMBNAILS_LICENSE_CONFIRMED=true` — include publisher-supplied thumbnails only after confirming image reuse rights for every enabled source. Unset by default.
+- **Algorithm:** HMAC-SHA256 over a base64url-encoded JSON payload (`username`, `role`, `expiresAt`).
+- **Role model:** Principle of Least Privilege — two roles (`super_admin`, `admin`) so an admin cannot assume super-admin capabilities by default.
+- **TTL:** 24-hour absolute expiration embedded in the token and re-validated on every request.
+- **Verification:** Signature compared with Node's `crypto.timingSafeEqual` to mitigate timing-side-channel attacks.
+- **Secret resolution:** Reads `ADMIN_SESSION_SECRET` / `ADMIN_PASSWORD` / `SUPER_ADMIN_PASSWORD` from environment variables — **never hardcoded**, never committed (`.env.local` is gitignored).
 
-## Features
+### 2. Input Validation & Data Sanitization
 
-- App Router powered page structure
-- TypeScript-first architecture
-- Tailwind CSS styling with glassmorphism and premium cinematic design
-- Framer Motion page transitions and hover animations
-- Responsive mobile-first layout
-- Supabase backend for newsletter and contact form data
-- Authenticated website AI chat backed by the shared FastAPI assistant and church-document retrieval system
-- Daily allowance of 10 admitted website chat attempts per signed-in non-admin; CMS/admin users have unlimited access
-- Dedicated News page with daily scripture and attributed publisher headlines
-- SEO-friendly metadata and Open Graph preview settings
+- **AI chat endpoint:** Requires authentication (`401` if missing), validates JSON shape, rejects empty queries, caps question length at 4,000 characters (`413` if exceeded), and enforces a daily quota of 10 calls per authenticated user (`429` when exhausted).
+- **Contact form:** Client-side required-field and privacy-consent validation before any network call; server-side validation at `/api/contact`; prayer requests stored with `is_private: true` and versioned privacy consent.
+- **Output encoding:** API error messages are generic (no stack traces or internal details returned to the client).
 
-### News and scripture dashboard
+### 3. Secure API Handling
 
-The dashboard fetches headlines through RSS2JSON from Faithwire, Christian Newswire, Charisma News, and Faith News Service, alongside the optional NewsAPI source. Feed results are cached for one hour. RSS descriptions are reduced to plain text and capped at 140 characters; cards link directly to the publisher's article in a new tab. Publisher thumbnails remain disabled unless image reuse rights are confirmed. Confirm each publisher's feed and syndication terms before production use; short excerpts and attribution do not themselves grant a licence.
+- All mutating endpoints use `POST` with `Content-Type: application/json`.
+- Upstream FastAPI chat calls are time-boxed (20 s `AbortSignal.timeout`) and handle `502`/`503`/`504` gracefully without leaking backend internals.
+- Supabase writes use typed helper functions with explicit column allow-lists; the client degrades gracefully when environment variables are absent rather than failing open.
 
-The Standard RSS feed is intentionally not polled or displayed because its published terms do not clearly permit automated collection or displaying feed headlines elsewhere. Nation Africa's feed and applicable terms could not be verified, so it is not polled or displayed either. Add either source only after obtaining written permission or confirming publisher terms that explicitly permit this use.
+### 4. Network & Transport Hardening
 
-NewsAPI's free Developer plan is for development and testing only. Production use is disabled unless `NEWS_API_PRODUCTION_ENABLED=true` is set; only set this after securing an appropriate paid plan and confirming content-use rights. Keep `NEWS_API_KEY` server-side and never use a `NEXT_PUBLIC_` variable for production credentials.
+- `X-Frame-Options: DENY` — clickjacking protection.
+- `X-Content-Type-Options: nosniff` — MIME-type sniffing protection.
+- `Referrer-Policy: strict-origin-when-cross-origin` — referrer data minimisation.
+- `Permissions-Policy: camera=(), microphone=(), geolocation=()` — disables sensitive device APIs by default.
 
-## Deployment
+### 5. Crawler & Indexing Hygiene
 
-### Vercel
+Disallows indexing of administrative and internal surfaces: `/admin/`, `/api/`, `/cms/`, `/login`, `/auth/`, `/search`, `/_next/`. Canonical URLs and structured metadata keep the public surface SEO-clean.
 
-1. Push this repository to GitHub.
-2. Create a new Vercel project and link your repository.
-3. Add the environment variables in Vercel:
-   - `NEXT_PUBLIC_SUPABASE_URL`
-   - `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`
-   - `FASTAPI_BACKEND_URL` (the deployed FastAPI service URL)
-   - `RESEND_API_KEY` and `CONTACT_FROM_EMAIL` (only after verifying the sending domain)
-   - `INGEST_API_TOKEN` on the FastAPI deployment
-4. Deploy the site.
+### 6. Dependency & Supply-Chain Posture
 
-Vercel's free Hobby plan is limited to personal, non-commercial use. Confirm eligibility for a church/organization with Vercel; do not assume that a free tier permits organizational production use. Free Render web services are suitable for previews only: they sleep after inactivity and have ephemeral filesystems. Review the deployment comparison in `SECURITY_AUDIT_REPORT.md` before selecting a host.
+- Root production dependency audit reported **0 known vulnerabilities** at review time.
+- TypeScript strict mode + ESLint enforce type and lint safety at build time.
+- Python backend dependencies are acknowledged as unpinned in the security review; a lockfile/pinning step is the identified hardening action.
+- A `sharp` CVE (CVE-2026-96889) was identified in the Cloudflare Worker development toolchain only; no production Worker path invokes it.
 
-### Supabase
+### 7. Privacy-Aligned Data Practices
 
-1. Create a Supabase project at https://app.supabase.com.
-2. In the Supabase dashboard, go to `Settings > API` and copy the project URL and publishable key.
-3. Apply `supabase/migrations/20261006172000_admitted_ai_chat_attempts.sql` using the Supabase SQL editor or your normal migration workflow. It adds atomic per-day admission counting.
-4. Create the `newsletter`, `contacts`, and `ai_conversations` tables if they are not already present.
-5. Configure `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` in Vercel or your local `.env.local` file, and enable the desired Supabase Auth sign-in provider.
+- Analytics tracks event *type* only — never name, email, or message body (DPA-aligned batching).
+- Newsletter stores email only.
+- Privacy notice versioning and consent timestamps are stored with submissions.
 
-The website chat requires a valid Supabase sign-in session and a configured `FASTAPI_BACKEND_URL`. Signed-in administrators present in `admin_users` or `cms_admins` have unlimited calls; other signed-in users are limited to 10 admitted attempts per Africa/Nairobi calendar day. Admission increments atomically before FastAPI is called, so concurrent requests cannot exceed the limit and provider/network failures still count. Users who reach the limit receive HTTP `429`; internal provider errors are logged server-side and are not returned to visitors. Telegram calls the shared FastAPI assistant directly and does not use the website quota.
+> **Note on disclosure:** A repository-only security review identified conditional findings around Supabase row-level security grants and an unpinned dependency tree. These are operational hardening items for deployment, not defects in the public application logic described here. No live credentials, `.env` contents, or private keys are stored in this repository.
 
-### Admin logs
 
-- Visit `/admin` to see the AI conversation history stored in Supabase.
-- The logs dashboard is protected by `ADMIN_PASSWORD` and will redirect to `/admin/login` when not signed in. The super-admin username is configured in `content/admins.json`.
+---
 
-### Editorial CMS
+## 🧰 Tech Stack & Dependencies
 
-- The editorial CMS is available at `/cms` and uses Supabase email magic-link sign-in. It is separate from the `/admin` AI-log password; CMS access is granted only to user IDs listed in `public.cms_admins`.
-- Apply the exact pending SQL migrations for this project in order using the Supabase SQL editor or your normal migration workflow. `20261007213000_admin_cms_inbox_media.sql` establishes the content/inbox/media policies, and `20261007232200_cms_kind_and_privacy_consent.sql` normalizes legacy CMS kind types and adds recorded contact-form consent. Do not rerun migrations already applied to the live project.
-- Sign in at `/login?next=%2Fcms` with the editor's email, then confirm the user in Supabase Authentication. Add that authenticated user's UUID to the allowlist in the SQL editor:
+### Core Framework
 
-  ```sql
-  insert into public.cms_admins (user_id)
-  values ('<AUTH_USER_UUID>')
-  on conflict (user_id) do nothing;
-  ```
+| Layer | Technology | Purpose |
+|---|---|---|
+| Framework | Next.js (App Router) | Server-side rendering, API routes, routing |
+| UI Library | React 18 | Component model |
+| Type Safety | TypeScript (`strict`) | Compile-time correctness |
+| Styling | Tailwind CSS + CSS tokens | Theme-aware, responsive design |
+| Dark Mode | next-themes (class-based) | Light/dark theme on `<html>` |
 
-- Reopen `/cms` after the row has been added. No CMS password or service-role key is needed; the user signs in through the configured Supabase Auth email provider.
-- Published sermons, events, announcements, gallery images, and site settings are served from Supabase. Drafts remain private to authorized CMS editors.
-- The public gallery separates photos and videos into their own collections, pages each collection six items at a time, and leaves media captions blank. Bundled videos use generated poster frames and native playback controls with audio enabled; hiding download controls is only a deterrent and cannot prevent copying public media.
-- Configure `RESEND_API_KEY` and `CONTACT_FROM_EMAIL` for form notifications. The sender must be verified with Resend; without those settings the message is still saved privately, but email notification is not sent. Contact and prayer submissions are delivered to the church address configured in `lib/siteData.ts`.
+### Key Libraries
 
-### Supabase schema
+| Library | Role |
+|---|---|
+| `@supabase/supabase-js`, `@supabase/ssr` | Data layer (newsletter, contact/prayer requests, AI transcripts, usage quotas) |
+| `framer-motion` | Page transitions and animations |
+| `gsap` | Homepage hero animation |
+| `lucide-react` | Iconography |
+| `@next/third-parties` | Safe third-party script loading |
+| `@react-three/fiber`, `three` | 3D visual elements |
+| `clsx` + `tailwind-merge` | Conditional class composition |
 
-A ready-made schema, including the daily chat quota table and admission RPC, is
-available at `supabase/schema.sql`. For an existing Supabase project, apply
-the migration listed above instead of recreating the base schema.
+### Security & Testing
 
-Example Supabase table columns:
+| Tool | Role |
+|---|---|
+| Node `crypto` (HMAC-SHA256, `timingSafeEqual`) | Admin session signing & verification |
+| Playwright | E2E smoke + theme/link/SEO tests |
+| ESLint + TypeScript | Lint and type enforcement |
+| OWASP Top 10 alignment | Security review methodology |
 
-- `newsletter`
-  - `id` (int, identity)
-  - `email` (text)
-  - `created_at` (timestamp)
+### Infrastructure
 
-- `contacts`
-  - `id` (int, identity)
-  - `name` (text)
-  - `email` (text)
-  - `message` (text)
-  - `created_at` (timestamp)
+- **Edge/CDN:** Vercel (security headers at the edge)
+- **Backend:** FastAPI (AI chat), Cloudflare Worker (edge functions)
+- **Domain:** `https://glorious-restoration-embassy.vercel.app`
 
-## Build and production
+
+---
+
+## 💻 Simulated User Flow
+
+Below is a text-based, terminal-style walkthrough of a visitor interacting with the system. It demonstrates the public surface, a protected chat interaction, a contact submission, and an administrative session — without showing real credentials or source code.
 
 ```bash
-npm run build
-npm start
+$ curl -I https://glorious-restoration-embassy.vercel.app/
+HTTP/2 200
+content-type: text/html; charset=utf-8
+x-frame-options: DENY
+x-content-type-options: nosniff
+referrer-policy: strict-origin-when-cross-origin
+permissions-policy: camera=(), microphone=(), geolocation=()
+cache-control: public, max-age=0, must-revalidate
+
+[Browser renders homepage: "Welcome Home" — service times, ministries, livestream]
+Theme: light → user toggles to dark → <html class="dark"> applied via next-themes
+
+$ User navigates to /chat
+[Client component: "AI assistant — you must be signed in"]
+→ Redirects to /login → authenticates → returns with session cookie
+
+$ POST /api/chat
+  { "query": "What are Sunday service times?", "history": [] }
+  Authorization: Bearer <hmac-signed-session-token>
+
+[Gate 1: Authentication verified — 200 OK]
+[Gate 2: Quota admission — used 3/10, remaining 7, reset Africa/Nairobi midnight]
+[Gate 3: Input validation — length < 4000 chars ✓]
+→ Forwarded to FastAPI backend (20 s timeout)
+← { "message": "Sunday Divine Restoration is at 9:00 AM...", "sources": [...] }
+[Conversation persisted to Supabase: ai_conversations (user_question, bot_response)]
+[Response returns quota metadata: quotaUsed=3, quotaLimit=10, remainingCalls=7]
+
+$ User navigates to /contact
+[Client form: name, email, message type (enquiry/prayer), privacy consent checkbox]
+→ User submits; client validates required fields + consent ✓
+
+$ POST /api/contact
+  { "name": "...", "email": "...", "message": "...", "requestType": "prayer", "privacyConsent": true }
+← 200 OK — saved privately (is_private=true)
+← WhatsApp fallback link rendered: wa.me/254721356430?text=...
+[Analytics tracks CHURCH_EVENTS.PRAYER_REQUEST_SUBMIT {type: "prayer"} — PII never sent]
+
+$ Admin navigates to /admin/login
+[Gate: public route, no session]
+→ Enters credentials → server verifies against env-resolved secret
+← Set-Cookie: admin_session=<base64url.payload>.<hmac-sha256.signature>
+→ Redirects to /admin (gated surface: CMS, media management)
+
+$ Subsequent request to /admin/cms
+[Gate: verifyAdminSessionToken — timingSafeEqual comparison, TTL check]
+← 200 OK — role = "admin" (least privilege; cannot escalate to super_admin)
+
+$ Logout / session expiry (24h)
+[Token expiresAt in payload → verifyAdminSessionToken returns null → 401 on /admin]
 ```
 
-## Notes
 
-- This project is designed to be CMS-ready and extendable.
-- Use Supabase for backend data and replace placeholder AI features with real services later.
+---
+
+<div align="center">
+
+<p align="center">
+  <a href="https://github.com/Charles-234" target="_blank"><img src="https://img.shields.io/badge/📬_Contact_Me-009688?style=for-the-badge&logo=github&logoColor=white" alt="Contact"/></a>
+  <a href="https://glorious-restoration-embassy.vercel.app" target="_blank"><img src="https://img.shields.io/badge/🚀_Live_Demo-009688?style=for-the-badge&logo=vercel&logoColor=white" alt="Live Demo"/></a>
+</p>
+
+<br/>
+
+<p align="center">
+  <b>Made with ❤️ by Charles-234</b> • Infrastructure Technician & Field Operations<br/>
+  <i>Public documentation mirror — source code kept private for IP & cybersecurity reasons.</i>
+</p>
+
+</div>
+
