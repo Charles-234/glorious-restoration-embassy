@@ -59,7 +59,12 @@ export function Navbar() {
         <div className="gre-wrap gre-announcement-inner">
           <p className="gre-service-note">
             <span aria-hidden="true">◷</span>
-            Sunday Services: {siteConfig.serviceTimes[0].time} {siteConfig.serviceTimes[0].label} · {siteConfig.serviceTimes[1].time} {siteConfig.serviceTimes[1].label}
+            Weekly Services: {siteConfig.serviceTimes.map((service, index) => (
+              <span key={service.day}>
+                {index > 0 ? " · " : ""}
+                {service.day} {service.time} {service.label}
+              </span>
+            ))}
           </p>
           <div className="gre-announcement-links">
             <Link href="/give" className="gre-paybill-top">

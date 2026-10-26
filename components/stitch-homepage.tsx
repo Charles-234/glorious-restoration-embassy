@@ -8,6 +8,7 @@ import { LocalMediaGallery } from "@/components/local-media-gallery";
 import { MpesaLogo } from "@/components/mpesa-logo";
 import PastorPortraitCarousel from "@/components/pastor-portrait-carousel";
 import { AIChatbot } from "@/components/ai-chatbot";
+import { LiquidGlassHeroActions } from "@/components/liquid-glass-hero-actions";
 import type { HeroContent } from "@/lib/content";
 import type { GalleryMediaItem } from "@/lib/local-gallery";
 import { branches, siteConfig } from "@/lib/siteData";
@@ -185,18 +186,20 @@ export function StitchHomepage({
               <p className="gre-eyebrow">Welcome to Glorious Restoration Embassy</p>
               <h1 id="home-title">{heroContent.title}</h1>
               <p className="gre-hero-lead">{heroContent.subtitle}</p>
-              <div className="gre-hero-actions">
-                <button
-                  type="button"
-                  className="gre-button gre-button-primary"
-                  onClick={() => liveDialog.current?.showModal()}
-                >
-                  <Play size={17} fill="currentColor" />                   {heroContent.ctaPrimary}
-                </button>
-                <Link href="/contact#visit-planner" className="gre-button gre-button-outline">
-                  <CalendarDays size={17} /> {heroContent.ctaSecondary}
-                </Link>
-              </div>
+              <LiquidGlassHeroActions>
+                <div className="gre-hero-actions">
+                  <button
+                    type="button"
+                    className="gre-button gre-button-primary"
+                    onClick={() => liveDialog.current?.showModal()}
+                  >
+                    <Play size={17} fill="currentColor" /> {heroContent.ctaPrimary}
+                  </button>
+                  <Link href="/contact#visit-planner" className="gre-button gre-button-outline">
+                    <CalendarDays size={17} /> {heroContent.ctaSecondary}
+                  </Link>
+                </div>
+              </LiquidGlassHeroActions>
               <Link href="/sermons" className="gre-text-link">
                 Watch Channel Sermons <ArrowRight size={17} />
               </Link>

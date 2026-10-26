@@ -64,7 +64,7 @@ export default function ContactPage() {
             </ul>
           </Card>
 
-          <Card className="space-y-5">
+          <Card id="visit-planner" className="space-y-5">
             <h2 className="text-2xl font-semibold text-foreground">Visit a branch</h2>
             <ul className="space-y-4">
               {branches.map((branch) => (

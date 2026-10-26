@@ -2,7 +2,7 @@
 
 import { Suspense, useEffect, useState } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
-import { GoogleAnalytics } from "@next/third-parties/google";
+import Script from "next/script";
 import type { ConsentValue } from "@/components/cookie-consent";
 
 const GA_ID = "G-KHTD567MYY";
@@ -55,7 +55,21 @@ function AnalyticsLoaderInner() {
 
     // GA4 only mounts after explicit consent — this is the Kenya DPA gate.
   if (consent !== "accepted") return null;
-  return <GoogleAnalytics gaId={GA_ID} />;
+  return (
+    <>
+      <Script id="gre-ga-init" strategy="afterInteractive">
+        {`window.dataLayer = window.dataLayer || [];
+          function gtag(){window.dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', '${GA_ID}', { send_page_view: false });`}
+      </Script>
+      <Script
+        id="gre-ga"
+        src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
+        strategy="afterInteractive"
+      />
+    </>
+  );
 }
 
 // Wrapper so `useSearchParams` has the Suspense boundary Next.js requires

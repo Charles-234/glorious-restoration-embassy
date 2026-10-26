@@ -81,6 +81,44 @@ test.describe('internal links', () => {
   });
 });
 
+test.describe('homepage and analytics', () => {
+  test('homepage visit link opens the contact visit planner', async ({ page }) => {
+    await page.goto('/');
+
+    const visitLink = page.locator('a[href="/contact#visit-planner"]');
+    await expect(visitLink).toBeVisible();
+    await visitLink.click();
+
+    await expect(page).toHaveURL(/\/contact#visit-planner$/);
+    await expect(page.locator('#visit-planner')).toBeVisible();
+  });
+
+  test('analytics waits for consent and disables automatic page views', async ({ page }) => {
+    await page.addInitScript(() => window.localStorage.clear());
+    await page.goto('/');
+
+    await expect(page.getByRole('dialog', { name: 'Cookie consent' })).toBeVisible();
+    const analyticsScript = page.locator('script[src*="googletagmanager.com/gtag/js"]');
+    await expect(analyticsScript).toHaveCount(0);
+
+    await page.getByRole('button', { name: 'Accept analytics' }).click();
+    await expect(analyticsScript).toHaveCount(1);
+
+    await expect.poll(() => page.evaluate(() => {
+      const dataLayer = (window as Window & { dataLayer?: IArguments[] }).dataLayer ?? [];
+      return dataLayer.some((event) =>
+        event[0] === 'config' &&
+        (event[2] as { send_page_view?: boolean } | undefined)?.send_page_view === false
+      );
+    })).toBe(true);
+
+    await expect.poll(() => page.evaluate(() => {
+      const dataLayer = (window as Window & { dataLayer?: IArguments[] }).dataLayer ?? [];
+      return dataLayer.some((event) => event[0] === 'event' && event[1] === 'page_view');
+    })).toBe(true);
+  });
+});
+
 test.describe('SEO plumbing', () => {
   test('sitemap.xml is valid and lists the public routes', async ({ request }) => {
     const response = await request.get('/sitemap.xml');
