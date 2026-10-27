@@ -1,4 +1,17 @@
 ﻿/** Next.js minimal config */
+const contentSecurityPolicy = [
+  "default-src 'self';",
+  "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com;",
+  "style-src 'self' 'unsafe-inline';",
+  "img-src 'self' data: https:;",
+  "font-src 'self' data:;",
+  "connect-src 'self' https://www.google-analytics.com https://*.supabase.co;",
+  "media-src 'self' https://*.supabase.co;",
+  "frame-ancestors 'none';",
+  "base-uri 'self';",
+  "form-action 'self';",
+].join(" ");
+
 export default {
   allowedDevOrigins: ["127.0.0.1", "localhost", "10.0.11.176"],
   reactStrictMode: true,
@@ -18,6 +31,7 @@ export default {
           { key: "X-Content-Type-Options", value: "nosniff" },
           { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
           { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
+          { key: "Content-Security-Policy", value: contentSecurityPolicy },
         ],
       },
       {
