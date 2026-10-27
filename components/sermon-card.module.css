@@ -1,0 +1,9 @@
+.baseImage {
+  filter: grayscale(1);
+}
+
+@media (hover: none) {
+  .baseImage {
+    filter: none;
+  }
+}
