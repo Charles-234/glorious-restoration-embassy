@@ -28,7 +28,7 @@ type FeedConfig = {
   revalidateSeconds?: number;
   timeoutMs?: number;
   summaryLength?: number;
-  requireSummary?: boolean;
+  fallbackSummary?: string;
   allowHttpLinks?: boolean;
 };
 
@@ -129,7 +129,7 @@ const CBN_FEEDS = [
     revalidateSeconds: 1800,
     timeoutMs: 8000,
     summaryLength: 200,
-    requireSummary: true,
+    fallbackSummary: "CBN has not supplied a summary for this story. Read the original report for details.",
     allowHttpLinks: true,
   },
   {
@@ -141,7 +141,7 @@ const CBN_FEEDS = [
     revalidateSeconds: 1800,
     timeoutMs: 8000,
     summaryLength: 200,
-    requireSummary: true,
+    fallbackSummary: "CBN has not supplied a summary for this story. Read the original report for details.",
     allowHttpLinks: true,
   },
 ] as const satisfies readonly FeedConfig[];
@@ -373,8 +373,7 @@ async function fetchFeed(
               ? item["content:encoded"]
               : "";
 
-      const summary = plainTextSummary(descRaw, feed.summaryLength);
-      if (feed.requireSummary && !summary) return [];
+      const summary = plainTextSummary(descRaw, feed.summaryLength) || feed.fallbackSummary || "";
 
       return [{
         id: articleUrl,
