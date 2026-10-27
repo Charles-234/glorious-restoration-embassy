@@ -19,6 +19,19 @@ const dailyScriptures = [
   { book: "ROM", chapter: 8, verse: 28, reference: "Romans 8:28" },
   { book: "JHN", chapter: 14, verse: 6, reference: "John 14:6" },
 ] as const;
+type FeedConfig = {
+  name: string;
+  url: string;
+  publisherUrl: string;
+  articleHosts: readonly string[];
+  categories: readonly FaithNewsCategory[];
+  revalidateSeconds?: number;
+  timeoutMs?: number;
+  summaryLength?: number;
+  requireSummary?: boolean;
+  allowHttpLinks?: boolean;
+};
+
 const FEEDS = [
   {
     name: "Faithwire",
@@ -104,7 +117,34 @@ const FEEDS = [
     articleHosts: ["gatewaynews.co.za"],
     categories: ["Africa"] as FaithNewsCategory[],
   },
-] as const;
+] as const satisfies readonly FeedConfig[];
+
+const CBN_FEEDS = [
+  {
+    name: "CBN",
+    url: "https://www1.cbn.com/rss-cbn-articles-cbnnews.xml",
+    publisherUrl: "https://www1.cbn.com/cbnnews",
+    articleHosts: ["cbn.com"],
+    categories: ["Faith"] as const,
+    revalidateSeconds: 1800,
+    timeoutMs: 8000,
+    summaryLength: 200,
+    requireSummary: true,
+    allowHttpLinks: true,
+  },
+  {
+    name: "CBN",
+    url: "https://www1.cbn.com/cbnnews/world/feed",
+    publisherUrl: "https://www1.cbn.com/cbnnews",
+    articleHosts: ["cbn.com"],
+    categories: ["Faith"] as const,
+    revalidateSeconds: 1800,
+    timeoutMs: 8000,
+    summaryLength: 200,
+    requireSummary: true,
+    allowHttpLinks: true,
+  },
+] as const satisfies readonly FeedConfig[];
 
 type JsonRecord = Record<string, unknown>;
 type SourceResult<T> =
@@ -126,13 +166,44 @@ function validHttpsUrl(value: unknown): string | null {
   }
 }
 
-function plainTextSummary(value: unknown): string {
+function plainTextSummary(value: unknown, maxLength = 140): string {
   if (typeof value !== "string") return "";
-  return value.replace(/<[^>]*>/g, "").replace(/\s+/g, " ").trim().slice(0, 140);
+  return value
+    .replace(/<[^>]*>/g, "")
+    .replace(/&amp;/gi, "&")
+    .replace(/&quot;|&#34;/gi, '"')
+    .replace(/&apos;|&#39;|&#039;/gi, "'")
+    .replace(/&nbsp;|&#160;/gi, " ")
+    .replace(/&lt;/gi, "<")
+    .replace(/&gt;/gi, ">")
+    .replace(/&#x([0-9a-f]+);/gi, (_, code: string) =>
+      String.fromCodePoint(Number.parseInt(code, 16)),
+    )
+    .replace(/&#([0-9]+);/g, (_, code: string) =>
+      String.fromCodePoint(Number.parseInt(code, 10)),
+    )
+    .replace(/\s+/g, " ")
+    .trim()
+    .slice(0, maxLength);
 }
 
-function validPublisherArticleUrl(value: unknown, allowedHosts: readonly string[]): string | null {
-  const articleUrl = validHttpsUrl(value);
+function validPublisherArticleUrl(
+  value: unknown,
+  allowedHosts: readonly string[],
+  allowHttp = false,
+): string | null {
+  let articleUrl = validHttpsUrl(value);
+  if (!articleUrl && allowHttp && typeof value === "string") {
+    try {
+      const url = new URL(value);
+      if (url.protocol === "http:") {
+        url.protocol = "https:";
+        articleUrl = url.toString();
+      }
+    } catch {
+      return null;
+    }
+  }
   if (!articleUrl) return null;
   const articleHost = new URL(articleUrl).hostname.toLowerCase().replace(/^www\./, "");
   return allowedHosts.some((host) => {
@@ -222,95 +293,105 @@ function parseNewsApi(data: unknown): FaithNewsArticle[] {
 }
 
 async function fetchFeed(
-  feed: (typeof FEEDS)[number],
+  feed: FeedConfig,
   thumbnailsEnabled: boolean,
 ): Promise<FaithNewsArticle[]> {
-  const response = await fetch(feed.url, {
-    headers: {
-      "User-Agent": "Mozilla/5.0 (compatible; GloriousRestorationEmbassy/1.0)",
-      "Accept": "application/rss+xml, application/xml, text/xml, */*",
-    },
-    next: { revalidate: 3600 },
-    signal: AbortSignal.timeout(12_000),
-  });
-  if (!response.ok) {
-    throw new Error(`Feed ${feed.name} returned HTTP ${response.status}.`);
-  }
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), feed.timeoutMs ?? 12_000);
 
-  const xml = await response.text();
-  const parser = new XMLParser({
-    ignoreAttributes: false,
-    attributeNamePrefix: "@_",
-  });
-  const parsed = parser.parse(xml);
+  try {
+    const response = await fetch(feed.url, {
+      headers: {
+        "User-Agent": feed.name === "CBN"
+          ? "GloryEmbassyNewsBot/1.0 (+https://glory-embassy-of-grace.vercel.app)"
+          : "Mozilla/5.0 (compatible; GloriousRestorationEmbassy/1.0)",
+        "Accept": "application/rss+xml, application/xml, text/xml, */*",
+      },
+      next: { revalidate: feed.revalidateSeconds ?? 3600 },
+      signal: controller.signal,
+    });
+    if (!response.ok) {
+      throw new Error(`Feed ${feed.name} returned HTTP ${response.status}.`);
+    }
 
-  const channel = parsed?.rss?.channel || parsed?.feed;
-  if (!channel) throw new Error(`Feed ${feed.name} has no channel.`);
+    const xml = await response.text();
+    const parser = new XMLParser({
+      ignoreAttributes: false,
+      attributeNamePrefix: "@_",
+    });
+    const parsed = parser.parse(xml);
 
-  let rawItems = channel.item || channel.entry || [];
-  if (!Array.isArray(rawItems)) rawItems = [rawItems];
+    const channel = parsed?.rss?.channel || parsed?.feed;
+    if (!channel) throw new Error(`Feed ${feed.name} has no channel.`);
 
-  return rawItems.slice(0, 10).flatMap((item: Record<string, unknown>) => {
-    const title =
-      typeof item.title === "string"
-        ? item.title
-        : typeof item.title === "object" && item.title !== null && "#text" in item.title
-          ? String((item.title as Record<string, unknown>)["#text"])
-          : "";
+    let rawItems = channel.item || channel.entry || [];
+    if (!Array.isArray(rawItems)) rawItems = [rawItems];
 
-    if (!title.trim()) return [];
-
-    const linkRaw =
-      typeof item.link === "string"
-        ? item.link
-        : Array.isArray(item.link)
-          ? String((item.link[0] as Record<string, unknown>)?.["@_href"] || (item.link[0] as string) || "")
-          : typeof item.link === "object" && item.link !== null && "@_href" in item.link
-            ? String((item.link as Record<string, unknown>)["@_href"])
-            : typeof item.guid === "string"
-              ? item.guid
-              : "";
-
-    const articleUrl = validPublisherArticleUrl(linkRaw, feed.articleHosts);
-    if (!articleUrl) return [];
-
-    const pubDate = typeof item.pubDate === "string"
-      ? item.pubDate
-      : typeof item.published === "string"
-        ? item.published
-        : typeof item.updated === "string"
-          ? item.updated
-          : "";
-
-    const publishedAt =
-      pubDate && Number.isFinite(Date.parse(pubDate))
-        ? new Date(pubDate).toISOString()
-        : null;
-
-    const descRaw =
-      typeof item.description === "string"
-        ? item.description
-        : typeof item.summary === "string"
-          ? item.summary
-          : typeof item["content:encoded"] === "string"
-            ? item["content:encoded"]
+    return rawItems.slice(0, 10).flatMap((item: Record<string, unknown>) => {
+      const title =
+        typeof item.title === "string"
+          ? item.title
+          : typeof item.title === "object" && item.title !== null && "#text" in item.title
+            ? String((item.title as Record<string, unknown>)["#text"])
             : "";
 
-    const summary = plainTextSummary(descRaw);
+      if (!title.trim()) return [];
 
-    return [{
-      id: articleUrl,
-      title: plainTextSummary(title),
-      url: articleUrl,
-      source: feed.name,
-      ...("publisherUrl" in feed ? { sourceAttributionUrl: feed.publisherUrl } : {}),
-      author: null,
-      publishedAt,
-      summary,
-      imageUrl: null,
-      categories: categoriesFor(`${title} ${summary}`, feed.categories),
-    }];
-  });
+      const linkRaw =
+        typeof item.link === "string"
+          ? item.link
+          : Array.isArray(item.link)
+            ? String((item.link[0] as Record<string, unknown>)?.["@_href"] || (item.link[0] as string) || "")
+            : typeof item.link === "object" && item.link !== null && "@_href" in item.link
+              ? String((item.link as Record<string, unknown>)["@_href"])
+              : typeof item.guid === "string"
+                ? item.guid
+                : "";
+
+      const articleUrl = validPublisherArticleUrl(linkRaw, feed.articleHosts, feed.allowHttpLinks);
+      if (!articleUrl) return [];
+
+      const pubDate = typeof item.pubDate === "string"
+        ? item.pubDate
+        : typeof item.published === "string"
+          ? item.published
+          : typeof item.updated === "string"
+            ? item.updated
+            : "";
+
+      const publishedAt =
+        pubDate && Number.isFinite(Date.parse(pubDate))
+          ? new Date(pubDate).toISOString()
+          : null;
+
+      const descRaw =
+        typeof item.description === "string"
+          ? item.description
+          : typeof item.summary === "string"
+            ? item.summary
+            : typeof item["content:encoded"] === "string"
+              ? item["content:encoded"]
+              : "";
+
+      const summary = plainTextSummary(descRaw, feed.summaryLength);
+      if (feed.requireSummary && !summary) return [];
+
+      return [{
+        id: articleUrl,
+        title: plainTextSummary(title),
+        url: articleUrl,
+        source: feed.name,
+        ...(feed.publisherUrl ? { sourceAttributionUrl: feed.publisherUrl } : {}),
+        author: null,
+        publishedAt,
+        summary,
+        imageUrl: null,
+        categories: categoriesFor(`${title} ${summary}`, feed.categories),
+      }];
+    });
+  } finally {
+    clearTimeout(timeout);
+  }
 }
 
 function getDailyScriptureSelection(now = new Date()) {
@@ -409,15 +490,24 @@ export async function GET() {
   };
 
   try {
-    const [news, scripture, ...feeds] = await Promise.all([
+    const [news, scripture, ...sources] = await Promise.all([
       readSource("News API", newsApiRequest),
       readSource("Bible API", fetchDailyScripture),
       ...FEEDS.map((feed) => readSource(feed.name, () => fetchFeed(feed, thumbnailsEnabled))),
+      ...CBN_FEEDS.map((feed, index) =>
+        readSource(`CBN feed ${index + 1}`, () => fetchFeed(feed, thumbnailsEnabled)),
+      ),
     ]);
 
+    const feeds = sources.slice(0, FEEDS.length);
+    const cbnFeeds = sources.slice(FEEDS.length);
+    const cbnArticles = sortAndDeduplicate(
+      cbnFeeds.flatMap((feed) => feed.value ?? []),
+    ).slice(0, 5);
     const articles = sortAndDeduplicate([
       ...(news.value ?? []),
       ...feeds.flatMap((feed) => feed.value ?? []),
+      ...cbnArticles,
     ]);
     const data: FaithDashboardData = {
       articles,

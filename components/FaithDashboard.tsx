@@ -181,7 +181,9 @@ export function FaithDashboard() {
                   <h3 className={styles.articleTitle}>{article.title}</h3>
                   {article.summary && <p className={styles.articleSummary}>{article.summary}</p>}
                   <span className={styles.articleLink}>
-                    Read at source <ArrowUpRight size={15} aria-hidden="true" />
+                    {article.source === "CBN"
+                      ? "Read Full Story on CBN →"
+                      : <>Read at source <ArrowUpRight size={15} aria-hidden="true" /></>}
                   </span>
                 </a>
               </article>

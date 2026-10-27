@@ -1,5 +1,4 @@
 import { FaithDashboard } from "@/components/FaithDashboard";
-import { CbnNews } from "./cbn-news";
 
 export const metadata = {
   title: "News & Daily Scripture",
@@ -10,7 +9,6 @@ export default function NewsPage() {
   return (
     <main>
       <FaithDashboard />
-      <CbnNews />
     </main>
   );
 }
