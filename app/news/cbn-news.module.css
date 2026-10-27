@@ -1,0 +1,118 @@
+.section {
+  padding: 0 1rem clamp(3.75rem, 7vw, 6.5rem);
+  color: hsl(var(--foreground));
+  background: hsl(var(--background));
+}
+
+.container {
+  width: min(100%, 1240px);
+  margin-inline: auto;
+}
+
+.header {
+  margin-bottom: 1.25rem;
+}
+
+.eyebrow {
+  margin: 0 0 0.4rem;
+  color: hsl(var(--accent));
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.title {
+  margin: 0;
+  color: hsl(var(--foreground));
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(1.75rem, 3vw, 2.4rem);
+  font-weight: 500;
+  letter-spacing: -0.035em;
+  line-height: 1.2;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1rem;
+}
+
+.article {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  padding: clamp(1rem, 3vw, 1.4rem);
+  border: 1px solid hsl(var(--border));
+  border-radius: 1rem;
+  background:
+    linear-gradient(135deg, hsl(var(--primary) / 0.055), transparent 58%),
+    hsl(var(--card) / 0.88);
+  box-shadow: 0 0.65rem 1.8rem hsl(var(--primary) / 0.055);
+  backdrop-filter: blur(12px);
+}
+
+.headline {
+  margin: 0;
+  color: hsl(var(--card-foreground));
+  font-family: var(--font-display), Georgia, serif;
+  font-size: 1.15rem;
+  font-weight: 650;
+  line-height: 1.45;
+}
+
+.description {
+  margin: 0.65rem 0 0;
+  color: hsl(var(--muted-foreground));
+  font-size: 0.88rem;
+  line-height: 1.65;
+}
+
+.date {
+  margin-top: 0.65rem;
+  color: hsl(var(--muted-foreground));
+  font-size: 0.75rem;
+}
+
+.storyLink,
+.allNews a,
+.fallback a {
+  color: hsl(var(--primary));
+  font-size: 0.84rem;
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-color: hsl(var(--accent) / 0.65);
+  text-underline-offset: 0.24em;
+}
+
+.storyLink {
+  width: fit-content;
+  min-height: 2.75rem;
+  margin-top: auto;
+  padding-top: 0.85rem;
+}
+
+.allNews {
+  margin: 1.25rem 0 0;
+  text-align: right;
+}
+
+.fallback {
+  margin: 1rem 0 0;
+  padding: 1rem 1.15rem;
+  border: 1px solid hsl(var(--border));
+  border-radius: 1rem;
+  color: hsl(var(--muted-foreground));
+  background: hsl(var(--card) / 0.88);
+  line-height: 1.7;
+}
+
+.fallback a {
+  white-space: nowrap;
+}
+
+@media (min-width: 700px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
