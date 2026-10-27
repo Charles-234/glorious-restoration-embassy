@@ -59,6 +59,13 @@ allowed_origins = [
 
 app = FastAPI(title="Glorious Restoration Embassy API", lifespan=lifespan)
 
+
+@app.get("/")
+@app.head("/")
+async def health_check() -> dict[str, str]:
+    return {"status": "ok"}
+
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=allowed_origins,

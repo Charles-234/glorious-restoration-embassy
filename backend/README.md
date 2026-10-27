@@ -1,9 +1,10 @@
 # Glorious Restoration Embassy API
 
 FastAPI service for the church's document-backed research assistant. It exposes
-`GET /health`, `POST /api/chat`, and `POST /api/ingest`. At startup, it reads
-PDFs recursively from `content/documents/` in `GITHUB_REPO` and rebuilds the
-vector index using `BAAI/bge-small-en-v1.5`.
+`GET /` and `HEAD /` health checks, `GET /health`, `POST /api/chat`, and
+`POST /api/ingest`. At startup, it reads PDFs recursively from
+`content/documents/` in `GITHUB_REPO` and rebuilds the vector index using
+`BAAI/bge-small-en-v1.5`.
 
 The daily limit of 10 admitted chat request attempts is enforced by the
 authenticated website's Next.js `POST /api/chat` route using Supabase and the
@@ -54,6 +55,12 @@ Verify it at <http://127.0.0.1:8000/health>; the response is
 make a provider request or verify that configured provider credentials are
 valid. Test an actual chat request separately when you are ready to use the
 configured provider.
+
+## Deploy to Render
+
+The repository's `render.yaml` configures the backend service, binds Uvicorn to
+Render's `$PORT`, and uses `/` for the health check. Create a Blueprint from
+this repository in Render to apply that configuration.
 
 ## Index PDF sources
 
