@@ -45,13 +45,24 @@ export const metadata: Metadata = {
   alternates: {
     canonical: './',
   },
-  keywords: ["church", "Glorious Restoration Embassy", "Kenya", "worship", "Christian", "ministry", "spiritual growth", "sermons", "events"],
+  keywords: [
+    "church",
+    "Glory Embassy of Grace Church",
+    "Glory Embassy",
+    "Kenya",
+    "worship",
+    "Christian",
+    "ministry",
+    "spiritual growth",
+    "sermons",
+    "events",
+  ],
   authors: [{ name: siteConfig.brandName }],
   openGraph: {
     type: "website",
     locale: "en_US",
     url: siteConfig.url,
-    siteName: siteConfig.brandName,
+    siteName: siteConfig.name,
     title: siteConfig.brandName,
     description: siteConfig.tagline,
     images: [

@@ -227,7 +227,7 @@ Disallows indexing of administrative and internal surfaces: `/admin/`, `/api/`, 
 
 - **Edge/CDN:** Vercel (security headers at the edge)
 - **Backend:** FastAPI (AI chat), Cloudflare Worker (edge functions)
-- **Domain:** `https://glorious-restoration-embassy.vercel.app`
+- **Domain:** `https://glory-embassy-of-grace.vercel.app`
 
 
 ---
@@ -237,7 +237,7 @@ Disallows indexing of administrative and internal surfaces: `/admin/`, `/api/`, 
 Below is a text-based, terminal-style walkthrough of a visitor interacting with the system. It demonstrates the public surface, a protected chat interaction, a contact submission, and an administrative session — without showing real credentials or source code.
 
 ```bash
-$ curl -I https://glorious-restoration-embassy.vercel.app/
+$ curl -I https://glory-embassy-of-grace.vercel.app/
 HTTP/2 200
 content-type: text/html; charset=utf-8
 x-frame-options: DENY
@@ -296,7 +296,7 @@ $ Logout / session expiry (24h)
 
 <p align="center">
   <a href="https://github.com/Charles-234" target="_blank"><img src="https://img.shields.io/badge/📬_Contact_Me-009688?style=for-the-badge&logo=github&logoColor=white" alt="Contact"/></a>
-  <a href="https://glorious-restoration-embassy.vercel.app" target="_blank"><img src="https://img.shields.io/badge/🚀_Live_Demo-009688?style=for-the-badge&logo=vercel&logoColor=white" alt="Live Demo"/></a>
+  <a href="https://glory-embassy-of-grace.vercel.app" target="_blank"><img src="https://img.shields.io/badge/🚀_Live_Demo-009688?style=for-the-badge&logo=vercel&logoColor=white" alt="Live Demo"/></a>
 </p>
 
 <br/>
@@ -307,4 +307,3 @@ $ Logout / session expiry (24h)
 </p>
 
 </div>
-

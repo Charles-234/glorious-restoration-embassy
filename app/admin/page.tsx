@@ -1,5 +1,5 @@
-import Link from "next/link";
-import { redirect } from "next/navigation";
+import Link from "next/link.js";
+import { redirect } from "next/navigation.js";
 import { createClient } from "@/utils/supabase/server";
 
 const dashboardSections = [
@@ -66,7 +66,7 @@ export default async function AdminPage() {
         <div className="space-y-3">
           <p className="text-xs font-semibold uppercase tracking-[0.28em] text-accent">Administration</p>
           <h1 className="font-display text-3xl font-semibold text-foreground sm:text-4xl">
-            Glorious Restoration Embassy — Admin
+            Glory Embassy of Grace Church — Admin
           </h1>
           <p className="text-sm text-muted-foreground">
             Signed in as <span className="font-semibold text-foreground">{user.email ?? admin.email}</span>

@@ -11,7 +11,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "About Us",
   description:
-    "Learn about the mission, vision, and spiritual heartbeat of Glorious Restoration Embassy."
+    "Learn about the mission, vision, and spiritual heartbeat of Glory Embassy of Grace Church."
 };
 
 export default function AboutLayout({ children }: { children: React.ReactNode }) {

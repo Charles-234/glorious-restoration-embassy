@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Image from "next/image";
-import Link from "next/link";
+import Image from "next/image.js";
+import Link from "next/link.js";
 import { GalleryBackground } from "@/components/gallery-background";
 import { LocalMediaGallery } from "@/components/local-media-gallery";
 import { MpesaLogo } from "@/components/mpesa-logo";
@@ -182,7 +182,7 @@ export function StitchHomepage({
         <section id="heroSection" className="gre-hero" aria-labelledby="home-title">
           <div className="gre-wrap gre-hero-grid">
             <div className="gre-hero-copy">
-              <p className="gre-eyebrow">Welcome to Glorious Restoration Embassy</p>
+              <p className="gre-eyebrow">Welcome to Glory Embassy of Grace Church</p>
               <h1 id="home-title">{heroContent.title}</h1>
               <p className="gre-hero-lead">{heroContent.subtitle}</p>
               <LiquidGlassHeroActions>
@@ -242,7 +242,7 @@ export function StitchHomepage({
               </a>
             </div>
           </div>
-          <span className="gre-hero-watermark" aria-hidden="true">GRE</span>
+          <span className="gre-hero-watermark" aria-hidden="true">GEGC</span>
         </section>
 
         <section className="gre-live gre-section">
@@ -314,7 +314,7 @@ export function StitchHomepage({
                 <span className="gre-channel-mark"><YouTubeMark size={28} /></span>
                 <span className="gre-channel-badge"><i /> OFFICIAL YOUTUBE CHANNEL</span>
               </div>
-              <h3>Glorious Restoration Embassy Official Channel</h3>
+              <h3>Glory Embassy of Grace Church Official Channel</h3>
               <p>Live &amp; Recorded Preachings will sync here</p>
               <a href="https://www.youtube.com/@stephenkariuki7444" target="_blank" rel="noopener noreferrer">
                 <YouTubeMark size={18} /> Subscribe on YouTube <ArrowRight size={17} />
@@ -414,7 +414,7 @@ export function StitchHomepage({
               <SectionIntro
                 eyebrow="Global Footprint"
                 title="Headquarters"
-                description="Visit Glorious Restoration Embassy in Joska, Machakos County."
+                description="Visit Glory Embassy of Grace Church in Joska, Machakos County."
               />
               <Link href="/branches" className="gre-text-link">View location <ArrowRight size={17} /></Link>
             </div>
@@ -447,7 +447,7 @@ export function StitchHomepage({
             <SectionIntro
               eyebrow="Media Center"
               title="Gallery & Video Media Highlights"
-              description="Photos and videos from Glorious Restoration Embassy."
+              description="Photos and videos from Glory Embassy of Grace Church."
             />
             <LocalMediaGallery items={mediaItems} limitPerKind={6} />
             <Link href="/gallery" className="gre-gallery-all-link">View all media <ArrowRight size={17} /></Link>
@@ -474,7 +474,7 @@ export function StitchHomepage({
           <button className="gre-dialog-close" type="button" onClick={() => liveDialog.current?.close()} aria-label="Close live stream">
             <X size={21} />
           </button>
-          <span className="gre-live-label"><i /> Glorious Restoration Embassy • Live Stream</span>
+          <span className="gre-live-label"><i /> Glory Embassy of Grace Church • Live Stream</span>
           <span className="gre-dialog-icon"><Radio size={29} /></span>
           <p className="gre-eyebrow">Live Sanctuary Broadcast Feed</p>
           <h2 id="live-dialog-title">Live Sanctuary Broadcast Feed</h2>

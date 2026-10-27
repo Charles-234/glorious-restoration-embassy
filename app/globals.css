@@ -2,7 +2,7 @@
 @config "../tailwind.config.ts";
 
 /* ==========================================================================
-   Glorious Restoration Embassy — design tokens
+   Glory Embassy of Grace Church — design tokens
    Warm alabaster, deep navy, terracotta and olive sage.
    Every component reads from these variables, so both themes stay legible.
    ========================================================================== */
@@ -223,7 +223,7 @@
   }
 
   /* --------------------------------------------------------------------------
-     Glorious Restoration Embassy — faithful home page treatment
+     Glory Embassy of Grace Church — faithful home page treatment
      Mobile-first styles for the Stitch homepage; the source export's fixed
      1280px canvas is deliberately not carried into the live application.
      -------------------------------------------------------------------------- */
@@ -540,9 +540,34 @@
   }
 
   .gre-hero-actions {
+    position: relative;
+    z-index: 1;
     display: flex;
     flex-wrap: wrap;
     gap: 12px;
+  }
+
+  .gre-hero-actions-shell {
+    position: relative;
+    display: flex;
+    width: fit-content;
+    max-width: 100%;
+    flex-wrap: wrap;
+    gap: 12px;
+    isolation: isolate;
+  }
+
+  .liquid-glass-hero-surface {
+    position: absolute;
+    inset: -12px -18px;
+    z-index: 0;
+    pointer-events: none;
+    border-radius: 28px;
+    border: 1px solid hsl(var(--primary-foreground) / 0.24);
+    background: hsl(var(--primary) / 0.13);
+    box-shadow: 0 28px 80px -34px rgb(6 24 48 / 0.38);
+    -webkit-backdrop-filter: blur(12px) saturate(135%);
+    backdrop-filter: blur(12px) saturate(135%);
   }
 
   .gre-button {

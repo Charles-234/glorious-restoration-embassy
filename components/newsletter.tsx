@@ -57,7 +57,7 @@ export function Newsletter() {
         <div className="space-y-3">
           <p className="text-sm font-semibold uppercase tracking-[0.24em] text-accent sm:tracking-[0.32em]">Newsletter</p>
           <h2 className="text-2xl md:text-3xl font-semibold text-foreground">Stay connected with weekly inspiration.</h2>
-          <p className="max-w-2xl text-sm leading-7 text-muted-foreground">Subscribe to updates for livestream announcements, sermon summaries, and community stories from Glorious Restoration Embassy.</p>
+          <p className="max-w-2xl text-sm leading-7 text-muted-foreground">Subscribe to updates for livestream announcements, sermon summaries, and community stories from Glory Embassy of Grace Church.</p>
         </div>
         
         <form onSubmit={handleSubmit} className="space-y-4">

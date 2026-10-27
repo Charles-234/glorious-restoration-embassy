@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Image from "next/image";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import Image from "next/image.js";
+import Link from "next/link.js";
+import { usePathname } from "next/navigation.js";
 import { motion } from "framer-motion";
 import { useHydrated } from "@wrksz/themes/client/use-hydrated";
 import { useTheme } from "@wrksz/themes/client/use-theme";
@@ -79,18 +79,18 @@ export function Navbar() {
       </div>
 
       <div className="gre-wrap gre-nav-row">
-        <Link href="/" className="gre-brand" aria-label="Glorious Restoration Embassy home">
+        <Link href="/" className="gre-brand" aria-label="Glory Embassy of Grace Church home">
           <Image
-            src="/stitch/glorious-restoration-embassy-official-logo.png"
-            alt="Glorious Restoration Embassy crest"
+            src="/stitch/glory-embassy-of-grace-official-logo.png"
+            alt="Glory Embassy of Grace Church crest"
             width={58}
             height={58}
             priority
             className="gre-crest"
           />
           <span className="gre-brand-copy">
-            <span className="gre-brand-name">Glorious Restoration</span>
-            <span className="gre-brand-tag">EMBASSY • APOSTLE STEVE KARIUKI</span>
+            <span className="gre-brand-name">Glory Embassy</span>
+            <span className="gre-brand-tag">OF GRACE CHURCH • APOSTLE STEVE KARIUKI</span>
           </span>
         </Link>
 

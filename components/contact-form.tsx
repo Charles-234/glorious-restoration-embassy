@@ -116,7 +116,7 @@ export function ContactForm() {
           required
         />
         <span>
-          I agree that Glorious Restoration Embassy may use these details to respond to my message
+          I agree that Glory Embassy of Grace Church may use these details to respond to my message
           as explained in the{" "}
           <a href="/privacy" target="_blank" rel="noopener noreferrer" className="underline underline-offset-4">
             Privacy Policy

@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import Link from "next/link";
-import Image from "next/image";
+import Link from "next/link.js";
+import Image from "next/image.js";
 import { heroContent, fallbackHeroImages } from "@/lib/siteData";
 import { PlayCircle, ArrowRight } from "lucide-react";
 
@@ -38,7 +38,7 @@ export function Hero({ images = fallbackHeroImages }: HeroProps) {
           >
             <Image
               src={image}
-              alt="Worship moment at Glorious Restoration Embassy"
+              alt="Worship moment at Glory Embassy of Grace Church"
               fill
               priority={index === 0}
               sizes="100vw"

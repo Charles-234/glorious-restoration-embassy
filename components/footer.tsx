@@ -1,5 +1,5 @@
-import Image from "next/image";
-import Link from "next/link";
+import Image from "next/image.js";
+import Link from "next/link.js";
 import { ArrowUpRight } from "lucide-react";
 import { siteConfig } from "@/lib/siteData";
 
@@ -42,12 +42,12 @@ export function Footer() {
           <div className="gre-footer-brand">
             <Link href="/" className="gre-footer-logo">
               <Image
-                src="/stitch/glorious-restoration-embassy-official-logo.png"
-                alt="Glorious Restoration Embassy crest"
+                src="/stitch/glory-embassy-of-grace-official-logo.png"
+                alt="Glory Embassy of Grace Church crest"
                 width={68}
                 height={68}
               />
-              <span>Glorious Restoration<small>EMBASSY • APOSTLE STEVE KARIUKI</small></span>
+              <span>Glory Embassy<small>OF GRACE CHURCH • APOSTLE STEVE KARIUKI</small></span>
             </Link>
             <p>
               A sanctuary of restoration, divine purpose, and radiant spiritual hospitality
@@ -75,7 +75,7 @@ export function Footer() {
           </div>
         </div>
         <div className="gre-footer-bottom">
-          <p>© {new Date().getFullYear()} Glorious Restoration Embassy International • Apostle Steve Kariuki. All spiritual rights reserved.</p>
+          <p>© {new Date().getFullYear()} Glory Embassy of Grace Church • Apostle Steve Kariuki. All spiritual rights reserved.</p>
           </div>
       </div>
     </footer>

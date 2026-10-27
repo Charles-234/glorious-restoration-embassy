@@ -12,14 +12,16 @@ export type LibraryMediaItem = {
 
 /** Central site identity and confirmed location, giving, and service details. */
 export const siteConfig = {
-  /** Canonical display name. Used by the navbar, footer, headings and metadata. */
-  brandName: "Glorious Restoration Embassy",
+  /** Legal organization name. */
+  name: "Glory Embassy of Grace Church",
+  /** Canonical display brand used by the navbar, footer, headings and metadata. */
+  brandName: "Glory Embassy",
   /** Short form for tight spaces. */
-  brandShort: "GRE",
+  brandShort: "GEGC",
   /** Canonical origin — used by metadataBase and the sitemap so they agree. */
-  url: "https://glorious-restoration-embassy.vercel.app",
+  url: "https://glory-embassy-of-grace.vercel.app",
   tagline:
-    "A place of weightless faith, boundless grace, and immersive spiritual depth.",
+    "Glory Embassy of Grace Church is a Christ-centered church community in Kenya, welcoming people to worship, discipleship, and outreach.",
 
   // Existing contact channels are kept separate from the confirmed service and giving details.
   email: "embassychurchglory@gmail.com",
@@ -256,7 +258,7 @@ export const branches = [
 export const searchIndex = [
   {
     title: "Welcome Home",
-    description: "Home page of Glorious Restoration Embassy - A place of weightless faith, boundless grace, and immersive spiritual depth.",
+    description: "Home page of Glory Embassy of Grace Church, a Christ-centered church community in Kenya.",
     href: "/",
     category: "page"
   },
@@ -321,7 +323,7 @@ export const pastor = {
   // TODO: Add actual pastor image to /public/pastor.jpg when available
   // Current fallback image from gallery
   image: "/gallery/photo24.jpeg",
-  bio: "Bishop David Omari is the senior pastor and founder of Glorious Restoration Embassy. With over 20 years of ministry experience, he leads with a vision to restore hope, dignity, and purpose to God's people. His teaching is characterized by deep biblical insight, practical wisdom, and a heart for the lost.",
+  bio: "Bishop David Omari is the senior pastor and founder of Glory Embassy of Grace Church. With over 20 years of ministry experience, he leads with a vision to restore hope, dignity, and purpose to God's people. His teaching is characterized by deep biblical insight, practical wisdom, and a heart for the lost.",
   title: "Senior Pastor & Founder",
   email: "bishop@gloriousrestorationembassy.org"
 };

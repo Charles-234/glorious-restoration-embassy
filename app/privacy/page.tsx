@@ -23,7 +23,7 @@ export default function PrivacyPage() {
 
       <Card className="space-y-8">
         <p className="text-sm leading-7 text-muted-foreground">
-          Glorious Restoration Embassy (the “church,” “we,” or “us”) respects your privacy. This
+          Glory Embassy of Grace Church (the “church,” “we,” or “us”) respects your privacy. This
           notice applies to this website and its contact, prayer-request, newsletter, and AI chat
           features. It is a practical notice, not a promise that online transmission or storage is
           risk-free. Please do not send passwords, payment-card data, identity documents, or details

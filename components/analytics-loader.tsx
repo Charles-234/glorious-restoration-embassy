@@ -1,8 +1,8 @@
 "use client";
 
 import { Suspense, useEffect, useState } from "react";
-import { usePathname, useSearchParams } from "next/navigation";
-import Script from "next/script";
+import { usePathname, useSearchParams } from "next/navigation.js";
+import Script from "next/script.js";
 import type { ConsentValue } from "@/components/cookie-consent";
 
 const GA_ID = "G-KHTD567MYY";
@@ -53,7 +53,7 @@ function AnalyticsLoaderInner() {
     });
   }, [pathname, searchParams, consent]);
 
-    // GA4 only mounts after explicit consent — this is the Kenya DPA gate.
+    // Glory Embassy GA4 only mounts after explicit consent — this is the Kenya DPA gate.
   if (consent !== "accepted") return null;
   return (
     <>

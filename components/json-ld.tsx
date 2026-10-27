@@ -4,8 +4,8 @@ export function JsonLd() {
   const data = {
     "@context": "https://schema.org",
     "@type": "Church",
-    name: siteConfig.brandName,
-    alternateName: siteConfig.brandShort,
+    name: siteConfig.name,
+    alternateName: [siteConfig.brandName, siteConfig.brandShort],
     url: siteConfig.url,
     logo: `${siteConfig.url}/favicon.svg`,
     image: `${siteConfig.url}/social-preview.svg`,
