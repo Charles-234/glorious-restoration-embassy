@@ -829,9 +829,9 @@
   }
 
   .gre-service-card:hover {
-    transform: translateY(-4px);
+    transform: translateY(-5px) scale(1.02);
     border-color: hsl(var(--brand-gold) / 0.55);
-    box-shadow: var(--shadow-lift);
+    box-shadow: var(--shadow-lift), 0 0 24px hsl(var(--brand-gold) / 0.16);
   }
 
   .gre-service-card-head {
@@ -960,6 +960,13 @@
     background: color-mix(in srgb, var(--gre-on-dark) 9%, transparent);
     box-shadow: var(--shadow-lift);
     backdrop-filter: blur(12px);
+    transition: transform 220ms var(--ease-soft), border-color 220ms var(--ease-soft), box-shadow 220ms var(--ease-soft);
+  }
+
+  .gre-channel-card:hover {
+    transform: translateY(-4px) scale(1.01);
+    border-color: hsl(var(--brand-gold) / 0.4);
+    box-shadow: var(--shadow-lift), 0 0 26px hsl(var(--brand-gold) / 0.14);
   }
 
   .gre-channel-top {
@@ -1189,6 +1196,16 @@
 
   .gre-ministry-tile {
     border-radius: 11px;
+    transition: transform 220ms var(--ease-soft);
+  }
+
+  .gre-ministry-tile:hover {
+    transform: translateY(-5px) scale(1.015);
+  }
+
+  .gre-ministry-tile:hover .gre-ministry-card-surface {
+    border-color: hsl(var(--brand-gold) / 0.55);
+    box-shadow: var(--shadow-lift), 0 0 24px hsl(var(--brand-gold) / 0.18);
   }
 
   .gre-ministry-card-surface {
@@ -2653,6 +2670,30 @@
   a:active {
     transform: scale(0.98);
     transition: transform 0.1s ease-out;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  a:hover,
+  button:hover {
+    scale: 1.04;
+    color: color-mix(in srgb, currentColor 90%, hsl(var(--accent)));
+  }
+
+  :is(a[class*="button"], a[class~="btn"], button:not([class*="toggle"])):hover {
+    box-shadow: 0 0 15px hsl(var(--accent) / 0.22);
+  }
+}
+
+a,
+button {
+  transition: all 0.2s ease-in-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  a:hover,
+  button:hover {
+    scale: 1;
   }
 }
 

@@ -102,12 +102,7 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
-  themeColor: [
-    // These must match --background in globals.css, otherwise the browser
-    // chrome colour does not line up with the page on mobile.
-    { media: "(prefers-color-scheme: light)", color: "#e9e4d9" },
-    { media: "(prefers-color-scheme: dark)", color: "#091426" }
-  ]
+  themeColor: "#091426"
 };
 
 export default async function RootLayout({
@@ -123,7 +118,7 @@ export default async function RootLayout({
         className={`${bodyFont.variable} ${subtitleFont.variable} ${displayFont.variable} min-h-screen antialiased bg-background text-foreground font-sans`}
         suppressHydrationWarning
       >
-        <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false} disableTransitionOnChange>
           <div className="relative isolate min-h-screen flex flex-col">
             <PublicGalleryBackground backgrounds={galleryBackgrounds} />
             <div className="relative z-10 flex min-h-screen flex-col">

@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import Image from "next/image.js";
 import { BookOpenText, Play } from "lucide-react";
 import { Card } from "@/components/ui/card";
@@ -77,13 +77,26 @@ export function SermonCard({
 }: SermonCardProps) {
   const media = resolveSermonMedia(videoUrl);
   const [spotlight, setSpotlight] = useState<{ x: number; y: number } | null>(null);
+  const prefersReducedMotion = useReducedMotion();
 
   const maskImage = spotlight
-    ? `radial-gradient(circle 112px at ${spotlight.x}px ${spotlight.y}px, black 0%, black 62%, transparent 100%)`
+    ? `radial-gradient(circle 112px at ${spotlight.x}px ${spotlight.y}px, black 0%, black 55%, transparent 100%)`
     : undefined;
 
   return (
-    <motion.article whileHover={{ y: -8 }} transition={{ type: "spring", stiffness: 160 }} className="group">
+    <motion.article
+      whileHover={
+        prefersReducedMotion
+          ? undefined
+          : {
+              y: -5,
+              scale: 1.02,
+              boxShadow: "0 0 28px hsl(var(--accent) / 0.24)",
+            }
+      }
+      transition={{ type: "spring", stiffness: 220, damping: 22 }}
+      className="group"
+    >
       <Card className={`space-y-5 ${cardClassName ?? ""}`}>
         {!media && thumbnail ? (
           <div

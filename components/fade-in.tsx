@@ -26,11 +26,11 @@ export function FadeIn({
       className={[className, "motion-reduce-visible"].filter(Boolean).join(" ")}
       aria-label={ariaLabel}
       aria-labelledby={ariaLabelledBy}
-      initial={{ opacity: 0, y: 30, scale: 1 }}
+      initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0, scale: 1 }}
       viewport={{ once: true, margin: "-100px" }}
       transition={{
-        duration: prefersReducedMotion ? 0 : 0.5,
+        duration: prefersReducedMotion ? 0 : 0.6,
         ease: "easeOut",
       }}
     >
