@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "next/link.js";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { EventCard } from "@/components/event-card";
 import { getEvents } from "@/lib/content";

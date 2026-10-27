@@ -1,5 +1,5 @@
 import { createServerClient } from "@supabase/ssr";
-import { NextResponse, type NextRequest } from "next/server";
+import { NextResponse, type NextRequest } from "next/server.js";
 import { getSupabasePublicConfig } from "./utils/supabase/config";
 
 // Paths where a Supabase session is actually consumed server-side.

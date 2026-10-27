@@ -3,8 +3,8 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import Image from 'next/image';
-import Link from 'next/link';
+import Image from 'next/image.js';
+import Link from 'next/link.js';
 import { motion } from 'framer-motion';
 import { PlayCircle, ArrowRight } from 'lucide-react';
 import { fallbackHeroImages } from "@/lib/siteData";

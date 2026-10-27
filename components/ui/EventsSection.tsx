@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { events } from "@/lib/siteData";
 import { Calendar, MapPin } from "lucide-react";
-import Link from "next/link";
+import Link from "next/link.js";
 
 export function EventsSection() {
   const featuredEvent = events[0];

@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Image from "next/image";
+import Image from "next/image.js";
 import { CalendarDays } from "lucide-react";
 import { Card } from "@/components/ui/card";
 

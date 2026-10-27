@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, type FormEvent } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/navigation.js";
 import { createClient } from "@/utils/supabase/client";
 
 export function AdminMagicLinkForm() {

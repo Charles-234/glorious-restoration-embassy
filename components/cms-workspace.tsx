@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useMemo, useState, type ChangeEvent, type FormEvent } from "react";
-import { useRouter } from "next/navigation";
-import Link from "next/link";
+import { useRouter } from "next/navigation.js";
+import Link from "next/link.js";
 import {
   cmsCollections,
   settingFields,

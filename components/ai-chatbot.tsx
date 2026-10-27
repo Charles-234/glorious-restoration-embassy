@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import { track, CHURCH_EVENTS } from "@/lib/analytics";
 import { MessageCircle, Send, X, AlertCircle } from "lucide-react";
-import Link from "next/link";
+import Link from "next/link.js";
 import { siteConfig } from "@/lib/siteData";
 import { motion, AnimatePresence } from "framer-motion";
 

@@ -1,9 +1,11 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Image from "next/image";
+import Image from "next/image.js";
 import { BookOpenText, Play } from "lucide-react";
 import { Card } from "@/components/ui/card";
+import styles from "@/components/sermon-card.module.css";
+import { useState } from "react";
 
 interface SermonCardProps {
   title: string;
@@ -12,6 +14,7 @@ interface SermonCardProps {
   summary: string;
   thumbnail?: string;
   videoUrl?: string;
+  cardClassName?: string;
 }
 
 type SermonMedia =
@@ -70,21 +73,53 @@ export function SermonCard({
   summary,
   thumbnail,
   videoUrl,
+  cardClassName,
 }: SermonCardProps) {
   const media = resolveSermonMedia(videoUrl);
+  const [spotlight, setSpotlight] = useState<{ x: number; y: number } | null>(null);
+
+  const maskImage = spotlight
+    ? `radial-gradient(circle 112px at ${spotlight.x}px ${spotlight.y}px, black 0%, black 62%, transparent 100%)`
+    : undefined;
 
   return (
     <motion.article whileHover={{ y: -8 }} transition={{ type: "spring", stiffness: 160 }} className="group">
-      <Card className="space-y-5">
+      <Card className={`space-y-5 ${cardClassName ?? ""}`}>
         {!media && thumbnail ? (
-          <div className="relative aspect-video overflow-hidden rounded-2xl bg-muted">
+          <div
+            className="relative aspect-video overflow-hidden rounded-2xl bg-muted"
+            onMouseMove={(event) => {
+              const rect = event.currentTarget.getBoundingClientRect();
+              setSpotlight({
+                x: event.clientX - rect.left,
+                y: event.clientY - rect.top,
+              });
+            }}
+            onMouseLeave={() => setSpotlight(null)}
+          >
             <Image
               src={thumbnail}
               alt={title}
               fill
               sizes="(max-width: 768px) 100vw, 33vw"
               unoptimized
-              className="object-contain"
+              className={`object-contain ${styles.baseImage}`}
+            />
+            <Image
+              src={thumbnail}
+              alt=""
+              aria-hidden="true"
+              fill
+              sizes="(max-width: 768px) 100vw, 33vw"
+              unoptimized
+              className={`pointer-events-none absolute inset-0 h-full w-full object-contain transition-opacity duration-150 motion-reduce:transition-none ${
+                spotlight ? "opacity-100" : "opacity-0"
+              }`}
+              style={
+                maskImage
+                  ? { maskImage, WebkitMaskImage: maskImage }
+                  : undefined
+              }
             />
           </div>
         ) : null}

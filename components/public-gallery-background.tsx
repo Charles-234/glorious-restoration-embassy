@@ -1,6 +1,6 @@
 "use client";
 
-import { usePathname } from "next/navigation";
+import { usePathname } from "next/navigation.js";
 import type { GalleryMediaItem } from "@/lib/local-gallery";
 import { GalleryBackground } from "@/components/gallery-background";
 

@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextResponse } from "next/server.js";
 import { requireAdmin } from "@/lib/admin/require-admin";
 import { setPublished, updateMedia, type MediaUpdatePatch } from "@/lib/media-admin";
 

@@ -1,5 +1,5 @@
 import { timingSafeEqual } from "node:crypto";
-import { NextResponse } from "next/server";
+import { NextResponse } from "next/server.js";
 import { createAdminSessionToken, type AdminRole } from "@/lib/adminAuth";
 import adminConfigJson from "@/content/admins.json";
 

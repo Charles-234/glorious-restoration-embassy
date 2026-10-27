@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import Link from "next/link.js";
 import { Building2, HeartHandshake } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { siteConfig } from "@/lib/siteData";

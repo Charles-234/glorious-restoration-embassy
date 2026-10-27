@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import Image from "next/image.js";
 import { useCallback, useEffect, useRef, useState, type KeyboardEvent } from "react";
 import { ChevronLeft, ChevronRight, Pause, Play } from "lucide-react";
 import styles from "./pastor-portrait-carousel.module.css";

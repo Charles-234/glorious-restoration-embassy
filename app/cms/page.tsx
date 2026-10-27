@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { redirect } from "next/navigation";
+import Link from "next/link.js";
+import { redirect } from "next/navigation.js";
 import { CmsWorkspace } from "@/components/cms-workspace";
 import { createClient } from "@/utils/supabase/server";
 

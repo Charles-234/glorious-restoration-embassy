@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Link from "next/link";
+import Link from "next/link.js";
 import { heroContent } from "@/lib/siteData";
 
 export function HeroSection() {

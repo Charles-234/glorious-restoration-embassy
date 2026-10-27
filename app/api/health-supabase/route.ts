@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextResponse } from "next/server.js";
 import { createClient } from "@/utils/supabase/server";
 
 function getSupabaseErrorMessage(error: unknown) {

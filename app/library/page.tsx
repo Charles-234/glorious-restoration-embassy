@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "next/link.js";
 import { getLibraryMedia } from "@/lib/siteData";
 
 type Book = {

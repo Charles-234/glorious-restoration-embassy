@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextResponse } from "next/server.js";
 import { submitContactMessage } from "@/lib/supabaseClient";
 import { siteConfig } from "@/lib/siteData";
 

@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "next/link.js";
 import { requireAdmin } from "@/lib/admin/require-admin";
 import { deletePrayerRequest, updatePrayerRequest } from "./actions";
 

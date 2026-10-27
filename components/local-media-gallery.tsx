@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import Image from "next/image.js";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { ArrowLeft, ArrowRight, Play, X } from "lucide-react";
 import type { GalleryMediaItem } from "@/lib/local-gallery";

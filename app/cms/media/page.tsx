@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { redirect } from "next/navigation";
+import { redirect } from "next/navigation.js";
 import { CmsMediaManager } from "@/components/cms-media-manager";
 import { listAllMedia } from "@/lib/media-admin";
 import { createClient } from "@/utils/supabase/server";

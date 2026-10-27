@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Link from "next/link";
+import Link from "next/link.js";
 import { Button } from "@/components/ui/button";
 import { Clock, Facebook, MessageSquare } from "lucide-react";
 import { track, CHURCH_EVENTS } from "@/lib/analytics";

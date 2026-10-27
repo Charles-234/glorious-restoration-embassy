@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { donationInfo } from "@/lib/siteData";
 import { Heart } from "lucide-react";
-import Link from "next/link";
+import Link from "next/link.js";
 
 export function DonationSection() {
   return (

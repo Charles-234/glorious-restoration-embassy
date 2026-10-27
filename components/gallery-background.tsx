@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import Image from "next/image.js";
 import { useEffect, useRef, useState } from "react";
 import type { GalleryMediaItem } from "@/lib/local-gallery";
 import styles from "./gallery-background.module.css";

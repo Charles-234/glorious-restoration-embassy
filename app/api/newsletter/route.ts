@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextResponse } from "next/server.js";
 import { saveNewsletterSubscriber } from "@/lib/supabaseClient";
 
 export async function POST(request: Request) {

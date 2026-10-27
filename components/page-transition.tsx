@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { usePathname } from "next/navigation";
+import { usePathname } from "next/navigation.js";
 
 const pageMotion = {
   initial: { opacity: 0, y: 30 },

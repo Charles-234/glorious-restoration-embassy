@@ -3,8 +3,8 @@
 import { CmsMediaRowActions } from "@/components/cms-media-row-actions";
 import { CmsMediaUploadDrawer } from "@/components/cms-media-upload-drawer";
 
-import Link from "next/link";
-import { useRouter } from "next/navigation";
+import Link from "next/link.js";
+import { useRouter } from "next/navigation.js";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { FileText, Film, Music, X, Image as ImageIcon } from "lucide-react";
 import type { MediaRow } from "@/lib/media-db";

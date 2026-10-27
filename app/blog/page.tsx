@@ -1,6 +1,7 @@
-import Link from "next/link";
+import Link from "next/link.js";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { Card } from "@/components/ui/card";
+import { SermonCard } from "@/components/sermon-card";
 import { getAnnouncements, getSermons } from "@/lib/content";
 import { siteConfig } from "@/lib/siteData";
 
@@ -53,14 +54,15 @@ export default async function BlogPage() {
           <h2 className="text-2xl font-semibold text-foreground">Latest messages</h2>
           <div className="grid gap-6 md:grid-cols-2">
             {sermons.slice(0, 4).map((sermon) => (
-              <Card key={`${sermon.title}-${sermon.date}`} className="space-y-3">
-                <p className="text-xs font-semibold uppercase tracking-[0.28em] text-accent">
-                  {sermon.date}
-                </p>
-                <h3 className="text-xl font-semibold text-foreground">{sermon.title}</h3>
-                <p className="text-sm leading-7 text-muted-foreground">{sermon.summary}</p>
-                <p className="text-sm text-muted-foreground">{sermon.speaker}</p>
-              </Card>
+              <SermonCard
+                key={`${sermon.title}-${sermon.date}`}
+                title={sermon.title}
+                speaker={sermon.speaker}
+                date={sermon.date}
+                summary={sermon.summary}
+                thumbnail={sermon.thumbnail}
+                cardClassName="space-y-3"
+              />
             ))}
           </div>
           <div className="flex flex-col gap-3 sm:flex-row">

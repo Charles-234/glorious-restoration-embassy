@@ -1,7 +1,7 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache.js";
+import { redirect } from "next/navigation.js";
 import { requireAdmin } from "@/lib/admin/require-admin";
 
 const validStatuses = ["new", "contacted", "closed"] as const;

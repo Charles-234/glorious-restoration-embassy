@@ -1,8 +1,8 @@
 "use client";
 
 import { Suspense, useState, type FormEvent } from "react";
-import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import Link from "next/link.js";
+import { useSearchParams } from "next/navigation.js";
 import { createClient } from "@/utils/supabase/client";
 
 function getReturnPath() {

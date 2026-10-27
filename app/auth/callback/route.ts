@@ -1,6 +1,6 @@
-import { NextResponse, type NextRequest } from "next/server";
+import { NextResponse, type NextRequest } from "next/server.js";
 import { createServerClient } from "@supabase/ssr";
-import { cookies } from "next/headers";
+import { cookies } from "next/headers.js";
 import { getSupabasePublicConfig } from "@/utils/supabase/config";
 
 function getSafeReturnPath(value: string | null) {
