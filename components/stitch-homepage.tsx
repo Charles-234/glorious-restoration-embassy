@@ -188,15 +188,11 @@ export function StitchHomepage({
               <p className="gre-hero-lead">{heroContent.subtitle}</p>
               <LiquidGlassHeroActions>
                 <div className="gre-hero-actions">
-                  <button
-                    type="button"
-                    className="gre-button gre-button-primary"
-                    onClick={() => liveDialog.current?.showModal()}
-                  >
-                    <Play size={17} fill="currentColor" /> {heroContent.ctaPrimary}
-                  </button>
-                  <Link href="/contact#visit-planner" className="gre-button gre-button-outline">
-                    <CalendarDays size={17} /> {heroContent.ctaSecondary}
+                  <Link href="/contact#visit-planner" className="gre-button gre-button-primary">
+                    <CalendarDays size={17} /> {heroContent.ctaPrimary}
+                  </Link>
+                  <Link href="/ministries" className="gre-button gre-button-outline">
+                    <UsersRound size={17} /> {heroContent.ctaSecondary}
                   </Link>
                 </div>
               </LiquidGlassHeroActions>

@@ -77,7 +77,13 @@ export function GivingPanel({ title, description }: GivingPanelProps) {
           <Link
             href={`https://wa.me/${siteConfig.whatsapp}`}
             className="btn btn-primary"
-            onClick={() => track(CHURCH_EVENTS.GIVING_METHOD_CLICK, { method: "whatsapp" })}
+            onClick={() => {
+              track(CHURCH_EVENTS.GIVING_METHOD_CLICK, {
+                method: "whatsapp",
+                transport_type: "beacon",
+              });
+              console.log("Giving event fired");
+            }}
           >
             Give via WhatsApp
           </Link>
