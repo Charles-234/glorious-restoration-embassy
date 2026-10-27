@@ -305,7 +305,7 @@ export function StitchHomepage({
                 className="gre-button gre-button-youtube"
                 href="https://www.youtube.com/@stephenkariuki7444"
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
               >
                 <YouTubeMark /> Subscribe on YouTube
               </a>
@@ -317,7 +317,7 @@ export function StitchHomepage({
               </div>
               <h3>Glorious Restoration Embassy Official Channel</h3>
               <p>Live &amp; Recorded Preachings will sync here</p>
-              <a href="https://www.youtube.com/@stephenkariuki7444" target="_blank" rel="noreferrer">
+              <a href="https://www.youtube.com/@stephenkariuki7444" target="_blank" rel="noopener noreferrer">
                 <YouTubeMark size={18} /> Subscribe on YouTube <ArrowRight size={17} />
               </a>
               <small>Channel auto-sync configured for upcoming live streams &amp; Sunday archives.</small>
@@ -440,7 +440,7 @@ export function StitchHomepage({
                   <p>{branch.address}</p>
                   {branch.coordinates && <p>{branch.coordinates}</p>}
                   {branch.mapsUrl && (
-                    <a href={branch.mapsUrl} target="_blank" rel="noreferrer" className="gre-branch-map-link">
+                    <a href={branch.mapsUrl} target="_blank" rel="noopener noreferrer" className="gre-branch-map-link">
                       View on Google Maps
                     </a>
                   )}
@@ -493,7 +493,7 @@ export function StitchHomepage({
             Our live broadcast starts 15 minutes before scheduled service times. Presided by
             Apostle Steve Kariuki.
           </p>
-          <a className="gre-button gre-button-youtube" href="https://www.youtube.com/@stephenkariuki7444" target="_blank" rel="noreferrer">
+          <a className="gre-button gre-button-youtube" href="https://www.youtube.com/@stephenkariuki7444" target="_blank" rel="noopener noreferrer">
             <YouTubeMark /> Open on YouTube Live
           </a>
           <div className="gre-audio-choice">

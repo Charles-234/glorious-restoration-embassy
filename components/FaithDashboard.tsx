@@ -96,7 +96,7 @@ export function FaithDashboard() {
               <p className={styles.scriptureReference}>{data.scripture.reference}</p>
               <p className={styles.scriptureAttribution}>
                 {data.scripture.translation} ·{" "}
-                <a href={data.scripture.licenseUrl} target="_blank" rel="noreferrer">
+                <a href={data.scripture.licenseUrl} target="_blank" rel="noopener noreferrer">
                   Translation details
                 </a>
               </p>

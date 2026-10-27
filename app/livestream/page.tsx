@@ -55,12 +55,17 @@ export default function LivestreamPage() {
             <a
               href={siteConfig.facebookLive}
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
               className="btn btn-primary"
             >
               <Facebook size={16} /> Watch on Facebook
             </a>
-            <a href={`https://wa.me/${siteConfig.whatsapp}`} className="btn btn-secondary">
+            <a
+              href={`https://wa.me/${siteConfig.whatsapp}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-secondary"
+            >
               <MessageSquare size={16} /> WhatsApp us
             </a>
           </div>

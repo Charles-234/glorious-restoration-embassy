@@ -29,7 +29,7 @@ export function BranchLocator() {
               className="mt-4 inline-flex text-sm font-semibold text-accent underline-offset-4 hover:underline"
               href={branch.mapsUrl}
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
             >
               View on Google Maps
             </a>

@@ -55,6 +55,8 @@ export default function ContactPage() {
               <li>
                 <a
                   href={`https://wa.me/${siteConfig.whatsapp}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="flex items-center gap-3 text-foreground transition hover:text-brand-royal"
                 >
                   <MessageSquare size={18} className="shrink-0 text-accent" />
@@ -82,7 +84,7 @@ export default function ContactPage() {
                         className="font-semibold text-accent underline-offset-4 hover:underline"
                         href={branch.mapsUrl}
                         target="_blank"
-                        rel="noreferrer"
+                        rel="noopener noreferrer"
                       >
                         View on Google Maps
                       </a>

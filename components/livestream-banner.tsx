@@ -27,6 +27,8 @@ export function LivestreamBanner() {
             <Link
               href="https://www.facebook.com/share/1Xob4wuJwK/"
               className="btn btn-secondary gap-2 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
               onClick={() => track(CHURCH_EVENTS.LIVESTREAM_JOIN, { channel: "facebook" })}
             >
               <Facebook size={16} /> Facebook Live

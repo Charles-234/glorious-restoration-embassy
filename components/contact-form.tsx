@@ -164,7 +164,7 @@ export function ContactForm() {
           className="btn btn-secondary inline-flex"
           href={whatsappUrl}
           target="_blank"
-          rel="noreferrer"
+          rel="noopener noreferrer"
         >
           Continue to WhatsApp · {siteConfig.phoneDisplay}
         </a>

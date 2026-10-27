@@ -77,6 +77,8 @@ export function GivingPanel({ title, description }: GivingPanelProps) {
           <Link
             href={`https://wa.me/${siteConfig.whatsapp}`}
             className="btn btn-primary"
+            target="_blank"
+            rel="noopener noreferrer"
             onClick={() => {
               track(CHURCH_EVENTS.GIVING_METHOD_CLICK, {
                 method: "whatsapp",

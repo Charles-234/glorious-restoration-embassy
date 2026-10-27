@@ -78,7 +78,7 @@ export default function AboutPage() {
                   <a
                     href={branch.mapsUrl}
                     target="_blank"
-                    rel="noreferrer"
+                    rel="noopener noreferrer"
                     className="inline-flex min-h-[2.75rem] items-center justify-center rounded-2xl border border-border bg-card px-4 py-3 text-sm font-semibold text-foreground transition hover:bg-muted"
                   >
                     View on Google Maps
