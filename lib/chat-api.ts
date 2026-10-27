@@ -22,6 +22,7 @@ export type ChatAuthorization =
 type ChatPostDependencies = {
   authorize: () => Promise<ChatAuthorization>;
   getBackendUrl: () => string | undefined;
+  getBackendToken: () => string | undefined;
   fetcher: typeof fetch;
   saveConversation: (question: string, answer: string) => Promise<unknown>;
 };
@@ -52,6 +53,7 @@ function withQuota(
 export function createChatPostHandler({
   authorize,
   getBackendUrl,
+  getBackendToken,
   fetcher,
   saveConversation,
 }: ChatPostDependencies) {
@@ -109,6 +111,14 @@ export function createChatPostHandler({
         { status: 503 },
       );
     }
+    const backendToken = getBackendToken();
+    if (!backendToken) {
+      console.error("[chat] FastAPI backend authentication is not configured.");
+      return NextResponse.json(
+        { error: "The AI assistant is temporarily unavailable. Please try again later." },
+        { status: 503 },
+      );
+    }
 
     let admission: AdmissionResult;
     if (access.adminUnlimited) {
@@ -154,7 +164,10 @@ export function createChatPostHandler({
     try {
       response = await fetcher(`${backendUrl.replace(/\/+$/, "")}/api/chat`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${backendToken}`,
+        },
         body: JSON.stringify({ question: query, history: (data as any).history ?? [] }),
         // CHAT DEBUG: forwarding
         signal: AbortSignal.timeout(20_000),

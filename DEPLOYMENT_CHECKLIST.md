@@ -74,6 +74,7 @@ NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=your-supabase-publishable-key
 
 # AI Backend (for website chat)
 FASTAPI_BACKEND_URL=https://your-fastapi-service-url
+CHAT_BACKEND_SHARED_SECRET=<same-long-random-secret-configured-in-Koyeb-and-Cloudflare>
 
 # Admin Dashboard
 ADMIN_PASSWORD=your-secure-admin-password
@@ -82,6 +83,10 @@ ADMIN_SESSION_SECRET=your-random-secret-for-admin-sessions
 # News API (optional for development)
 NEWS_API_KEY=your-newsapi-key
 ```
+
+`CHAT_BACKEND_SHARED_SECRET` must be the same long, random value in Vercel,
+Koyeb, and Cloudflare Worker secrets. FastAPI rejects chat requests when the
+secret is missing or incorrect.
 
 #### Optional Variables
 ```bash

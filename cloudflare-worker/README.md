@@ -37,6 +37,7 @@ npx wrangler secret put TELEGRAM_WEBHOOK_SECRET
 npx wrangler secret put GITHUB_TOKEN
 npx wrangler secret put GITHUB_REPO
 npx wrangler secret put FASTAPI_BACKEND_URL
+npx wrangler secret put CHAT_BACKEND_SHARED_SECRET
 npx wrangler secret put SUPER_ADMIN_TELEGRAM_ID
 npm run typecheck
 npm run deploy
@@ -81,12 +82,14 @@ TELEGRAM_WEBHOOK_SECRET=your_local_secret
 GITHUB_TOKEN=your_github_token
 GITHUB_REPO=owner/repository
 FASTAPI_BACKEND_URL=http://127.0.0.1:8000
+CHAT_BACKEND_SHARED_SECRET=your_local_shared_secret
 SUPER_ADMIN_TELEGRAM_ID=123456789
 ```
 
 Keep `.dev.vars` local and do not commit the Telegram ID mapping. Obtain the
 numeric ID from a trusted Telegram account-ID source; never derive it from the
-GitHub username.
+GitHub username. `CHAT_BACKEND_SHARED_SECRET` must match the value configured
+for FastAPI and the website; do not commit or expose it.
 
 ## Commands
 
@@ -100,7 +103,8 @@ GitHub username.
 Ordinary text messages are posted to the shared service's `POST /api/chat`
 endpoint as `{ "question": "..." }`; answers and source links come from the
 same RAG pipeline used by the website. `KOYEB_BACKEND_URL` remains accepted as
-a legacy alias if `FASTAPI_BACKEND_URL` is not set.
+a legacy alias if `FASTAPI_BACKEND_URL` is not set. The Worker sends the
+`CHAT_BACKEND_SHARED_SECRET` bearer token, which FastAPI requires.
 
 CMS commands and photo uploads require the sender's Telegram ID to be listed in
 `content/admins.json`. Sermons and events are written as JSON to match the

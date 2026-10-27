@@ -139,6 +139,7 @@ async function authorize(): Promise<ChatAuthorization> {
 const handleChatPost = createChatPostHandler({
   authorize,
   getBackendUrl: () => process.env.FASTAPI_BACKEND_URL || process.env.KOYEB_BACKEND_URL,
+  getBackendToken: () => process.env.CHAT_BACKEND_SHARED_SECRET,
   fetcher: fetch,
   saveConversation: saveAIConversation,
 });

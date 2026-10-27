@@ -7,6 +7,7 @@ interface Env {
   GITHUB_TOKEN: string;
   GITHUB_REPO: string;
   SUPER_ADMIN_TELEGRAM_ID?: string;
+  CHAT_BACKEND_SHARED_SECRET?: string;
   FASTAPI_BACKEND_URL?: string;
   KOYEB_BACKEND_URL?: string;
 }
@@ -373,13 +374,20 @@ export function createBot(env: Env): Bot {
       await ctx.reply("The AI assistant is not configured yet.");
       return;
     }
+    if (!env.CHAT_BACKEND_SHARED_SECRET) {
+      await ctx.reply("The AI assistant is not configured yet.");
+      return;
+    }
 
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 25000);
     try {
       const response = await fetch(`${baseUrl}/api/chat`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${env.CHAT_BACKEND_SHARED_SECRET}`,
+        },
         body: JSON.stringify({ question }),
         signal: controller.signal,
       });

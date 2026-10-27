@@ -32,7 +32,7 @@ async def lifespan(_: FastAPI) -> AsyncIterator[None]:
 MAX_PDF_SIZE_BYTES = 25 * 1024 * 1024
 
 
-def is_ingest_authorized(authorization: str | None, expected_token: str | None) -> bool:
+def is_bearer_token_authorized(authorization: str | None, expected_token: str | None) -> bool:
     if not expected_token or not authorization:
         return False
     scheme, separator, supplied_token = authorization.partition(" ")
@@ -41,6 +41,10 @@ def is_ingest_authorized(authorization: str | None, expected_token: str | None) 
         and scheme.lower() == "bearer"
         and hmac.compare_digest(supplied_token, expected_token)
     )
+
+
+def is_ingest_authorized(authorization: str | None, expected_token: str | None) -> bool:
+    return is_bearer_token_authorized(authorization, expected_token)
 
 
 frontend_urls = os.getenv(
@@ -130,7 +134,20 @@ async def ingest(
 
 
 @app.post("/api/chat")
-async def chat(payload: dict) -> dict[str, object]:
+async def chat(
+    payload: dict,
+    authorization: str | None = Header(default=None),
+) -> dict[str, object]:
+    expected_token = os.getenv("CHAT_BACKEND_SHARED_SECRET")
+    if not expected_token:
+        logger.error("Chat is disabled because CHAT_BACKEND_SHARED_SECRET is not configured.")
+        raise HTTPException(
+            status_code=503,
+            detail="The AI assistant is temporarily unavailable.",
+        )
+    if not is_bearer_token_authorized(authorization, expected_token):
+        raise HTTPException(status_code=401, detail="Authentication required.")
+
     question = (payload or {}).get("question") or (payload or {}).get("query") or ""
     history = (payload or {}).get("history") or []
     logger.info("[chat] Received question=%r history_len=%d", question[:60], len(history) if isinstance(history, list) else -1)

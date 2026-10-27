@@ -50,11 +50,15 @@ async def request_assistant_answer(question: str) -> dict[str, Any]:
     ).rstrip("/")
     if not base_url:
         raise RuntimeError("The FastAPI chat service is not configured.")
+    shared_secret = os.getenv("CHAT_BACKEND_SHARED_SECRET", "").strip()
+    if not shared_secret:
+        raise RuntimeError("The FastAPI chat service credentials are not configured.")
 
     async with httpx.AsyncClient(timeout=25.0) as client:
         response = await client.post(
             f"{base_url}/api/chat",
             json={"question": question},
+            headers={"Authorization": f"Bearer {shared_secret}"},
         )
     response.raise_for_status()
     result = response.json()

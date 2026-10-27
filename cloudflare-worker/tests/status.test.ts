@@ -150,10 +150,12 @@ test("ordinary Telegram messages are sent to the shared FastAPI chat endpoint", 
     GITHUB_TOKEN: "local-test-github-token",
     GITHUB_REPO: "church/site",
     FASTAPI_BACKEND_URL: "https://api.example.test/",
+    CHAT_BACKEND_SHARED_SECRET: "local-chat-secret",
   });
   const replies: string[] = [];
   let requestUrl = "";
   let requestBody: unknown;
+  let requestAuthorization = "";
 
   bot.api.config.use(async (_previous, method, payload) => {
     if (method === "getMe") {
@@ -179,6 +181,7 @@ test("ordinary Telegram messages are sent to the shared FastAPI chat endpoint", 
   globalThis.fetch = async (input, init) => {
     requestUrl = String(input);
     requestBody = JSON.parse(String(init?.body));
+    requestAuthorization = new Headers(init?.headers).get("Authorization") ?? "";
     return Response.json({
       answer: "A sourced answer.",
       sources: [{ title: "A source", url: "https://example.test/source", type: "document" }],
@@ -203,6 +206,7 @@ test("ordinary Telegram messages are sent to the shared FastAPI chat endpoint", 
 
   assert.equal(requestUrl, "https://api.example.test/api/chat");
   assert.deepEqual(requestBody, { question: "What does the source say?" });
+  assert.equal(requestAuthorization, "Bearer local-chat-secret");
   assert.deepEqual(replies, [
     "A sourced answer.\n\nSources:\n- A source: https://example.test/source",
   ]);

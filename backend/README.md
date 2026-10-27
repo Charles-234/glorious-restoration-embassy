@@ -8,9 +8,10 @@ vector index using `BAAI/bge-small-en-v1.5`.
 The daily limit of 10 admitted chat request attempts is enforced by the
 authenticated website's Next.js `POST /api/chat` route using Supabase and the
 Africa/Nairobi calendar day. Attempts count when admitted, whether FastAPI
-succeeds or fails. FastAPI's shared `POST /api/chat` endpoint remains unchanged
-so Telegram can continue to use the same assistant and knowledge base without
-consuming website-user quota.
+succeeds or fails. FastAPI's shared `POST /api/chat` endpoint requires the
+`CHAT_BACKEND_SHARED_SECRET` bearer token so callers cannot bypass the website
+session check. The website proxy, Cloudflare Worker, and optional Telegram bot
+must use the same secret; the Telegram bot does not consume website-user quota.
 
 ## Local setup
 
@@ -33,7 +34,10 @@ frontend origin; multiple comma-separated origins are supported. Provider keys
 are not needed for the health endpoint. Set `INGEST_API_TOKEN` to a long,
 random secret before enabling PDF ingestion; the ingest route rejects requests
 without its bearer token and is disabled when the setting is absent. For local
-development, set `VECTRIX_PERSIST_DIRECTORY=./vectrix_db`. The legacy
+development, set the same random `CHAT_BACKEND_SHARED_SECRET` in the website,
+FastAPI, and any enabled bot/Worker environment. FastAPI rejects chat requests
+when the secret is missing or incorrect. Set
+`VECTRIX_PERSIST_DIRECTORY=./vectrix_db`. The legacy
 `CHROMA_PERSIST_DIRECTORY` setting is also accepted when the Vectrix-specific
 setting is not present. The embedding model runs locally; extracted text is
 not sent to an embedding API. An empty knowledge collection skips vector search
@@ -69,10 +73,10 @@ in `VECTRIX_PERSIST_DIRECTORY` (or the legacy
 ## Optional polling Telegram bot
 
 `telegram_bot.py` supports the same shared assistant API as the Cloudflare
-Worker. Configure `FASTAPI_BACKEND_URL` to the FastAPI base URL (the legacy
-`KOYEB_BACKEND_URL` is also accepted), and ordinary text messages are posted
-to `POST /api/chat` as `{ "question": "..." }`. The reply includes available
-source links.
+Worker. Configure `CHAT_BACKEND_SHARED_SECRET` and `FASTAPI_BACKEND_URL` in
+its environment; the legacy `KOYEB_BACKEND_URL` is also accepted as a backend
+URL. Ordinary text messages are posted to `POST /api/chat` as
+`{ "question": "..." }`. The reply includes available source links.
 
 For CMS access, `content/admins.json` may contain a GitHub `super_admin`
 username and an `admins` list of numeric Telegram IDs. A GitHub username is
@@ -113,6 +117,8 @@ Set these Koyeb environment variables:
 - `CHROMA_PERSIST_DIRECTORY=/tmp/chroma_db`
 - - `GROQ_API_KEY` and `GEMINI_API_KEY` (Gemini is the runtime fallback for Groq)
 - `FRONTEND_URL` to the deployed Vercel origin
+- `CHAT_BACKEND_SHARED_SECRET` to the same long, random value configured in
+  Vercel and the Cloudflare Worker, if deployed
 
 Place source PDFs in `content/documents/` in the GitHub repository. The backend
 rebuilds the index at each startup; a restart after inactivity incurs the

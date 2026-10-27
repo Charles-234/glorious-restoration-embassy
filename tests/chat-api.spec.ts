@@ -32,6 +32,7 @@ function createHandler({
   return createChatPostHandler({
     authorize,
     getBackendUrl: () => backendUrl,
+    getBackendToken: () => "test-chat-backend-secret",
     fetcher,
     saveConversation,
   });
@@ -40,10 +41,12 @@ function createHandler({
 test("website chat proxies to FastAPI and maps answer/sources for the client", async () => {
   let requestUrl = "";
   let requestBody: unknown;
+  let requestAuthorization = "";
   const handler = createHandler({
     fetcher: async (input, init) => {
       requestUrl = String(input);
       requestBody = JSON.parse(String(init?.body));
+      requestAuthorization = new Headers(init?.headers).get("Authorization") ?? "";
       return Response.json({
         answer: "A RAG answer.",
         sources: [{ title: "Church document", url: "https://example.test/doc" }],
@@ -53,7 +56,11 @@ test("website chat proxies to FastAPI and maps answer/sources for the client", a
   const response = await handler(CHAT_REQUEST());
 
   expect(requestUrl).toBe("https://fastapi.example.test/api/chat");
-  expect(requestBody).toEqual({ question: "What does the document say?" });
+  expect(requestBody).toEqual({
+    question: "What does the document say?",
+    history: [],
+  });
+  expect(requestAuthorization).toBe("Bearer test-chat-backend-secret");
   expect(response.status).toBe(200);
   expect(await response.json()).toEqual({
     message: "A RAG answer.",
@@ -63,6 +70,32 @@ test("website chat proxies to FastAPI and maps answer/sources for the client", a
     remainingCalls: 9,
     resetTimezone: "Africa/Nairobi",
   });
+});
+
+test("website chat does not call FastAPI or consume quota without backend credentials", async () => {
+  let backendCalled = false;
+  let quotaCalled = false;
+  const handler = createChatPostHandler({
+    authorize: async () => ({
+      status: "authenticated",
+      admitCall: async () => {
+        quotaCalled = true;
+        return { status: "admitted", used: 1, remaining: 9 };
+      },
+    }),
+    getBackendUrl: () => "https://fastapi.example.test",
+    getBackendToken: () => undefined,
+    fetcher: async () => {
+      backendCalled = true;
+      return Response.json({});
+    },
+    saveConversation: async () => undefined,
+  });
+
+  const response = await handler(CHAT_REQUEST());
+  expect(response.status).toBe(503);
+  expect(backendCalled).toBe(false);
+  expect(quotaCalled).toBe(false);
 });
 
 test("website chat rejects unauthenticated requests before contacting the backend", async () => {

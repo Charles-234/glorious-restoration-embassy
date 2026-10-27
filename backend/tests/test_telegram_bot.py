@@ -26,6 +26,7 @@ class FakeAsyncClient:
     def __init__(self, **kwargs):
         self.kwargs = kwargs
         self.request = None
+        self.request_headers = None
 
     async def __aenter__(self):
         return self
@@ -33,8 +34,9 @@ class FakeAsyncClient:
     async def __aexit__(self, *_args):
         return False
 
-    async def post(self, url, *, json):
+    async def post(self, url, *, json, headers):
         self.request = (url, json)
+        self.request_headers = headers
         return FakeAssistantResponse()
 
 
@@ -64,7 +66,10 @@ class TelegramBotIntegrationTests(unittest.IsolatedAsyncioTestCase):
         with (
             patch.dict(
                 os.environ,
-                {"FASTAPI_BACKEND_URL": "https://fastapi.example.test/"},
+                {
+                    "FASTAPI_BACKEND_URL": "https://fastapi.example.test/",
+                    "CHAT_BACKEND_SHARED_SECRET": "test-chat-secret",
+                },
                 clear=False,
             ),
             patch.object(telegram_bot.httpx, "AsyncClient", return_value=client) as client_factory,
@@ -78,6 +83,7 @@ class TelegramBotIntegrationTests(unittest.IsolatedAsyncioTestCase):
                 {"question": "What is the answer?"},
             ),
         )
+        self.assertEqual(client.request_headers, {"Authorization": "Bearer test-chat-secret"})
         self.assertEqual(
             telegram_bot.format_assistant_reply(result),
             "A shared RAG answer.\n\nSources:\n- Reference: https://example.test/ref",
