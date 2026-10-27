@@ -1187,23 +1187,33 @@
     gap: 17px;
   }
 
-  .gre-ministry-card {
-    overflow: hidden;
+  .gre-ministry-tile {
+    border-radius: 11px;
+  }
+
+  .gre-ministry-card-surface {
     border: 1px solid var(--gre-rule);
     border-radius: 11px;
     background: hsl(var(--card));
-    transition: transform 220ms ease, box-shadow 220ms ease;
   }
 
-  .gre-ministry-card:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--shadow-lift);
+  .gre-ministry-card-glare {
+    border-radius: inherit;
+  }
+
+  .gre-ministry-card {
+    position: relative;
+    z-index: 1;
+    overflow: visible;
+    border-radius: 11px;
+    background: transparent;
   }
 
   .gre-ministry-image {
     position: relative;
     height: 178px;
     overflow: hidden;
+    border-radius: 10px 10px 0 0;
     background: hsl(var(--muted));
   }
 
@@ -1867,6 +1877,16 @@
   @media (max-width: 860px) {
     .gre-announcement-inner {
       min-height: 36px;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      padding-block: 8px;
+    }
+
+    .gre-service-note,
+    .gre-announcement-links {
+      flex: 1 1 100%;
+      justify-content: center;
     }
 
     .gre-announcement-links {
@@ -1995,7 +2015,9 @@
       min-height: 31px;
       justify-content: center;
       font-size: 0.59rem;
-      white-space: nowrap;
+      flex-wrap: wrap;
+      gap: 4px 8px;
+      white-space: normal;
     }
 
     .gre-announcement-links {
@@ -2375,6 +2397,11 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
+    .motion-reduce-visible {
+      opacity: 1 !important;
+      transform: none !important;
+    }
+
     .gre-button,
     .gre-gallery-card img {
       transition-duration: 0.01ms !important;
@@ -2614,7 +2641,7 @@
     min-height: 44px;
     min-width: 44px;
   }
-  
+
   /* Better mobile navigation */
   .navbar-mobile {
     backdrop-filter: blur(12px);

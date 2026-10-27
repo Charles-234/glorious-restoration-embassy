@@ -9,6 +9,8 @@ import { MpesaLogo } from "@/components/mpesa-logo";
 import PastorPortraitCarousel from "@/components/pastor-portrait-carousel";
 import { AIChatbot } from "@/components/ai-chatbot";
 import { LiquidGlassHeroActions } from "@/components/liquid-glass-hero-actions";
+import { FadeIn } from "@/components/fade-in";
+import { MotionTile } from "@/components/motion-tile";
 import type { HeroContent } from "@/lib/content";
 import type { GalleryMediaItem } from "@/lib/local-gallery";
 import { branches, siteConfig } from "@/lib/siteData";
@@ -179,7 +181,11 @@ export function StitchHomepage({
   return (
     <div className="gre-home">
       <main>
-        <section id="heroSection" className="gre-hero" aria-labelledby="home-title">
+        <FadeIn
+          id="heroSection"
+          className="gre-hero"
+          aria-labelledby="home-title"
+        >
           <div className="gre-wrap gre-hero-grid">
             <div className="gre-hero-copy">
               <p className="gre-eyebrow">Welcome to Glory Embassy of Grace Church</p>
@@ -243,7 +249,7 @@ export function StitchHomepage({
             </div>
           </div>
           <span className="gre-hero-watermark" aria-hidden="true">GEGC</span>
-        </section>
+        </FadeIn>
 
         <section className="gre-live gre-section">
           <div className="gre-wrap">
@@ -261,7 +267,10 @@ export function StitchHomepage({
           </div>
         </section>
 
-        <section className="gre-gatherings gre-section" id="fellowship-schedule">
+        <FadeIn
+          className="gre-gatherings gre-section"
+          id="fellowship-schedule"
+        >
           <div className="gre-wrap">
             <SectionIntro
               eyebrow="Atmosphere of Grace"
@@ -289,7 +298,7 @@ export function StitchHomepage({
               })}
             </div>
           </div>
-        </section>
+        </FadeIn>
 
         <section className="gre-sermons gre-section" id="sermons-archive">
           <div className="gre-wrap gre-sermons-layout">
@@ -324,7 +333,7 @@ export function StitchHomepage({
           </div>
         </section>
 
-        <section className="gre-giving gre-section" id="giving-module">
+        <FadeIn className="gre-giving gre-section" id="giving-module">
           <div className="gre-wrap gre-giving-layout">
             <div className="gre-giving-copy">
               <p className="gre-eyebrow">Kingdom Stewardship</p>
@@ -360,9 +369,9 @@ export function StitchHomepage({
               <p className="gre-pay-account-name">{siteConfig.giveChannel.accountName}</p>
             </div>
           </div>
-        </section>
+        </FadeIn>
 
-        <section className="gre-life gre-section" id="life-at-the-embassy">
+        <FadeIn className="gre-life gre-section" id="life-at-the-embassy">
           <div className="gre-wrap">
             <SectionIntro
               eyebrow="Connect · Grow · Serve"
@@ -371,21 +380,23 @@ export function StitchHomepage({
             />
             <div className="gre-ministry-grid">
               {ministries.map((ministry) => (
-                <article className="gre-ministry-card" key={ministry.title}>
-                  <div className="gre-ministry-image">
-                    <Image src={ministry.image} alt={ministry.imageAlt} fill sizes="(max-width: 760px) 100vw, 25vw" />
-                  </div>
-                  <div className="gre-ministry-content">
-                    <p className="gre-card-kicker">{ministry.eyebrow}</p>
-                    <h3>{ministry.title}</h3>
-                    <p>{ministry.description}</p>
-                    <Link href="/events">{ministry.link}<ChevronRight size={15} /></Link>
-                  </div>
-                </article>
+                <MotionTile className="gre-ministry-tile" key={ministry.title}>
+                  <article className="gre-ministry-card">
+                    <div className="gre-ministry-image">
+                      <Image src={ministry.image} alt={ministry.imageAlt} fill sizes="(max-width: 760px) 100vw, 25vw" />
+                    </div>
+                    <div className="gre-ministry-content">
+                      <p className="gre-card-kicker">{ministry.eyebrow}</p>
+                      <h3>{ministry.title}</h3>
+                      <p>{ministry.description}</p>
+                      <Link href="/events">{ministry.link}<ChevronRight size={15} /></Link>
+                    </div>
+                  </article>
+                </MotionTile>
               ))}
             </div>
           </div>
-        </section>
+        </FadeIn>
 
         <section className="gre-advisory gre-section" id="visit-planner">
           <div className="gre-wrap">
