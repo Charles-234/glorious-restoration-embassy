@@ -50,6 +50,7 @@ export default function AboutPage() {
         <SectionHeading
           title="Our locations"
           subtitle="Visit us for worship, fellowship, and discipleship."
+          headingLevel="h2"
         />
 
         <div className="grid gap-6 md:grid-cols-2">

@@ -159,7 +159,6 @@ export function StitchHomepage({
   stitchPhotos?: Array<{ src: string; alt: string; title: string }>;
 }) {
   const [copied, setCopied] = useState<"paybill" | "account" | null>(null);
-  const [audioOnly, setAudioOnly] = useState(false);
   const liveDialog = useRef<HTMLDialogElement>(null);
 
   useEffect(() => {
@@ -331,19 +330,9 @@ export function StitchHomepage({
               <p className="gre-eyebrow">Kingdom Stewardship</p>
               <h2>Support the Kingdom Work &amp; Outreach</h2>
               <p>
-                Every seed sown advances community restoration, expands our church branches,
-                feeds vulnerable families, and brings the light of the gospel to the nations.
+                Your tithes and offerings support the work of the ministry, including our branches
+                and outreach programs.
               </p>
-              <div className="gre-giving-assurances">
-                <div>
-                  <span className="gre-assurance-icon"><HeartHandshake size={19} /></span>
-                  <p><strong>100% Transparent Stewardship:</strong> All tithes and building donations are audited quarterly under pastoral accountability.</p>
-                </div>
-                <div>
-                  <span className="gre-assurance-icon"><UsersRound size={19} /></span>
-                  <p><strong>Humanitarian Reach:</strong> Dedicated funds provide school sponsorships and emergency food bags to vulnerable families.</p>
-                </div>
-              </div>
             </div>
             <div className="gre-mpesa-card">
               <div className="gre-mpesa-heading">
@@ -496,12 +485,6 @@ export function StitchHomepage({
           <a className="gre-button gre-button-youtube" href="https://www.youtube.com/@stephenkariuki7444" target="_blank" rel="noopener noreferrer">
             <YouTubeMark /> Open on YouTube Live
           </a>
-          <div className="gre-audio-choice">
-            <span>Audio Only Mode Available for low bandwidth connections.</span>
-            <button type="button" aria-pressed={audioOnly} onClick={() => setAudioOnly((active) => !active)}>
-              {audioOnly ? "Audio Only Mode Selected" : "Switch to Low-Data Audio"}
-            </button>
-          </div>
         </div>
       </dialog>
     </div>
